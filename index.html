@@ -1,18 +1,21 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="clckd" content="c2e1a1d976a2b7776dc7b7b19d147dc5" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alta Rewards & Ads Platform</title>
-    <!-- Ad Verification Meta -->
+
+    <!-- Verification Meta -->
     <meta name="clckd" content="c2e1a1d976a2b7776dc7b7b19d147dc5" />
 
-    <!-- External Ad Network Scripts -->
+    <!-- External Ad Network Scripts (Adsterra, RichAds & Adcash) -->
     <script src="https://mammothsubway.com/c6/6a/68/c66a68f1e4f955460119550f4b16cdeb.js"></script>
-    <script type="module" src="https://richinfo.co/richpartners/push/js/rp-cl-ob.js?pubid=1021768&siteid=406964&niche=33" async data-cfasync="false"></script>
-    <script src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js" data-pubid="1021768" data-siteid="406965" async data-cfasync="false"></script>
-    <script src="https://richinfo.co/richpartners/in-page/js/richads-ob.js?pubid=1021768&siteid=406966" async></script>
+    <script src="https://mammothsubway.com/38/84/b8/3884b84642518c8d1767cf3d63554b7f.js"></script>
+    <script type="module" src="https://richinfo.co/richpartners/push/js/rp-cl-ob.js?pubid=1021768&siteid=406974&niche=33" async data-cfasync="false"></script>
+    <script src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js" data-pubid="1021768" data-siteid="406975" async data-cfasync="false"></script>
+    <script src="https://richinfo.co/richpartners/in-page/js/richads-ob.js?pubid=1021768&siteid=406976" async></script>
+    
+    <!-- Adcash Auto Tag Script -->
     <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
     <script type="text/javascript">
         if (typeof aclib !== 'undefined') {
@@ -54,11 +57,11 @@
             gap: 15px;
         }
 
-        /* Middle Center Alert Overlay */
+        /* Notification Overlay */
         .middle-overlay {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0, 0, 0, 0.7);
+            background: rgba(0, 0, 0, 0.75);
             display: none;
             justify-content: center;
             align-items: center;
@@ -72,7 +75,7 @@
             border-radius: 12px;
             text-align: center;
             box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
-            max-width: 80%;
+            max-width: 85%;
         }
 
         .alert-box.error {
@@ -80,17 +83,7 @@
             box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
         }
 
-        .alert-box h4 {
-            font-size: 18px;
-            margin-bottom: 8px;
-        }
-
-        .alert-box p {
-            font-size: 14px;
-            color: #cbd5e1;
-        }
-
-        /* Ad Banner */
+        /* Ad Banner Container */
         .ad-banner-box {
             width: 100%;
             background: #000;
@@ -98,10 +91,13 @@
             overflow: hidden;
             border: 1px solid #334155;
             text-align: center;
-            padding: 5px;
+            padding: 10px 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 260px;
         }
 
-        /* Balance & Stats Card */
         .stats-card {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -112,18 +108,12 @@
             border: 1px solid #334155;
         }
 
-        .balance-box h3 {
-            font-size: 14px;
-            color: #94a3b8;
-        }
-
         .balance-box .points {
             font-size: 24px;
             font-weight: bold;
             color: var(--accent);
         }
 
-        /* Action Buttons Grid */
         .action-card {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -179,30 +169,11 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Dynamic Rotating Banner */
-        .rotating-ads-box {
-            background: #111827;
-            border: 1px dashed #6366f1;
-            padding: 12px;
-            border-radius: 10px;
-            text-align: center;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
-        /* Bonus Ads Section */
         .scroll-ads-container {
             background-color: var(--card-bg);
             border-radius: 12px;
             padding: 12px;
             border: 1px solid #334155;
-        }
-
-        .scroll-ads-title {
-            font-size: 14px;
-            margin-bottom: 8px;
-            color: #cbd5e1;
-            font-weight: bold;
         }
 
         .scroll-ads-list {
@@ -223,7 +194,6 @@
             flex-shrink: 0;
         }
 
-        /* Withdraw Form */
         .withdraw-card {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -233,13 +203,6 @@
 
         .form-group {
             margin-bottom: 10px;
-        }
-
-        .form-group label {
-            display: block;
-            font-size: 12px;
-            color: #94a3b8;
-            margin-bottom: 4px;
         }
 
         .withdraw-input {
@@ -265,7 +228,6 @@
 </head>
 <body>
 
-<!-- Middle Screen Notification -->
 <div class="middle-overlay" id="middleOverlay">
     <div class="alert-box" id="alertBox">
         <h4 id="alertTitle">Notification</h4>
@@ -274,18 +236,28 @@
 </div>
 
 <div class="container">
-    <!-- AADS AD UNIT -->
+    <!-- 300x250 Banner Ad Placement -->
     <div class="ad-banner-box">
-        <div id="frame" style="width: 100%; margin: auto;">
-            <iframe data-aa='2454836' src='//acceptable.a-ads.com/2454836/?size=Adaptive'
-                    style='border:0; padding:0; width:100%; height:auto; overflow:hidden; display: block; margin: auto;'></iframe>
-        </div>
+        <script>
+          atOptions = {
+            'key' : 'd7df14c97756d36ac44df8b8b9ac8f81',
+            'format' : 'iframe',
+            'height' : 250,
+            'width' : 300,
+            'params' : {}
+          };
+        </script>
+        <script src="https://mammothsubway.com/d7df14c97756d36ac44df8b8b9ac8f81/invoke.js"></script>
     </div>
+
+    <!-- Native Ad Placement Container -->
+    <script async="async" data-cfasync="false" src="https://mammothsubway.com/567878e89e28fda7ea6b7fb45c33cdf9/invoke.js"></script>
+    <div id="container-567878e89e28fda7ea6b7fb45c33cdf9"></div>
 
     <!-- Stats -->
     <div class="stats-card">
         <div class="balance-box">
-            <h3>Alta Points Balance</h3>
+            <h3 style="font-size: 14px; color: #94a3b8;">Alta Points Balance</h3>
             <div class="points" id="altaBalance">50.00</div>
         </div>
         <div style="text-align: right;">
@@ -294,56 +266,42 @@
         </div>
     </div>
 
-    <!-- Action Buttons -->
+    <!-- Actions -->
     <div class="action-card">
         <button class="btn-double-ads" id="doubleAdsBtn" onclick="triggerDoubleAds()">Double Ads (+0.5 Alta)</button>
-        
         <button class="btn-auto-ads" id="autoAdsBtn" onclick="startAutoAds()">
             <div class="spinner" id="autoSpinner"></div>
             <span id="autoBtnText">Auto Ads (0/30)</span>
         </button>
     </div>
 
-    <!-- Dynamic Rotating Text -->
-    <div class="rotating-ads-box" id="rotatingAdText" onclick="triggerDirectAd()">
-        Sponsored: High Yield Trading & Crypto Offers
-    </div>
-
-    <!-- Bonus Ads Section (Points Hidden) -->
+    <!-- Bonus Section -->
     <div class="scroll-ads-container">
-        <div class="scroll-ads-title">🔥 Bonus Ads</div>
+        <div style="font-size: 14px; margin-bottom: 8px; color: #cbd5e1; font-weight: bold;">🔥 Bonus Ads</div>
         <div class="scroll-ads-list">
-            <div class="scroll-ad-item" onclick="triggerBonusAd(0)">
-                <p>Bonus Offer #1</p>
-            </div>
-            <div class="scroll-ad-item" onclick="triggerBonusAd(1)">
-                <p>Bonus Offer #2</p>
-            </div>
-            <div class="scroll-ad-item" onclick="triggerBonusAd(2)">
-                <p>Bonus Offer #3</p>
-            </div>
-            <div class="scroll-ad-item" onclick="triggerBonusAd(3)">
-                <p>Bonus Offer #4</p>
-            </div>
+            <div class="scroll-ad-item" onclick="triggerBonusAd(0)"><p>Bonus Offer #1</p></div>
+            <div class="scroll-ad-item" onclick="triggerBonusAd(1)"><p>Bonus Offer #2</p></div>
+            <div class="scroll-ad-item" onclick="triggerBonusAd(2)"><p>Bonus Offer #3</p></div>
+            <div class="scroll-ad-item" onclick="triggerBonusAd(3)"><p>Bonus Offer #4</p></div>
         </div>
     </div>
 
-    <!-- Withdrawal Form -->
+    <!-- Withdraw Form -->
     <div class="withdraw-card">
         <h3 style="margin-bottom: 12px;">Withdrawal Request Form</h3>
         <div class="form-group">
-            <label>Telegram Username (@Name)</label>
+            <label style="font-size: 12px; color: #94a3b8;">Telegram Username (@Name)</label>
             <input type="text" id="tgName" class="withdraw-input" placeholder="@yourusername">
         </div>
         <div class="form-group">
-            <label>Withdrawal Point Amount</label>
+            <label style="font-size: 12px; color: #94a3b8;">Withdrawal Point Amount</label>
             <input type="number" id="withdrawAmount" class="withdraw-input" placeholder="Enter amount">
         </div>
         <div class="form-group">
-            <label>TON Wallet Address</label>
+            <label style="font-size: 12px; color: #94a3b8;">TON Wallet Address</label>
             <input type="text" id="tonWallet" class="withdraw-input" placeholder="EQD...">
         </div>
-        <button class="btn-withdraw" onclick="submitWithdrawalRequest()">Submit Request to Channel</button>
+        <button class="btn-withdraw" onclick="submitWithdrawalRequest()">Submit Request</button>
     </div>
 </div>
 
@@ -352,203 +310,90 @@
     let withdrawCount = 0;
     let isDoubleAdRunning = false;
     let isBonusAdRunning = false;
-
-    // Auto Ads States
     let autoClickCount = 0;
     let isAutoAdsRunning = false;
-    let autoTimer = null;
 
-    // Direct Links Queue
     const directAdLinks = [
         "https://mammothsubway.com/vqvp77uv?key=e16f5adcebeee070d751d4132045f66e",
-        "https://mammothsubway.com/sraj8zz1d?key=80fe52ed90673410b3bd8a6ef1e23f0b",
-        "https://alta-rw4e.vercel.app/"
+        "https://mammothsubway.com/sraj8zz1d?key=80fe52ed90673410b3bd8a6ef1e23f0b"
     ];
-
-    // Telegram Bot Details
-    const TELEGRAM_BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN";
-    const TELEGRAM_CHANNEL_ID = "@YOUR_CHANNEL_ID";
 
     function updateUI() {
         document.getElementById('altaBalance').innerText = altaPoints.toFixed(2);
         document.getElementById('withdrawCountText').innerText = withdrawCount + " Times";
     }
-    updateUI();
 
-    // Middle Screen Notification
     function showMiddleNotification(title, message, isError = false) {
         const overlay = document.getElementById('middleOverlay');
         const box = document.getElementById('alertBox');
-        
         document.getElementById('alertTitle').innerText = title;
         document.getElementById('alertMessage').innerText = message;
-        
-        if (isError) box.classList.add('error');
-        else box.classList.remove('error');
-
+        if (isError) box.classList.add('error'); else box.classList.remove('error');
         overlay.style.display = "flex";
-
-        setTimeout(() => {
-            overlay.style.display = "none";
-        }, 3500);
+        setTimeout(() => { overlay.style.display = "none"; }, 3500);
     }
 
-    // Direct Link Open Helper
     function triggerDirectAd() {
         const url = directAdLinks[Math.floor(Math.random() * directAdLinks.length)];
         window.open(url, '_blank');
     }
 
-    // 1. Double Ads Logic (Hidden Timer, Verification on Active Focus)
     function triggerDoubleAds() {
         if (isDoubleAdRunning) return;
-
         isDoubleAdRunning = true;
         const btn = document.getElementById('doubleAdsBtn');
         btn.disabled = true;
-
         triggerDirectAd();
 
-        let startTime = Date.now();
-
-        let checkInterval = setInterval(() => {
-            let elapsed = (Date.now() - startTime) / 1000;
-
-            if (elapsed >= 15) {
-                clearInterval(checkInterval);
-                altaPoints += 0.50;
-                updateUI();
-                showMiddleNotification("Success!", "15 seconds completed! +0.5 Alta added.");
-                btn.disabled = false;
-                isDoubleAdRunning = false;
-            }
-        }, 1000);
+        setTimeout(() => {
+            altaPoints += 0.50;
+            updateUI();
+            showMiddleNotification("Success!", "+0.5 Alta added.");
+            btn.disabled = false;
+            isDoubleAdRunning = false;
+        }, 15000);
     }
 
-    // 2. Auto Ads Logic (0/30 trigger -> 4 Hours Loading -> +20 Alta)
     function startAutoAds() {
         if (isAutoAdsRunning) return;
-
-        // Count clicks up to 30
         autoClickCount++;
         triggerDirectAd();
 
         const btnText = document.getElementById('autoBtnText');
-        const spinner = document.getElementById('autoSpinner');
-        const btn = document.getElementById('autoAdsBtn');
-
         if (autoClickCount < 30) {
             btnText.innerText = `Auto Ads (${autoClickCount}/30)`;
-            showMiddleNotification("Auto Ads Progress", `Click registered (${autoClickCount}/30). Complete 30 clicks to start Auto Mode.`);
         } else {
-            // Reached 30 clicks -> Start 4 Hour Automation
             isAutoAdsRunning = true;
-            btn.disabled = true;
-            spinner.style.display = "block";
-            btnText.innerText = "Auto Ads Running (4:00:00)...";
-
-            showMiddleNotification("Auto Ads Started", "Auto Ads is now active for 4 hours. Loading in background...");
-
-            let totalSeconds = 4 * 3600; // 4 Hours
-
-            autoTimer = setInterval(() => {
-                totalSeconds--;
-                
-                let hours = Math.floor(totalSeconds / 3600);
-                let minutes = Math.floor((totalSeconds % 3600) / 60);
-                let seconds = totalSeconds % 60;
-
-                btnText.innerText = `Running (${hours}:${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds})`;
-
-                if (totalSeconds <= 0) {
-                    clearInterval(autoTimer);
-                    altaPoints += 20.0;
-                    updateUI();
-                    
-                    showMiddleNotification("Auto Ads Complete", "4 Hours Completed! +20 Alta automatically added.");
-                    
-                    // Reset State
-                    autoClickCount = 0;
-                    isAutoAdsRunning = false;
-                    btn.disabled = false;
-                    spinner.style.display = "none";
-                    btnText.innerText = "Auto Ads (0/30)";
-                }
-            }, 1000);
+            document.getElementById('autoAdsBtn').disabled = true;
+            document.getElementById('autoSpinner').style.display = "block";
+            btnText.innerText = "Auto Ads Running...";
+            showMiddleNotification("Auto Mode Activated", "Auto mode initiated.");
         }
     }
 
-    // 3. Bonus Ads Logic (Hidden Timer, Hidden Points Rewards)
     function triggerBonusAd(index) {
         if (isBonusAdRunning) return;
-
         isBonusAdRunning = true;
-        const rewards = [0.5, 1.0, 1.5, 2.0, 2.5];
-        const selectedReward = rewards[Math.floor(Math.random() * rewards.length)];
-
         triggerDirectAd();
 
-        let startTime = Date.now();
-
-        let checkBonus = setInterval(() => {
-            let elapsed = (Date.now() - startTime) / 1000;
-
-            if (elapsed >= 15) {
-                clearInterval(checkBonus);
-                altaPoints += selectedReward;
-                updateUI();
-                
-                showMiddleNotification("Bonus Claimed!", "15 seconds completed! Bonus Alta points added to balance.");
-                isBonusAdRunning = false;
-            }
-        }, 1000);
+        setTimeout(() => {
+            altaPoints += 1.0;
+            updateUI();
+            showMiddleNotification("Bonus Claimed!", "Bonus point added.");
+            isBonusAdRunning = false;
+        }, 15000);
     }
 
-    // Dynamic Rotating Text
-    const rotatingTexts = [
-        "Sponsored: High Income Offers Available!",
-        "Hot Deal: Instant Payouts via TON Network!",
-        "RichPartners: Highest Monetization Yields!"
-    ];
-    let rIndex = 0;
-    setInterval(() => {
-        rIndex = (rIndex + 1) % rotatingTexts.length;
-        document.getElementById('rotatingAdText').innerText = rotatingTexts[rIndex];
-    }, 4000);
-
-    // Telegram Withdrawal Submit
     function submitWithdrawalRequest() {
-        const tgName = document.getElementById('tgName').value.trim();
         const amount = parseFloat(document.getElementById('withdrawAmount').value);
-        const tonWallet = document.getElementById('tonWallet').value.trim();
-
-        if (!tgName.startsWith('@')) {
-            showMiddleNotification("Error", "Telegram username must start with @", true);
+        if (isNaN(amount) || amount > altaPoints) {
+            showMiddleNotification("Error", "Invalid or insufficient points.", true);
             return;
         }
-
-        if (isNaN(amount) || amount <= 0) {
-            showMiddleNotification("Error", "Please enter a valid amount.", true);
-            return;
-        }
-
-        if (tonWallet.length < 10) {
-            showMiddleNotification("Error", "Enter a valid TON Wallet address.", true);
-            return;
-        }
-
-        if (amount > altaPoints) {
-            showMiddleNotification("Error", "Insufficient Alta Balance.", true);
-            return;
-        }
-
         altaPoints -= amount;
         withdrawCount++;
         updateUI();
-
-        showMiddleNotification("Success", "Withdrawal Request Sent to Telegram Channel!");
-        document.getElementById('withdrawAmount').value = "";
-        document.getElementById('tonWallet').value = "";
+        showMiddleNotification("Success", "Request Submitted!");
     }
 </script>
 
