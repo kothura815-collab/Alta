@@ -8,14 +8,17 @@
     <!-- Verification Meta -->
     <meta name="clckd" content="c2e1a1d976a2b7776dc7b7b19d147dc5" />
 
-    <!-- External Ad Network Scripts (Adsterra, RichAds & Adcash) -->
+    <!-- External Ad Network Scripts -->
+    <!-- 1. RichAds Scripts -->
+    <script src="https://richinfo.co/richpartners/in-page/js/richads-ob.js?pubid=1021768&siteid=406976" async></script>
+    <script src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js" data-pubid="1021768" data-siteid="406975" async data-cfasync="false"></script>
+    <script type="module" src="https://richinfo.co/richpartners/push/js/rp-cl-ob.js?pubid=1021768&siteid=406974&niche=33" async data-cfasync="false"></script>
+
+    <!-- 2. Adsterra Scripts -->
     <script src="https://mammothsubway.com/c6/6a/68/c66a68f1e4f955460119550f4b16cdeb.js"></script>
     <script src="https://mammothsubway.com/38/84/b8/3884b84642518c8d1767cf3d63554b7f.js"></script>
-    <script type="module" src="https://richinfo.co/richpartners/push/js/rp-cl-ob.js?pubid=1021768&siteid=406974&niche=33" async data-cfasync="false"></script>
-    <script src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js" data-pubid="1021768" data-siteid="406975" async data-cfasync="false"></script>
-    <script src="https://richinfo.co/richpartners/in-page/js/richads-ob.js?pubid=1021768&siteid=406976" async></script>
-    
-    <!-- Adcash Auto Tag Script -->
+
+    <!-- 3. Adcash Auto Tag -->
     <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
     <script type="text/javascript">
         if (typeof aclib !== 'undefined') {
@@ -26,6 +29,7 @@
     <style>
         :root {
             --primary: #4f46e5;
+            --primary-hover: #4338ca;
             --bg: #0f172a;
             --card-bg: #1e293b;
             --text: #f8fafc;
@@ -57,10 +61,13 @@
             gap: 15px;
         }
 
-        /* Notification Overlay */
+        /* Middle Screen Notification Overlay */
         .middle-overlay {
             position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: rgba(0, 0, 0, 0.75);
             display: none;
             justify-content: center;
@@ -83,21 +90,28 @@
             box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
         }
 
-        /* Ad Banner Container */
-        .ad-banner-box {
-            width: 100%;
-            background: #000;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid #334155;
-            text-align: center;
-            padding: 10px 5px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 260px;
+        .alert-box h4 {
+            font-size: 18px;
+            margin-bottom: 8px;
         }
 
+        .alert-box p {
+            font-size: 14px;
+            color: #cbd5e1;
+        }
+
+        /* Top Video / AADS Banner Frame */
+        .top-aads-banner {
+            width: 100%;
+            border-radius: 12px;
+            overflow: hidden;
+            background: #000;
+            border: 1px solid #334155;
+            text-align: center;
+            padding: 5px 0;
+        }
+
+        /* Balance & Stats Card */
         .stats-card {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -108,12 +122,18 @@
             border: 1px solid #334155;
         }
 
+        .balance-box h3 {
+            font-size: 14px;
+            color: #94a3b8;
+        }
+
         .balance-box .points {
             font-size: 24px;
             font-weight: bold;
             color: var(--accent);
         }
 
+        /* Action Buttons Grid */
         .action-card {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -133,6 +153,7 @@
             font-weight: bold;
             border-radius: 8px;
             cursor: pointer;
+            transition: 0.2s;
         }
 
         .btn-auto-ads {
@@ -148,6 +169,7 @@
             justify-content: center;
             align-items: center;
             gap: 10px;
+            transition: 0.2s;
         }
 
         .btn-auto-ads:disabled, .btn-double-ads:disabled {
@@ -155,6 +177,7 @@
             cursor: not-allowed;
         }
 
+        /* Spinner Loading Animation */
         .spinner {
             width: 18px;
             height: 18px;
@@ -169,11 +192,30 @@
             to { transform: rotate(360deg); }
         }
 
+        /* Auto Rotating Ads Box */
+        .rotating-ads-box {
+            background: #111827;
+            border: 1px dashed #6366f1;
+            padding: 12px;
+            border-radius: 10px;
+            text-align: center;
+            font-size: 14px;
+            cursor: pointer;
+        }
+
+        /* Bonus Ads Section */
         .scroll-ads-container {
             background-color: var(--card-bg);
             border-radius: 12px;
             padding: 12px;
             border: 1px solid #334155;
+        }
+
+        .scroll-ads-title {
+            font-size: 14px;
+            margin-bottom: 8px;
+            color: #cbd5e1;
+            font-weight: bold;
         }
 
         .scroll-ads-list {
@@ -194,6 +236,24 @@
             flex-shrink: 0;
         }
 
+        .scroll-ad-item p {
+            font-size: 13px;
+            color: #f8fafc;
+            font-weight: 500;
+        }
+
+        /* Adsterra 300x250 Banner Holder */
+        .adsterra-banner-container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #0f172a;
+            border-radius: 12px;
+            padding: 10px;
+            border: 1px solid #334155;
+        }
+
+        /* Withdrawal Card */
         .withdraw-card {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -201,7 +261,8 @@
             border: 1px solid #334155;
         }
 
-        .form-group {
+        .withdraw-card h3 {
+            font-size: 16px;
             margin-bottom: 10px;
         }
 
@@ -212,6 +273,7 @@
             border: 1px solid #475569;
             background: #0f172a;
             color: #fff;
+            margin-bottom: 10px;
         }
 
         .btn-withdraw {
@@ -224,20 +286,83 @@
             font-weight: bold;
             cursor: pointer;
         }
+
+        .rules-text {
+            font-size: 12px;
+            color: #94a3b8;
+            margin-top: 8px;
+            line-height: 1.4;
+        }
     </style>
 </head>
 <body>
 
+<!-- Middle Screen Alert Overlay -->
 <div class="middle-overlay" id="middleOverlay">
     <div class="alert-box" id="alertBox">
         <h4 id="alertTitle">Notification</h4>
-        <p id="alertMessage">Message goes here...</p>
+        <p id="alertMessage">Message content goes here...</p>
     </div>
 </div>
 
 <div class="container">
-    <!-- 300x250 Banner Ad Placement -->
-    <div class="ad-banner-box">
+    <!-- Top AADS Unit -->
+    <div class="top-aads-banner">
+        <div id="frame" style="width: 100%; margin: auto; position: relative; z-index: 99998;">
+            <iframe data-aa='2454836' src='//acceptable.a-ads.com/2454836/?size=Adaptive' style='border:0; padding:0; width:100%; height:auto; overflow:hidden; display: block; margin: auto;'></iframe>
+        </div>
+    </div>
+
+    <!-- Stats -->
+    <div class="stats-card">
+        <div class="balance-box">
+            <h3>Alta Points Balance</h3>
+            <div class="points" id="altaBalance">50.00</div>
+        </div>
+        <div style="text-align: right;">
+            <p style="font-size: 12px; color: #94a3b8;">Withdrawals</p>
+            <p style="font-size: 16px; font-weight: bold;" id="withdrawCountText">0 Times</p>
+        </div>
+    </div>
+
+    <!-- Action Buttons -->
+    <div class="action-card">
+        <!-- 1. Double Ads Button -->
+        <button class="btn-double-ads" id="doubleAdsBtn" onclick="triggerDoubleAds()">Double Ads (+0.5 Alta)</button>
+        
+        <!-- 2. Auto Ads Button -->
+        <button class="btn-auto-ads" id="autoAdsBtn" onclick="startAutoAds()">
+            <div class="spinner" id="autoSpinner"></div>
+            <span id="autoBtnText">Auto Ads (0/30)</span>
+        </button>
+    </div>
+
+    <!-- Rotating Sponsored Banner -->
+    <div class="rotating-ads-box" id="rotatingAdText" onclick="triggerDirectAd()">
+        Sponsored: Premium Trading Platform - High Return!
+    </div>
+
+    <!-- 3. Bonus Ads Section (Points hidden) -->
+    <div class="scroll-ads-container">
+        <div class="scroll-ads-title">🔥 Bonus Ads</div>
+        <div class="scroll-ads-list">
+            <div class="scroll-ad-item" onclick="triggerBonusAd(0)">
+                <p>Bonus Offer #1</p>
+            </div>
+            <div class="scroll-ad-item" onclick="triggerBonusAd(1)">
+                <p>Bonus Offer #2</p>
+            </div>
+            <div class="scroll-ad-item" onclick="triggerBonusAd(2)">
+                <p>Bonus Offer #3</p>
+            </div>
+            <div class="scroll-ad-item" onclick="triggerBonusAd(3)">
+                <p>Bonus Offer #4</p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Adsterra 300x250 Banner Ad -->
+    <div class="adsterra-banner-container">
         <script>
           atOptions = {
             'key' : 'd7df14c97756d36ac44df8b8b9ac8f81',
@@ -250,58 +375,19 @@
         <script src="https://mammothsubway.com/d7df14c97756d36ac44df8b8b9ac8f81/invoke.js"></script>
     </div>
 
-    <!-- Native Ad Placement Container -->
+    <!-- Adsterra Native Ad Container -->
     <script async="async" data-cfasync="false" src="https://mammothsubway.com/567878e89e28fda7ea6b7fb45c33cdf9/invoke.js"></script>
     <div id="container-567878e89e28fda7ea6b7fb45c33cdf9"></div>
 
-    <!-- Stats -->
-    <div class="stats-card">
-        <div class="balance-box">
-            <h3 style="font-size: 14px; color: #94a3b8;">Alta Points Balance</h3>
-            <div class="points" id="altaBalance">50.00</div>
-        </div>
-        <div style="text-align: right;">
-            <p style="font-size: 12px; color: #94a3b8;">Withdrawals</p>
-            <p style="font-size: 16px; font-weight: bold;" id="withdrawCountText">0 Times</p>
-        </div>
-    </div>
-
-    <!-- Actions -->
-    <div class="action-card">
-        <button class="btn-double-ads" id="doubleAdsBtn" onclick="triggerDoubleAds()">Double Ads (+0.5 Alta)</button>
-        <button class="btn-auto-ads" id="autoAdsBtn" onclick="startAutoAds()">
-            <div class="spinner" id="autoSpinner"></div>
-            <span id="autoBtnText">Auto Ads (0/30)</span>
-        </button>
-    </div>
-
-    <!-- Bonus Section -->
-    <div class="scroll-ads-container">
-        <div style="font-size: 14px; margin-bottom: 8px; color: #cbd5e1; font-weight: bold;">🔥 Bonus Ads</div>
-        <div class="scroll-ads-list">
-            <div class="scroll-ad-item" onclick="triggerBonusAd(0)"><p>Bonus Offer #1</p></div>
-            <div class="scroll-ad-item" onclick="triggerBonusAd(1)"><p>Bonus Offer #2</p></div>
-            <div class="scroll-ad-item" onclick="triggerBonusAd(2)"><p>Bonus Offer #3</p></div>
-            <div class="scroll-ad-item" onclick="triggerBonusAd(3)"><p>Bonus Offer #4</p></div>
-        </div>
-    </div>
-
-    <!-- Withdraw Form -->
+    <!-- Withdrawal Form -->
     <div class="withdraw-card">
-        <h3 style="margin-bottom: 12px;">Withdrawal Request Form</h3>
-        <div class="form-group">
-            <label style="font-size: 12px; color: #94a3b8;">Telegram Username (@Name)</label>
-            <input type="text" id="tgName" class="withdraw-input" placeholder="@yourusername">
+        <h3>Withdraw Alta Points</h3>
+        <input type="number" id="withdrawAmount" class="withdraw-input" placeholder="Enter amount to withdraw">
+        <button class="btn-withdraw" onclick="processWithdrawal()">Withdraw Points</button>
+        <div class="rules-text">
+            * First Withdrawal: Minimum 50 Alta required.<br>
+            * Subsequent Withdrawals: Maintain a minimum balance of 150 Alta. Excess above 150 can be withdrawn (Min 50 Alta).
         </div>
-        <div class="form-group">
-            <label style="font-size: 12px; color: #94a3b8;">Withdrawal Point Amount</label>
-            <input type="number" id="withdrawAmount" class="withdraw-input" placeholder="Enter amount">
-        </div>
-        <div class="form-group">
-            <label style="font-size: 12px; color: #94a3b8;">TON Wallet Address</label>
-            <input type="text" id="tonWallet" class="withdraw-input" placeholder="EQD...">
-        </div>
-        <button class="btn-withdraw" onclick="submitWithdrawalRequest()">Submit Request</button>
     </div>
 </div>
 
@@ -310,9 +396,13 @@
     let withdrawCount = 0;
     let isDoubleAdRunning = false;
     let isBonusAdRunning = false;
+
+    // Auto Ads Variables
     let autoClickCount = 0;
     let isAutoAdsRunning = false;
+    let autoTimer = null;
 
+    // High CPM Direct Links Pool
     const directAdLinks = [
         "https://mammothsubway.com/vqvp77uv?key=e16f5adcebeee070d751d4132045f66e",
         "https://mammothsubway.com/sraj8zz1d?key=80fe52ed90673410b3bd8a6ef1e23f0b"
@@ -322,78 +412,193 @@
         document.getElementById('altaBalance').innerText = altaPoints.toFixed(2);
         document.getElementById('withdrawCountText').innerText = withdrawCount + " Times";
     }
+    updateUI();
 
+    // Middle Overlay Notification Handler
     function showMiddleNotification(title, message, isError = false) {
         const overlay = document.getElementById('middleOverlay');
         const box = document.getElementById('alertBox');
+        
         document.getElementById('alertTitle').innerText = title;
         document.getElementById('alertMessage').innerText = message;
-        if (isError) box.classList.add('error'); else box.classList.remove('error');
+        
+        if (isError) box.classList.add('error');
+        else box.classList.remove('error');
+
         overlay.style.display = "flex";
-        setTimeout(() => { overlay.style.display = "none"; }, 3500);
+
+        setTimeout(() => {
+            overlay.style.display = "none";
+        }, 3500);
     }
 
+    // Helper to open direct link
     function triggerDirectAd() {
-        const url = directAdLinks[Math.floor(Math.random() * directAdLinks.length)];
-        window.open(url, '_blank');
+        const randomUrl = directAdLinks[Math.floor(Math.random() * directAdLinks.length)];
+        window.open(randomUrl, '_blank');
     }
 
+    // 1. Double Ads Handler (Hidden 15s Timer)
     function triggerDoubleAds() {
         if (isDoubleAdRunning) return;
+
         isDoubleAdRunning = true;
         const btn = document.getElementById('doubleAdsBtn');
         btn.disabled = true;
+
         triggerDirectAd();
 
-        setTimeout(() => {
-            altaPoints += 0.50;
-            updateUI();
-            showMiddleNotification("Success!", "+0.5 Alta added.");
-            btn.disabled = false;
-            isDoubleAdRunning = false;
-        }, 15000);
+        let startTime = Date.now();
+
+        let checkInterval = setInterval(() => {
+            let elapsed = (Date.now() - startTime) / 1000;
+
+            if (elapsed >= 15) {
+                clearInterval(checkInterval);
+                altaPoints += 0.50;
+                updateUI();
+                showMiddleNotification("Success!", "15 seconds completed! +0.5 Alta added to balance.");
+                btn.disabled = false;
+                isDoubleAdRunning = false;
+            }
+        }, 1000);
     }
 
+    // 2. Auto Ads Handler (30 Clicks -> 4-Hour Background Mode)
     function startAutoAds() {
         if (isAutoAdsRunning) return;
+
         autoClickCount++;
         triggerDirectAd();
 
         const btnText = document.getElementById('autoBtnText');
+        const spinner = document.getElementById('autoSpinner');
+        const btn = document.getElementById('autoAdsBtn');
+
         if (autoClickCount < 30) {
             btnText.innerText = `Auto Ads (${autoClickCount}/30)`;
+            showMiddleNotification("Auto Ads Progress", `Click recorded (${autoClickCount}/30). Complete 30 clicks to activate 4-Hour Auto Mode.`);
         } else {
             isAutoAdsRunning = true;
-            document.getElementById('autoAdsBtn').disabled = true;
-            document.getElementById('autoSpinner').style.display = "block";
-            btnText.innerText = "Auto Ads Running...";
-            showMiddleNotification("Auto Mode Activated", "Auto mode initiated.");
+            btn.disabled = true;
+            spinner.style.display = "block";
+
+            showMiddleNotification("Auto Mode Activated!", "4-Hour Auto Ads process has started in background.");
+
+            let totalSeconds = 4 * 3600; // 4 Hours in seconds
+
+            autoTimer = setInterval(() => {
+                totalSeconds--;
+
+                let hours = Math.floor(totalSeconds / 3600);
+                let minutes = Math.floor((totalSeconds % 3600) / 60);
+                let seconds = totalSeconds % 60;
+
+                btnText.innerText = `Running (${hours}:${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds})`;
+
+                if (totalSeconds <= 0) {
+                    clearInterval(autoTimer);
+                    altaPoints += 20.0;
+                    updateUI();
+
+                    showMiddleNotification("Auto Mode Finished!", "4 Hours completed successfully! +20 Alta points added.");
+
+                    autoClickCount = 0;
+                    isAutoAdsRunning = false;
+                    btn.disabled = false;
+                    spinner.style.display = "none";
+                    btnText.innerText = "Auto Ads (0/30)";
+                }
+            }, 1000);
         }
     }
 
+    // 3. Bonus Ads Handler (Random Alta Points Reward)
     function triggerBonusAd(index) {
         if (isBonusAdRunning) return;
+
         isBonusAdRunning = true;
+        const rewardsPool = [0.5, 1.0, 1.5, 2.0, 2.5];
+        const randomReward = rewardsPool[Math.floor(Math.random() * rewardsPool.length)];
+
         triggerDirectAd();
 
-        setTimeout(() => {
-            altaPoints += 1.0;
-            updateUI();
-            showMiddleNotification("Bonus Claimed!", "Bonus point added.");
-            isBonusAdRunning = false;
-        }, 15000);
+        let startTime = Date.now();
+
+        let checkBonus = setInterval(() => {
+            let elapsed = (Date.now() - startTime) / 1000;
+
+            if (elapsed >= 15) {
+                clearInterval(checkBonus);
+                altaPoints += randomReward;
+                updateUI();
+
+                showMiddleNotification("Bonus Reward Claimed!", "15 seconds completed! Bonus Alta points added to your account.");
+                isBonusAdRunning = false;
+            }
+        }, 1000);
     }
 
-    function submitWithdrawalRequest() {
+    // Auto Rotating Sponsored Ad Text
+    const rotatingTexts = [
+        "Sponsored: Premium Trading Platform - High Return!",
+        "Hot Deal: E-Commerce 50% Off Voucher Today!",
+        "Invest: Fast Cloud Mining Pool Available!",
+        "Gaming: Play & Earn Daily Crypto Rewards!"
+    ];
+    let currentAdIndex = 0;
+    setInterval(() => {
+        currentAdIndex = (currentAdIndex + 1) % rotatingTexts.length;
+        document.getElementById('rotatingAdText').innerText = rotatingTexts[currentAdIndex];
+    }, 4000);
+
+    // Withdrawal Process Logic
+    function processWithdrawal() {
         const amount = parseFloat(document.getElementById('withdrawAmount').value);
-        if (isNaN(amount) || amount > altaPoints) {
-            showMiddleNotification("Error", "Invalid or insufficient points.", true);
+
+        if (isNaN(amount) || amount <= 0) {
+            showMiddleNotification("Error", "Please enter a valid withdrawal amount.", true);
             return;
         }
-        altaPoints -= amount;
-        withdrawCount++;
+
+        if (withdrawCount === 0) {
+            if (amount < 50) {
+                showMiddleNotification("Error", "First withdrawal requires a minimum of 50 Alta.", true);
+                return;
+            }
+            if (amount > altaPoints) {
+                showMiddleNotification("Error", "Insufficient Alta balance.", true);
+                return;
+            }
+
+            altaPoints -= amount;
+            withdrawCount++;
+            showMiddleNotification("Success!", `First withdrawal of ${amount} Alta completed successfully!`);
+        } else {
+            const availableToWithdraw = altaPoints - 150;
+
+            if (availableToWithdraw < 50) {
+                showMiddleNotification("Error", "You must keep 150 Alta in balance. Available excess must be at least 50 Alta.", true);
+                return;
+            }
+
+            if (amount < 50) {
+                showMiddleNotification("Error", "Minimum withdrawal is 50 Alta.", true);
+                return;
+            }
+
+            if (amount > availableToWithdraw) {
+                showMiddleNotification("Error", `Exceeds max withdrawable limit (${availableToWithdraw.toFixed(2)} Alta).`, true);
+                return;
+            }
+
+            altaPoints -= amount;
+            withdrawCount++;
+            showMiddleNotification("Success!", `Withdrawal of ${amount} Alta completed successfully!`);
+        }
+
+        document.getElementById('withdrawAmount').value = "";
         updateUI();
-        showMiddleNotification("Success", "Request Submitted!");
     }
 </script>
 
