@@ -22,7 +22,6 @@
     <style>
         :root {
             --primary: #4f46e5;
-            --primary-hover: #4338ca;
             --bg: #0f172a;
             --card-bg: #1e293b;
             --text: #f8fafc;
@@ -54,45 +53,43 @@
             gap: 15px;
         }
 
-        /* Middle Toast Notification Style */
-        .toast-container {
+        /* Middle Center Alert Overlay */
+        .middle-overlay {
             position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: none;
+            justify-content: center;
+            align-items: center;
             z-index: 999999;
-            display: flex;
-            flex-direction: column;
-            gap: 10px;
-            pointer-events: none;
-            width: 85%;
-            max-width: 320px;
         }
 
-        .toast {
-            background: #1e293b;
-            color: #fff;
-            padding: 16px 20px;
-            border-radius: 12px;
+        .alert-box {
+            background: var(--card-bg);
             border: 2px solid var(--accent);
-            box-shadow: 0 10px 25px rgba(0,0,0,0.8);
-            font-size: 15px;
-            font-weight: bold;
+            padding: 20px 25px;
+            border-radius: 12px;
             text-align: center;
-            animation: fadeIn 0.3s ease-in-out;
-            pointer-events: auto;
+            box-shadow: 0 0 20px rgba(34, 197, 94, 0.4);
+            max-width: 80%;
         }
 
-        .toast.error {
+        .alert-box.error {
             border-color: var(--warning);
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.9); }
-            to { opacity: 1; transform: scale(1); }
+        .alert-box h4 {
+            font-size: 18px;
+            margin-bottom: 8px;
         }
 
-        /* Banner Box */
+        .alert-box p {
+            font-size: 14px;
+            color: #cbd5e1;
+        }
+
+        /* Ad Banner */
         .ad-banner-box {
             width: 100%;
             background: #000;
@@ -125,73 +122,63 @@
             color: var(--accent);
         }
 
-        /* Action Card */
+        /* Action Buttons Grid */
         .action-card {
             background-color: var(--card-bg);
             border-radius: 12px;
             padding: 15px;
-            text-align: center;
-            border: 1px solid #334155;
             display: flex;
             flex-direction: column;
             gap: 12px;
+            border: 1px solid #334155;
         }
 
         .btn-double-ads {
             background: linear-gradient(135deg, #e11d48, #be123c);
             color: white;
             border: none;
-            padding: 14px 20px;
-            font-size: 16px;
+            padding: 14px;
+            font-size: 15px;
             font-weight: bold;
             border-radius: 8px;
-            width: 100%;
             cursor: pointer;
-            transition: 0.3s;
         }
 
         .btn-auto-ads {
-            background: linear-gradient(135deg, #0284c7, #0369a1);
+            background: linear-gradient(135deg, #6366f1, #4f46e5);
             color: white;
             border: none;
-            padding: 14px 20px;
-            font-size: 16px;
+            padding: 14px;
+            font-size: 15px;
             font-weight: bold;
             border-radius: 8px;
-            width: 100%;
             cursor: pointer;
-            transition: 0.3s;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 10px;
         }
 
-        .btn-double-ads:disabled, .btn-auto-ads:disabled {
+        .btn-auto-ads:disabled, .btn-double-ads:disabled {
             background: #475569;
             cursor: not-allowed;
         }
 
-        .timer-display {
-            font-size: 14px;
-            color: #fbbf24;
-            font-weight: bold;
-        }
-
-        /* Auto Ads Loading Indicator */
-        .loading-spinner {
-            display: inline-block;
-            width: 14px;
-            height: 14px;
-            border: 2px solid rgba(255,255,255,.3);
+        .spinner {
+            width: 18px;
+            height: 18px;
+            border: 3px solid rgba(255,255,255,0.3);
             border-radius: 50%;
             border-top-color: #fff;
             animation: spin 1s ease-in-out infinite;
-            margin-right: 6px;
-            vertical-align: middle;
+            display: none;
         }
 
         @keyframes spin {
             to { transform: rotate(360deg); }
         }
 
-        /* Rotating Ads Section */
+        /* Dynamic Rotating Banner */
         .rotating-ads-box {
             background: #111827;
             border: 1px dashed #6366f1;
@@ -199,14 +186,10 @@
             border-radius: 10px;
             text-align: center;
             font-size: 14px;
-            min-height: 50px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
             cursor: pointer;
         }
 
-        /* Bonus Ads Scroll Section */
+        /* Bonus Ads Section */
         .scroll-ads-container {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -229,45 +212,22 @@
         }
 
         .scroll-ad-item {
-            min-width: 140px;
+            min-width: 130px;
             background: #0f172a;
             border: 1px solid #334155;
-            padding: 10px;
+            padding: 12px;
             border-radius: 8px;
             text-align: center;
             cursor: pointer;
             flex-shrink: 0;
-            transition: transform 0.2s;
         }
 
-        .scroll-ad-item:hover {
-            transform: translateY(-2px);
-            border-color: #6366f1;
-        }
-
-        .scroll-ad-item p {
-            font-size: 12px;
-            color: #94a3b8;
-        }
-
-        .scroll-ad-item .reward {
-            font-size: 12px;
-            color: var(--accent);
-            font-weight: bold;
-            margin-top: 4px;
-        }
-
-        /* Withdrawal Form Card */
+        /* Withdraw Form */
         .withdraw-card {
             background-color: var(--card-bg);
             border-radius: 12px;
             padding: 15px;
             border: 1px solid #334155;
-        }
-
-        .withdraw-card h3 {
-            font-size: 16px;
-            margin-bottom: 12px;
         }
 
         .form-group {
@@ -299,31 +259,29 @@
             width: 100%;
             font-weight: bold;
             cursor: pointer;
-            margin-top: 5px;
-        }
-
-        .rules-text {
-            font-size: 12px;
-            color: #94a3b8;
-            margin-top: 10px;
-            line-height: 1.4;
         }
     </style>
 </head>
 <body>
 
-<div class="toast-container" id="toastContainer"></div>
+<!-- Middle Screen Notification -->
+<div class="middle-overlay" id="middleOverlay">
+    <div class="alert-box" id="alertBox">
+        <h4 id="alertTitle">Notification</h4>
+        <p id="alertMessage">Message goes here...</p>
+    </div>
+</div>
 
 <div class="container">
     <!-- AADS AD UNIT -->
     <div class="ad-banner-box">
-        <div id="frame" style="width: 100%; margin: auto; position: relative; z-index: 99998;">
+        <div id="frame" style="width: 100%; margin: auto;">
             <iframe data-aa='2454836' src='//acceptable.a-ads.com/2454836/?size=Adaptive'
                     style='border:0; padding:0; width:100%; height:auto; overflow:hidden; display: block; margin: auto;'></iframe>
         </div>
     </div>
 
-    <!-- Stats Box -->
+    <!-- Stats -->
     <div class="stats-card">
         <div class="balance-box">
             <h3>Alta Points Balance</h3>
@@ -335,59 +293,43 @@
         </div>
     </div>
 
-    <!-- Action Section (Double Ads & Auto Ads) -->
+    <!-- Action Buttons -->
     <div class="action-card">
-        <!-- 1. Double Ads Button -->
-        <div>
-            <button class="btn-double-ads" id="doubleAdsBtn" onclick="triggerDoubleAds()">Double Ads 15s (+0.5 Alta)</button>
-            <div class="timer-display" id="doubleTimerDisplay" style="display: none; margin-top: 5px;">
-                Ad timer: <span id="doubleSecondsLeft">15</span>s
-            </div>
-        </div>
-
-        <!-- 2. Auto Ads Button -->
-        <div>
-            <button class="btn-auto-ads" id="autoAdsBtn" onclick="startAutoAds()">Auto Ads (0/30 Limit)</button>
-            <div class="timer-display" id="autoTimerDisplay" style="display: none; margin-top: 5px;">
-                <span class="loading-spinner"></span> Auto Running: <span id="autoTimeLeft">04:00:00</span>
-            </div>
-        </div>
+        <button class="btn-double-ads" id="doubleAdsBtn" onclick="triggerDoubleAds()">Double Ads (+0.5 Alta)</button>
+        
+        <button class="btn-auto-ads" id="autoAdsBtn" onclick="startAutoAds()">
+            <div class="spinner" id="autoSpinner"></div>
+            <span id="autoBtnText">Auto Ads (0/30)</span>
+        </button>
     </div>
 
-    <!-- Rotating Banner Text -->
-    <div class="rotating-ads-box" id="rotatingAdText" onclick="triggerDirectAd(0)">
-        Sponsored: Premium Web3 & Crypto Offers
+    <!-- Dynamic Rotating Text -->
+    <div class="rotating-ads-box" id="rotatingAdText" onclick="triggerDirectAd()">
+        Sponsored: High Yield Trading & Crypto Offers
     </div>
 
-    <!-- 3. Bonus Ads Section (4 High Income Items with 15s Countdown) -->
+    <!-- Bonus Ads Section (Points Hidden) -->
     <div class="scroll-ads-container">
-        <div class="scroll-ads-title">🔥 Bonus Ads (15s View to Earn)</div>
+        <div class="scroll-ads-title">🔥 Bonus Ads</div>
         <div class="scroll-ads-list">
-            <div class="scroll-ad-item" onclick="triggerBonusAd(0, 0.5)">
-                <p>High Revenue #1</p>
-                <div class="reward">+0.5 Alta</div>
+            <div class="scroll-ad-item" onclick="triggerBonusAd(0)">
+                <p>Bonus Offer #1</p>
             </div>
-            <div class="scroll-ad-item" onclick="triggerBonusAd(1, 1.0)">
-                <p>High Revenue #2</p>
-                <div class="reward">+1.0 Alta</div>
+            <div class="scroll-ad-item" onclick="triggerBonusAd(1)">
+                <p>Bonus Offer #2</p>
             </div>
-            <div class="scroll-ad-item" onclick="triggerBonusAd(2, 1.5)">
-                <p>High Revenue #3</p>
-                <div class="reward">+1.5 Alta</div>
+            <div class="scroll-ad-item" onclick="triggerBonusAd(2)">
+                <p>Bonus Offer #3</p>
             </div>
-            <div class="scroll-ad-item" onclick="triggerBonusAd(0, 2.5)">
-                <p>High Revenue #4</p>
-                <div class="reward">+2.5 Alta</div>
+            <div class="scroll-ad-item" onclick="triggerBonusAd(3)">
+                <p>Bonus Offer #4</p>
             </div>
-        </div>
-        <div class="timer-display" id="bonusTimerDisplay" style="display: none; text-align: center; margin-top: 8px;">
-            Bonus Ad timer: <span id="bonusSecondsLeft">15</span>s
         </div>
     </div>
 
-    <!-- Withdrawal Request Form -->
+    <!-- Withdrawal Form -->
     <div class="withdraw-card">
-        <h3>Withdrawal Request Form</h3>
+        <h3 style="margin-bottom: 12px;">Withdrawal Request Form</h3>
         <div class="form-group">
             <label>Telegram Username (@Name)</label>
             <input type="text" id="tgName" class="withdraw-input" placeholder="@yourusername">
@@ -401,279 +343,209 @@
             <input type="text" id="tonWallet" class="withdraw-input" placeholder="EQD...">
         </div>
         <button class="btn-withdraw" onclick="submitWithdrawalRequest()">Submit Request to Channel</button>
-        <div class="rules-text">
-            * 1st Withdrawal: Minimum 50 Alta Points.<br>
-            * 2nd Withdrawal onwards: Must maintain 150 Alta balance. Excess above 150 can be withdrawn (Min 50 Alta).
-        </div>
     </div>
 </div>
 
 <script>
-    // System Core State
     let altaPoints = 50.00;
     let withdrawCount = 0;
-    
-    // Ad Processing Locks
     let isDoubleAdRunning = false;
     let isBonusAdRunning = false;
-    let autoAdsLimitCounter = 0; // Tracks 0/30 status
-    let isAutoAdsActive = false;
 
-    // High Revenue Direct Ad Links
+    // Auto Ads States
+    let autoClickCount = 0;
+    let isAutoAdsRunning = false;
+    let autoTimer = null;
+
+    // Direct Links Queue
     const directAdLinks = [
         "https://mammothsubway.com/vqvp77uv?key=e16f5adcebeee070d751d4132045f66e",
         "https://mammothsubway.com/sraj8zz1d?key=80fe52ed90673410b3bd8a6ef1e23f0b",
         "https://alta-rw4e.vercel.app/"
     ];
 
-    // Telegram Bot Setup
+    // Telegram Bot Details
     const TELEGRAM_BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN";
     const TELEGRAM_CHANNEL_ID = "@YOUR_CHANNEL_ID";
 
     function updateUI() {
         document.getElementById('altaBalance').innerText = altaPoints.toFixed(2);
         document.getElementById('withdrawCountText').innerText = withdrawCount + " Times";
-        if (!isAutoAdsActive) {
-            document.getElementById('autoAdsBtn').innerText = `Auto Ads (${autoAdsLimitCounter}/30 Limit)`;
-        }
     }
     updateUI();
 
-    // Central Toast Notification Function
-    function showCenterNotification(message, isError = false) {
-        const container = document.getElementById('toastContainer');
-        const toast = document.createElement('div');
-        toast.className = `toast ${isError ? 'error' : ''}`;
-        toast.innerText = message;
-        container.appendChild(toast);
+    // Middle Screen Notification
+    function showMiddleNotification(title, message, isError = false) {
+        const overlay = document.getElementById('middleOverlay');
+        const box = document.getElementById('alertBox');
+        
+        document.getElementById('alertTitle').innerText = title;
+        document.getElementById('alertMessage').innerText = message;
+        
+        if (isError) box.classList.add('error');
+        else box.classList.remove('error');
+
+        overlay.style.display = "flex";
 
         setTimeout(() => {
-            toast.remove();
+            overlay.style.display = "none";
         }, 3500);
     }
 
-    // Direct Link Launch
-    function triggerDirectAd(index) {
-        const targetUrl = directAdLinks[index % directAdLinks.length];
-        window.open(targetUrl, '_blank');
+    // Direct Link Open Helper
+    function triggerDirectAd() {
+        const url = directAdLinks[Math.floor(Math.random() * directAdLinks.length)];
+        window.open(url, '_blank');
     }
 
-    // 1. Double Ads 15s Timer Logic
+    // 1. Double Ads Logic (Hidden Timer, Verification on Active Focus)
     function triggerDoubleAds() {
         if (isDoubleAdRunning) return;
 
-        triggerDirectAd(Math.floor(Math.random() * directAdLinks.length));
-
         isDoubleAdRunning = true;
-        let timeLeft = 15;
-
         const btn = document.getElementById('doubleAdsBtn');
-        const timerDisplay = document.getElementById('doubleTimerDisplay');
-        const secondsText = document.getElementById('doubleSecondsLeft');
-
         btn.disabled = true;
-        timerDisplay.style.display = "block";
-        secondsText.innerText = timeLeft;
 
-        showCenterNotification("15-Second Ad Started!");
+        triggerDirectAd();
 
-        const timer = setInterval(() => {
-            timeLeft--;
-            secondsText.innerText = timeLeft;
+        let startTime = Date.now();
 
-            if (timeLeft <= 0) {
-                clearInterval(timer);
+        let checkInterval = setInterval(() => {
+            let elapsed = (Date.now() - startTime) / 1000;
+
+            if (elapsed >= 15) {
+                clearInterval(checkInterval);
                 altaPoints += 0.50;
                 updateUI();
-
-                showCenterNotification("15s Completed! +0.5 Alta Added.");
-
+                showMiddleNotification("Success!", "15 seconds completed! +0.5 Alta added.");
                 btn.disabled = false;
-                timerDisplay.style.display = "none";
                 isDoubleAdRunning = false;
             }
         }, 1000);
     }
 
-    // 2. Auto Ads Logic (Limit 30 trigger -> 4 Hours Duration -> +20 Alta Reward)
+    // 2. Auto Ads Logic (0/30 trigger -> 4 Hours Loading -> +20 Alta)
     function startAutoAds() {
-        if (isAutoAdsActive) return;
+        if (isAutoAdsRunning) return;
 
-        // Open ad tab on user action
-        triggerDirectAd(0);
+        // Count clicks up to 30
+        autoClickCount++;
+        triggerDirectAd();
 
-        autoAdsLimitCounter++;
-        
-        if (autoAdsLimitCounter < 30) {
-            updateUI();
-            showCenterNotification(`Auto Ads Limit (${autoAdsLimitCounter}/30) Updated!`);
-            return;
-        }
-
-        // Triggered 30/30 limit reached -> Run 4-Hour Background Task
-        isAutoAdsActive = true;
-        autoAdsLimitCounter = 30;
-        updateUI();
-
+        const btnText = document.getElementById('autoBtnText');
+        const spinner = document.getElementById('autoSpinner');
         const btn = document.getElementById('autoAdsBtn');
-        const timerDisplay = document.getElementById('autoTimerDisplay');
-        const timeText = document.getElementById('autoTimeLeft');
 
-        btn.disabled = true;
-        btn.innerText = "Auto Ads Running...";
-        timerDisplay.style.display = "block";
+        if (autoClickCount < 30) {
+            btnText.innerText = `Auto Ads (${autoClickCount}/30)`;
+            showMiddleNotification("Auto Ads Progress", `Click registered (${autoClickCount}/30). Complete 30 clicks to start Auto Mode.`);
+        } else {
+            // Reached 30 clicks -> Start 4 Hour Automation
+            isAutoAdsRunning = true;
+            btn.disabled = true;
+            spinner.style.display = "block";
+            btnText.innerText = "Auto Ads Running (4:00:00)...";
 
-        showCenterNotification("Auto Ads Started! Runs for 4 Hours.");
+            showMiddleNotification("Auto Ads Started", "Auto Ads is now active for 4 hours. Loading in background...");
 
-        let remainingSeconds = 4 * 60 * 60; // 4 Hours
+            let totalSeconds = 4 * 3600; // 4 Hours
 
-        const autoInterval = setInterval(() => {
-            remainingSeconds--;
-
-            const hours = String(Math.floor(remainingSeconds / 3600)).padStart(2, '0');
-            const minutes = String(Math.floor((remainingSeconds % 3600) / 60)).padStart(2, '0');
-            const seconds = String(remainingSeconds % 60).padStart(2, '0');
-            timeText.innerText = `${hours}:${minutes}:${seconds}`;
-
-            if (remainingSeconds <= 0) {
-                clearInterval(autoInterval);
-                altaPoints += 20.00;
+            autoTimer = setInterval(() => {
+                totalSeconds--;
                 
-                // Reset State
-                autoAdsLimitCounter = 0;
-                isAutoAdsActive = false;
-                updateUI();
+                let hours = Math.floor(totalSeconds / 3600);
+                let minutes = Math.floor((totalSeconds % 3600) / 60);
+                let seconds = totalSeconds % 60;
 
-                showCenterNotification("4 Hours Auto Ads Completed! +20 Alta Added.");
+                btnText.innerText = `Running (${hours}:${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds})`;
 
-                btn.disabled = false;
-                timerDisplay.style.display = "none";
-            }
-        }, 1000);
+                if (totalSeconds <= 0) {
+                    clearInterval(autoTimer);
+                    altaPoints += 20.0;
+                    updateUI();
+                    
+                    showMiddleNotification("Auto Ads Complete", "4 Hours Completed! +20 Alta automatically added.");
+                    
+                    // Reset State
+                    autoClickCount = 0;
+                    isAutoAdsRunning = false;
+                    btn.disabled = false;
+                    spinner.style.display = "none";
+                    btnText.innerText = "Auto Ads (0/30)";
+                }
+            }, 1000);
+        }
     }
 
-    // 3. Bonus Ads (4 items with 15s timer & specific rewards: 0.5, 1.0, 1.5, 2.5)
-    function triggerBonusAd(linkIndex, rewardAmount) {
-        if (isBonusAdRunning) {
-            showCenterNotification("An ad timer is already active!", true);
-            return;
-        }
-
-        triggerDirectAd(linkIndex);
+    // 3. Bonus Ads Logic (Hidden Timer, Hidden Points Rewards)
+    function triggerBonusAd(index) {
+        if (isBonusAdRunning) return;
 
         isBonusAdRunning = true;
-        let timeLeft = 15;
+        const rewards = [0.5, 1.0, 1.5, 2.0, 2.5];
+        const selectedReward = rewards[Math.floor(Math.random() * rewards.length)];
 
-        const timerDisplay = document.getElementById('bonusTimerDisplay');
-        const secondsText = document.getElementById('bonusSecondsLeft');
+        triggerDirectAd();
 
-        timerDisplay.style.display = "block";
-        secondsText.innerText = timeLeft;
+        let startTime = Date.now();
 
-        showCenterNotification(`Bonus Ad Started! Wait 15s for +${rewardAmount} Alta`);
+        let checkBonus = setInterval(() => {
+            let elapsed = (Date.now() - startTime) / 1000;
 
-        const bonusInterval = setInterval(() => {
-            timeLeft--;
-            secondsText.innerText = timeLeft;
-
-            if (timeLeft <= 0) {
-                clearInterval(bonusInterval);
-                altaPoints += rewardAmount;
+            if (elapsed >= 15) {
+                clearInterval(checkBonus);
+                altaPoints += selectedReward;
                 updateUI();
-
-                showCenterNotification(`15s Completed! +${rewardAmount} Alta Added.`);
-
-                timerDisplay.style.display = "none";
+                
+                showMiddleNotification("Bonus Claimed!", "15 seconds completed! Bonus Alta points added to balance.");
                 isBonusAdRunning = false;
             }
         }, 1000);
     }
 
-    // Rotating Banner text interval
+    // Dynamic Rotating Text
     const rotatingTexts = [
         "Sponsored: High Income Offers Available!",
-        "Hot Deal: Complete Bonus Ads to Claim Alta Points!",
-        "RichPartners Ad Network: High eCPM Direct Links!",
-        "TON Ecosystem: Fast Withdrawals Enabled!"
+        "Hot Deal: Instant Payouts via TON Network!",
+        "RichPartners: Highest Monetization Yields!"
     ];
-    let bannerIdx = 0;
+    let rIndex = 0;
     setInterval(() => {
-        bannerIdx = (bannerIdx + 1) % rotatingTexts.length;
-        document.getElementById('rotatingAdText').innerText = rotatingTexts[bannerIdx];
+        rIndex = (rIndex + 1) % rotatingTexts.length;
+        document.getElementById('rotatingAdText').innerText = rotatingTexts[rIndex];
     }, 4000);
 
-    // Telegram Channel Dispatcher
-    function sendTelegramRequest(tgName, amount, tonWallet) {
-        const payload = `🚨 *NEW WITHDRAWAL REQUEST* 🚨\n\n` +
-                        `👤 *User:* ${tgName}\n` +
-                        `💰 *Amount:* ${amount} Alta Points\n` +
-                        `💎 *TON Wallet:* \`${tonWallet}\`\n` +
-                        `🔢 *Withdrawal Count:* ${withdrawCount + 1}\n` +
-                        `📅 *Status:* Pending Review`;
-
-        if (TELEGRAM_BOT_TOKEN !== "YOUR_TELEGRAM_BOT_TOKEN") {
-            fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    chat_id: TELEGRAM_CHANNEL_ID,
-                    text: payload,
-                    parse_mode: 'Markdown'
-                })
-            }).catch(e => console.error(e));
-        }
-    }
-
-    // Form Processing
+    // Telegram Withdrawal Submit
     function submitWithdrawalRequest() {
         const tgName = document.getElementById('tgName').value.trim();
         const amount = parseFloat(document.getElementById('withdrawAmount').value);
         const tonWallet = document.getElementById('tonWallet').value.trim();
 
-        if (!tgName.startsWith('@') || tgName.length < 2) {
-            showCenterNotification("Enter valid Telegram username (@Name)", true);
+        if (!tgName.startsWith('@')) {
+            showMiddleNotification("Error", "Telegram username must start with @", true);
             return;
         }
 
         if (isNaN(amount) || amount <= 0) {
-            showCenterNotification("Enter a valid withdrawal amount", true);
+            showMiddleNotification("Error", "Please enter a valid amount.", true);
             return;
         }
 
         if (tonWallet.length < 10) {
-            showCenterNotification("Enter a valid TON Wallet address", true);
+            showMiddleNotification("Error", "Enter a valid TON Wallet address.", true);
             return;
         }
 
-        // Rules Check
-        if (withdrawCount === 0) {
-            if (amount < 50) {
-                showCenterNotification("1st withdrawal requires min 50 Alta", true);
-                return;
-            }
-            if (amount > altaPoints) {
-                showCenterNotification("Insufficient Alta balance", true);
-                return;
-            }
-        } else {
-            const available = altaPoints - 150;
-            if (available < 50) {
-                showCenterNotification("150 Alta reserve required. Excess must be min 50", true);
-                return;
-            }
-            if (amount < 50 || amount > available) {
-                showCenterNotification(`Invalid amount. Max withdrawable: ${available.toFixed(2)} Alta`, true);
-                return;
-            }
+        if (amount > altaPoints) {
+            showMiddleNotification("Error", "Insufficient Alta Balance.", true);
+            return;
         }
 
         altaPoints -= amount;
-        sendTelegramRequest(tgName, amount, tonWallet);
         withdrawCount++;
         updateUI();
 
-        showCenterNotification("Withdrawal Request Posted to Channel!");
-
+        showMiddleNotification("Success", "Withdrawal Request Sent to Telegram Channel!");
         document.getElementById('withdrawAmount').value = "";
         document.getElementById('tonWallet').value = "";
     }
