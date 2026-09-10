@@ -1,10 +1,24 @@
-
 <!DOCTYPE html>
-<html lang="my">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alta Rewards & Ads Platform</title>
+    <!-- Ad Verification Meta -->
+    <meta name="clckd" content="c2e1a1d976a2b7776dc7b7b19d147dc5" />
+
+    <!-- External Ad Network Scripts -->
+    <script src="https://mammothsubway.com/c6/6a/68/c66a68f1e4f955460119550f4b16cdeb.js"></script>
+    <script type="module" src="https://richinfo.co/richpartners/push/js/rp-cl-ob.js?pubid=1021768&siteid=406964&niche=33" async data-cfasync="false"></script>
+    <script src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js" data-pubid="1021768" data-siteid="406965" async data-cfasync="false"></script>
+    <script src="https://richinfo.co/richpartners/in-page/js/richads-ob.js?pubid=1021768&siteid=406966" async></script>
+    <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
+    <script type="text/javascript">
+        if (typeof aclib !== 'undefined') {
+            aclib.runAutoTag({ zoneId: 'cfbaw9n4yb' });
+        }
+    </script>
+
     <style>
         :root {
             --primary: #4f46e5;
@@ -40,21 +54,46 @@
             gap: 15px;
         }
 
-        /* Top Video Banner */
-        .top-video-banner {
-            width: 100%;
-            height: 180px;
-            border-radius: 12px;
-            overflow: hidden;
-            background: #000;
-            position: relative;
-            border: 1px solid #334155;
+        /* Toast Notification Styles */
+        .toast-container {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            z-index: 999999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
         }
 
-        .top-video-banner video {
+        .toast {
+            background: #1e293b;
+            color: #fff;
+            padding: 12px 20px;
+            border-radius: 8px;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 4px 12px rgba(0,0,0,0.5);
+            font-size: 14px;
+            animation: slideIn 0.3s ease;
+        }
+
+        .toast.error {
+            border-left-color: var(--warning);
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100%); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+
+        /* Banner Box */
+        .ad-banner-box {
             width: 100%;
-            height: 100%;
-            object-fit: cover;
+            background: #000;
+            border-radius: 12px;
+            overflow: hidden;
+            border: 1px solid #334155;
+            text-align: center;
+            padding: 5px;
         }
 
         /* Balance & Stats Card */
@@ -79,7 +118,7 @@
             color: var(--accent);
         }
 
-        /* Double Ads 15s Button */
+        /* Action Card */
         .action-card {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -101,10 +140,6 @@
             transition: 0.3s;
         }
 
-        .btn-double-ads:hover {
-            opacity: 0.9;
-        }
-
         .btn-double-ads:disabled {
             background: #475569;
             cursor: not-allowed;
@@ -117,7 +152,7 @@
             font-weight: bold;
         }
 
-        /* Auto Rotating Ads Section */
+        /* Rotating Ads Section */
         .rotating-ads-box {
             background: #111827;
             border: 1px dashed #6366f1;
@@ -129,6 +164,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            cursor: pointer;
         }
 
         /* High-Income Ads Scroll Section */
@@ -162,6 +198,12 @@
             text-align: center;
             cursor: pointer;
             flex-shrink: 0;
+            transition: transform 0.2s;
+        }
+
+        .scroll-ad-item:hover {
+            transform: translateY(-2px);
+            border-color: #6366f1;
         }
 
         .scroll-ad-item p {
@@ -176,7 +218,7 @@
             margin-top: 4px;
         }
 
-        /* Withdrawal Section */
+        /* Withdrawal Form Card */
         .withdraw-card {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -186,7 +228,18 @@
 
         .withdraw-card h3 {
             font-size: 16px;
+            margin-bottom: 12px;
+        }
+
+        .form-group {
             margin-bottom: 10px;
+        }
+
+        .form-group label {
+            display: block;
+            font-size: 12px;
+            color: #94a3b8;
+            margin-bottom: 4px;
         }
 
         .withdraw-input {
@@ -196,120 +249,165 @@
             border: 1px solid #475569;
             background: #0f172a;
             color: #fff;
-            margin-bottom: 10px;
         }
 
         .btn-withdraw {
             background-color: var(--primary);
             color: white;
             border: none;
-            padding: 10px;
+            padding: 12px;
             border-radius: 6px;
             width: 100%;
             font-weight: bold;
             cursor: pointer;
+            margin-top: 5px;
         }
 
         .rules-text {
             font-size: 12px;
             color: #94a3b8;
-            margin-top: 8px;
+            margin-top: 10px;
             line-height: 1.4;
         }
     </style>
 </head>
 <body>
 
+<div class="toast-container" id="toastContainer"></div>
+
 <div class="container">
-    <div class="top-video-banner">
-        <video autoplay muted loop playsinline>
-            <source src="https://www.w3schools.com/html/mov_bbb.mp4" type="video/mp4">
-            Video tag not supported.
-        </video>
+    <!-- AADS AD UNIT -->
+    <div class="ad-banner-box">
+        <div id="frame" style="width: 100%; margin: auto; position: relative; z-index: 99998;">
+            <iframe data-aa='2454836' src='//acceptable.a-ads.com/2454836/?size=Adaptive'
+                    style='border:0; padding:0; width:100%; height:auto; overflow:hidden; display: block; margin: auto;'></iframe>
+        </div>
     </div>
 
+    <!-- Stats Box -->
     <div class="stats-card">
         <div class="balance-box">
-            <h3>လက်ကျန် Alta Point</h3>
-            <div class="points" id="altaBalance">0.00</div>
+            <h3>Alta Points Balance</h3>
+            <div class="points" id="altaBalance">50.00</div>
         </div>
         <div style="text-align: right;">
-            <p style="font-size: 12px; color: #94a3b8;">ထုတ်ယူမှုအကြိမ်</p>
-            <p style="font-size: 16px; font-weight: bold;" id="withdrawCountText">0 ကြိမ်</p>
+            <p style="font-size: 12px; color: #94a3b8;">Withdrawals</p>
+            <p style="font-size: 16px; font-weight: bold;" id="withdrawCountText">0 Times</p>
         </div>
     </div>
 
+    <!-- Double Ads 15s Action -->
     <div class="action-card">
-        <button class="btn-double-ads" id="doubleAdsBtn" onclick="startDoubleAds()">Double Ads 15s (+0.5 Alta)</button>
-        <div class="timer-display" id="timerDisplay" style="display: none;">ကြော်ငြာပြီးဆုံးရန်: <span id="secondsLeft">15</span>s</div>
+        <button class="btn-double-ads" id="doubleAdsBtn" onclick="triggerDoubleAds()">Double Ads 15s (+0.5 Alta)</button>
+        <div class="timer-display" id="timerDisplay" style="display: none;">Ad completion timer: <span id="secondsLeft">15</span>s</div>
     </div>
 
-    <div class="rotating-ads-box" id="rotatingAdText">
-        Sponsored: Premium Trading Platform - High Return!
+    <!-- Auto Rotating Ads -->
+    <div class="rotating-ads-box" id="rotatingAdText" onclick="triggerDirectAd(0)">
+        Sponsored: Premium Web3 & Crypto Offers
     </div>
 
+    <!-- High-Income Ads (Horizontal Scroll) -->
     <div class="scroll-ads-container">
-        <div class="scroll-ads-title">🔥 High Income Ads (Scroll to view)</div>
+        <div class="scroll-ads-title">🔥 High Income Ads (Click to View & Earn)</div>
         <div class="scroll-ads-list">
-            <div class="scroll-ad-item" onclick="openHighIncomeAd('https://example.com/ad1')">
+            <div class="scroll-ad-item" onclick="triggerDirectAd(0)">
+                <p>Mammoth High Yield</p>
+                <div class="reward">+1.0 Alta</div>
+            </div>
+            <div class="scroll-ad-item" onclick="triggerDirectAd(1)">
+                <p>Mammoth Smart Link</p>
+                <div class="reward">+1.0 Alta</div>
+            </div>
+            <div class="scroll-ad-item" onclick="triggerDirectAd(2)">
+                <p>Alta Vercel Platform</p>
+                <div class="reward">+1.5 Alta</div>
+            </div>
+            <div class="scroll-ad-item" onclick="triggerDirectAd(0)">
                 <p>Crypto Staking</p>
-                <div class="reward">High Income</div>
-            </div>
-            <div class="scroll-ad-item" onclick="openHighIncomeAd('https://example.com/ad2')">
-                <p>Forex Trading</p>
-                <div class="reward">High Yield</div>
-            </div>
-            <div class="scroll-ad-item" onclick="openHighIncomeAd('https://example.com/ad3')">
-                <p>Gaming Token</p>
-                <div class="reward">Bonus +20%</div>
-            </div>
-            <div class="scroll-ad-item" onclick="openHighIncomeAd('https://example.com/ad4')">
-                <p>Cloud Mining</p>
-                <div class="reward">Daily Payout</div>
+                <div class="reward">+0.8 Alta</div>
             </div>
         </div>
     </div>
 
+    <!-- Withdrawal Request Form -->
     <div class="withdraw-card">
-        <h3>Alta Point ထုတ်ယူရန်</h3>
-        <input type="number" id="withdrawAmount" class="withdraw-input" placeholder="ထုတ်ယူမည့် ပမာဏ ရိုက်ထည့်ပါ">
-        <button class="btn-withdraw" onclick="processWithdrawal()">ငွေထုတ်ယူမည်</button>
+        <h3>Withdrawal Request Form</h3>
+        <div class="form-group">
+            <label>Telegram Username (@Name)</label>
+            <input type="text" id="tgName" class="withdraw-input" placeholder="@yourusername">
+        </div>
+        <div class="form-group">
+            <label>Withdrawal Point Amount</label>
+            <input type="number" id="withdrawAmount" class="withdraw-input" placeholder="Enter amount">
+        </div>
+        <div class="form-group">
+            <label>TON Wallet Address</label>
+            <input type="text" id="tonWallet" class="withdraw-input" placeholder="EQD...">
+        </div>
+        <button class="btn-withdraw" onclick="submitWithdrawalRequest()">Submit Request to Channel</button>
         <div class="rules-text">
-            * ပထမအကြိမ်: အနည်းဆုံး Min 50 Alta ဖြင့် စတင်ထုတ်ယူနိုင်သည်။<br>
-            * ဒုတိယအကြိမ်မှစ၍: အကောင့်ထဲတွင် Alta 150 Balance အဖြစ် ချန်ထားရမည်ဖြစ်ပြီး ပိုလျှံငွေထဲမှ Min 50 စတင်ထုတ်ယူနိုင်သည်။
+            * 1st Withdrawal: Minimum 50 Alta Points.<br>
+            * 2nd Withdrawal onwards: Must maintain 150 Alta balance. Excess above 150 can be withdrawn (Min 50 Alta).
         </div>
     </div>
 </div>
 
 <script>
-    let altaPoints = 50.0; // စမ်းသပ်ရန် Balance အစပြုတန်ဖိုး
+    // Configuration & State
+    let altaPoints = 50.00;
     let withdrawCount = 0;
     let isAdRunning = false;
     let timerInterval = null;
 
-    // Load Local Storage (Optional UI State)
+    // Provided Ad Links Queue
+    const directAdLinks = [
+        "https://mammothsubway.com/vqvp77uv?key=e16f5adcebeee070d751d4132045f66e",
+        "https://mammothsubway.com/sraj8zz1d?key=80fe52ed90673410b3bd8a6ef1e23f0b",
+        "https://alta-rw4e.vercel.app/"
+    ];
+
+    // Telegram Bot Details (Replace with your actual Bot Token and Channel Chat ID)
+    const TELEGRAM_BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN";
+    const TELEGRAM_CHANNEL_ID = "@YOUR_CHANNEL_ID";
+
     function updateUI() {
         document.getElementById('altaBalance').innerText = altaPoints.toFixed(2);
-        document.getElementById('withdrawCountText').innerText = withdrawCount + " ကြိမ်";
+        document.getElementById('withdrawCountText').innerText = withdrawCount + " Times";
     }
     updateUI();
 
-    // Double Ads 15s Logic
-    function startDoubleAds() {
+    // Custom Toast Notification System
+    function showNotification(message, isError = false) {
+        const container = document.getElementById('toastContainer');
+        const toast = document.createElement('div');
+        toast.className = `toast ${isError ? 'error' : ''}`;
+        toast.innerText = message;
+        container.appendChild(toast);
+
+        setTimeout(() => {
+            toast.remove();
+        }, 4000);
+    }
+
+    // Direct Ad Click Handler
+    function triggerDirectAd(index) {
+        const targetUrl = directAdLinks[index % directAdLinks.length];
+        window.open(targetUrl, '_blank');
+        showNotification("Ad opened in a new tab. Complete the offer to support!");
+    }
+
+    // Double Ads 15-Second Timer Functionality
+    function triggerDoubleAds() {
         if (isAdRunning) return;
 
-        // Ads link ဖွင့်ပေးခြင်း
-        const adUrls = [
-            "https://www.google.com",
-            "https://www.bing.com",
-            "https://www.wikipedia.org"
-        ];
-        const randomAd = adUrls[Math.floor(Math.random() * adUrls.length)];
-        window.open(randomAd, '_blank');
+        // Open ad in a new tab
+        const selectedAd = directAdLinks[Math.floor(Math.random() * directAdLinks.length)];
+        window.open(selectedAd, '_blank');
 
-        // Timer စတင်ခြင်း
         isAdRunning = true;
         let timeLeft = 15;
+
         const btn = document.getElementById('doubleAdsBtn');
         const timerDisplay = document.getElementById('timerDisplay');
         const secondsText = document.getElementById('secondsLeft');
@@ -318,15 +416,21 @@
         timerDisplay.style.display = "block";
         secondsText.innerText = timeLeft;
 
+        showNotification("15-second ad timer started! Keep the tab open.");
+
         timerInterval = setInterval(() => {
             timeLeft--;
             secondsText.innerText = timeLeft;
 
             if (timeLeft <= 0) {
                 clearInterval(timerInterval);
-                altaPoints += 0.5;
+                altaPoints += 0.50;
                 updateUI();
-                alert("ဂုဏ်ယူပါတယ်! Alta +0.5 ရရှိပါပြီ။");
+
+                // mandatory notification alert
+                showNotification("Success! 15 seconds completed. +0.5 Alta Points added.");
+                alert("Notification: 15 Seconds Completed! +0.5 Alta Points have been added to your balance.");
+
                 btn.disabled = false;
                 timerDisplay.style.display = "none";
                 isAdRunning = false;
@@ -334,74 +438,102 @@
         }, 1000);
     }
 
-    // Auto-Rotating Ads Logic
-    const rotatingAdsList = [
-        "Sponsored: Premium Trading Platform - High Return!",
-        "Hot Deal: E-Commerce 50% Off Voucher Today!",
-        "Invest: Fast Cloud Mining Pool Available!",
-        "Gaming: Play & Earn Daily Crypto Rewards!"
+    // Dynamic Ad Rotation Text
+    const rotatingAdTexts = [
+        "Sponsored: High Income Mammoth Offer - Click to Earn!",
+        "Hot Deal: Visit Alta Platform for Bonus Points!",
+        "RichPartners Ad Network: Top CPM Rates Available!",
+        "TON Ecosystem: Connect Wallet & Earn Daily Rewards!"
     ];
     let currentAdIndex = 0;
     setInterval(() => {
-        currentAdIndex = (currentAdIndex + 1) % rotatingAdsList.length;
-        document.getElementById('rotatingAdText').innerText = rotatingAdsList[currentAdIndex];
+        currentAdIndex = (currentAdIndex + 1) % rotatingAdTexts.length;
+        document.getElementById('rotatingAdText').innerText = rotatingAdTexts[currentAdIndex];
     }, 4000);
 
-    // High Income Ads Click
-    function openHighIncomeAd(url) {
-        window.open(url, '_blank');
+    // Telegram Channel Request Integration
+    function sendTelegramRequest(tgName, amount, tonWallet) {
+        const messageText = `🚨 *NEW WITHDRAWAL REQUEST* 🚨\n\n` +
+                            `👤 *User:* ${tgName}\n` +
+                            `💰 *Amount:* ${amount} Alta Points\n` +
+                            `💎 *TON Wallet:* \`${tonWallet}\`\n` +
+                            `🔢 *Withdrawal Count:* ${withdrawCount + 1}\n` +
+                            `📅 *Status:* Pending Review`;
+
+        if (TELEGRAM_BOT_TOKEN !== "YOUR_TELEGRAM_BOT_TOKEN") {
+            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
+            fetch(url, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: TELEGRAM_CHANNEL_ID,
+                    text: messageText,
+                    parse_mode: 'Markdown'
+                })
+            }).catch(err => console.error("Telegram API Error:", err));
+        } else {
+            console.log("Simulated Telegram Broadcast:\n" + messageText);
+        }
     }
 
-    // Withdraw Validation Logic
-    function processWithdrawal() {
+    // Withdrawal Processing & Form Validation
+    function submitWithdrawalRequest() {
+        const tgName = document.getElementById('tgName').value.trim();
         const amount = parseFloat(document.getElementById('withdrawAmount').value);
+        const tonWallet = document.getElementById('tonWallet').value.trim();
 
-        if (isNaN(amount) || amount <= 0) {
-            alert("ထုတ်ယူမည့် ပမာဏကို မှန်ကန်စွာ ဖြည့်သွင်းပါ။");
+        if (!tgName.startsWith('@') || tgName.length < 2) {
+            showNotification("Please enter a valid Telegram handle starting with @", true);
             return;
         }
 
-        // စည်းကမ်းသတ်မှတ်ချက်များ
+        if (isNaN(amount) || amount <= 0) {
+            showNotification("Please enter a valid point amount.", true);
+            return;
+        }
+
+        if (tonWallet.length < 10) {
+            showNotification("Please enter a valid TON wallet address.", true);
+            return;
+        }
+
+        // Rules Validation
         if (withdrawCount === 0) {
-            // ပထမအကြိမ်ထုတ်ယူခြင်း
             if (amount < 50) {
-                alert("ပထမအကြိမ်အတွက် အနည်းဆုံး 50 Alta ထုတ်ယူရပါမည်။");
+                showNotification("1st withdrawal requires a minimum of 50 Alta Points.", true);
                 return;
             }
             if (amount > altaPoints) {
-                alert("လက်ကျန် Alta Point မလုံလောက်ပါ။");
+                showNotification("Insufficient Alta Points balance.", true);
                 return;
             }
-
-            altaPoints -= amount;
-            withdrawCount++;
-            alert("ပထမအကြိမ် ငွေထုတ်ယူမှု အောင်မြင်ပါသည်။ ပမာဏ: " + amount + " Alta");
         } else {
-            // ဒုတိယအကြိမ်နှင့် နောက်ပိုင်းထုတ်ယူခြင်း
-            const availableToWithdraw = altaPoints - 150;
-
-            if (availableToWithdraw < 50) {
-                alert("ဒုတိယအကြိမ်မှစ၍ Alta 150 ချန်ထားရမည်ဖြစ်ပြီး ပိုလျှံငွေ အနည်းဆုံး 50 Alta ရှိမှသာ ထုတ်ယူနိုင်ပါမည်။");
+            const availableBalance = altaPoints - 150;
+            if (availableBalance < 50) {
+                showNotification("You must maintain 150 Alta balance. Min withdrawal is 50 above reserve.", true);
                 return;
             }
-
             if (amount < 50) {
-                alert("အနည်းဆုံး 50 Alta စတင်ထုတ်ယူရပါမည်။");
+                showNotification("Minimum withdrawal amount is 50 Alta Points.", true);
                 return;
             }
-
-            if (amount > availableToWithdraw) {
-                alert("ထုတ်ယူနိုင်သော ပမာဏထက် ကျော်လွန်နေပါသည်။ (150 Alta ချန်ထားရမည်ဖြစ်သဖြင့် အများဆုံးထုတ်နိုင်သောပမာဏ: " + availableToWithdraw.toFixed(2) + " Alta)");
+            if (amount > availableBalance) {
+                showNotification(`Max withdrawable amount with 150 reserve is ${availableBalance.toFixed(2)} Alta.`, true);
                 return;
             }
-
-            altaPoints -= amount;
-            withdrawCount++;
-            alert("ငွေထုတ်ယူမှု အောင်မြင်ပါသည်။ ပမာဏ: " + amount + " Alta");
         }
 
-        document.getElementById('withdrawAmount').value = "";
+        // Deduct points & post to channel
+        altaPoints -= amount;
+        sendTelegramRequest(tgName, amount, tonWallet);
+        withdrawCount++;
         updateUI();
+
+        showNotification("Withdrawal Request Submitted Successfully!");
+        alert(`Withdrawal Request Sent!\n\nUser: ${tgName}\nAmount: ${amount} Alta\nWallet: ${tonWallet}\n\nA request alert has been posted to the channel.`);
+
+        document.getElementById('withdrawAmount').value = "";
+        document.getElementById('tonWallet').value = "";
     }
 </script>
 
