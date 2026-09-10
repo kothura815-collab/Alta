@@ -28,7 +28,6 @@
             --text: #f8fafc;
             --accent: #22c55e;
             --warning: #ef4444;
-            --gold: #fbbf24;
         }
 
         * {
@@ -53,6 +52,44 @@
             display: flex;
             flex-direction: column;
             gap: 15px;
+        }
+
+        /* Middle Toast Notification Style */
+        .toast-container {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            z-index: 999999;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            pointer-events: none;
+            width: 85%;
+            max-width: 320px;
+        }
+
+        .toast {
+            background: #1e293b;
+            color: #fff;
+            padding: 16px 20px;
+            border-radius: 12px;
+            border: 2px solid var(--accent);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.8);
+            font-size: 15px;
+            font-weight: bold;
+            text-align: center;
+            animation: fadeIn 0.3s ease-in-out;
+            pointer-events: auto;
+        }
+
+        .toast.error {
+            border-color: var(--warning);
+        }
+
+        @keyframes fadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
         }
 
         /* Banner Box */
@@ -88,13 +125,16 @@
             color: var(--accent);
         }
 
-        /* Double Ads & Auto Ads Action Cards */
+        /* Action Card */
         .action-card {
             background-color: var(--card-bg);
             border-radius: 12px;
             padding: 15px;
             text-align: center;
             border: 1px solid #334155;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
         }
 
         .btn-double-ads {
@@ -111,7 +151,7 @@
         }
 
         .btn-auto-ads {
-            background: linear-gradient(135deg, #059669, #10b981);
+            background: linear-gradient(135deg, #0284c7, #0369a1);
             color: white;
             border: none;
             padding: 14px 20px;
@@ -126,27 +166,25 @@
         .btn-double-ads:disabled, .btn-auto-ads:disabled {
             background: #475569;
             cursor: not-allowed;
-            opacity: 0.6;
         }
 
         .timer-display {
-            margin-top: 10px;
             font-size: 14px;
-            color: var(--gold);
+            color: #fbbf24;
             font-weight: bold;
         }
 
-        /* Spinner / Loading Animation */
-        .spinner {
+        /* Auto Ads Loading Indicator */
+        .loading-spinner {
             display: inline-block;
-            width: 18px;
-            height: 18px;
-            border: 3px solid rgba(255,255,255,0.3);
+            width: 14px;
+            height: 14px;
+            border: 2px solid rgba(255,255,255,.3);
             border-radius: 50%;
             border-top-color: #fff;
             animation: spin 1s ease-in-out infinite;
+            margin-right: 6px;
             vertical-align: middle;
-            margin-right: 8px;
         }
 
         @keyframes spin {
@@ -168,7 +206,7 @@
             cursor: pointer;
         }
 
-        /* Bonus Ads (Scroll Section) */
+        /* Bonus Ads Scroll Section */
         .scroll-ads-container {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -191,10 +229,10 @@
         }
 
         .scroll-ad-item {
-            min-width: 130px;
+            min-width: 140px;
             background: #0f172a;
             border: 1px solid #334155;
-            padding: 12px 10px;
+            padding: 10px;
             border-radius: 8px;
             text-align: center;
             cursor: pointer;
@@ -213,7 +251,7 @@
         }
 
         .scroll-ad-item .reward {
-            font-size: 13px;
+            font-size: 12px;
             color: var(--accent);
             font-weight: bold;
             margin-top: 4px;
@@ -270,81 +308,11 @@
             margin-top: 10px;
             line-height: 1.4;
         }
-
-        /* Middle Notification Modal Style */
-        .modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.75);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 999999;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
-        }
-
-        .modal-overlay.active {
-            opacity: 1;
-            pointer-events: auto;
-        }
-
-        .modal-box {
-            background: #1e293b;
-            border: 2px solid #38bdf8;
-            padding: 20px;
-            border-radius: 12px;
-            width: 90%;
-            max-width: 380px;
-            text-align: center;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.8);
-            transform: scale(0.8);
-            transition: transform 0.3s ease;
-        }
-
-        .modal-overlay.active .modal-box {
-            transform: scale(1);
-        }
-
-        .modal-title {
-            font-size: 18px;
-            font-weight: bold;
-            color: var(--gold);
-            margin-bottom: 10px;
-        }
-
-        .modal-body {
-            font-size: 14px;
-            color: #f8fafc;
-            margin-bottom: 15px;
-            line-height: 1.5;
-        }
-
-        .modal-btn {
-            background: var(--primary);
-            color: #fff;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 6px;
-            font-weight: bold;
-            cursor: pointer;
-        }
     </style>
 </head>
 <body>
 
-<!-- Middle Notification Modal -->
-<div class="modal-overlay" id="middleModal">
-    <div class="modal-box">
-        <div class="modal-title" id="modalTitle">Notification</div>
-        <div class="modal-body" id="modalMessage">Message content goes here...</div>
-        <button class="modal-btn" onclick="closeModal()">OK</button>
-    </div>
-</div>
+<div class="toast-container" id="toastContainer"></div>
 
 <div class="container">
     <!-- AADS AD UNIT -->
@@ -367,52 +335,53 @@
         </div>
     </div>
 
-    <!-- Double Ads 15s Action -->
+    <!-- Action Section (Double Ads & Auto Ads) -->
     <div class="action-card">
-        <button class="btn-double-ads" id="doubleAdsBtn" onclick="triggerDoubleAds()">Double Ads 15s (+0.5 Alta)</button>
-        <div class="timer-display" id="doubleTimerDisplay" style="display: none;">Ad timer running: <span id="doubleSecondsLeft">15</span>s</div>
-    </div>
-
-    <!-- Auto Ads Section (4 Hours Mining) -->
-    <div class="action-card">
-        <button class="btn-auto-ads" id="autoAdsBtn" onclick="startAutoAds()" disabled>Auto Ads 4 Hours (+20 Alta)</button>
-        <div style="font-size: 12px; color: #94a3b8; margin-top: 6px;">
-            Requirement: <span id="clickCounterText" style="color: var(--gold); font-weight: bold;">0/30</span> Ads Clicked to Unlock
+        <!-- 1. Double Ads Button -->
+        <div>
+            <button class="btn-double-ads" id="doubleAdsBtn" onclick="triggerDoubleAds()">Double Ads 15s (+0.5 Alta)</button>
+            <div class="timer-display" id="doubleTimerDisplay" style="display: none; margin-top: 5px;">
+                Ad timer: <span id="doubleSecondsLeft">15</span>s
+            </div>
         </div>
-        <div class="timer-display" id="autoTimerDisplay" style="display: none;">
-            <span class="spinner"></span>Auto Ads Running... Time Left: <span id="autoHoursLeft">04:00:00</span>
+
+        <!-- 2. Auto Ads Button -->
+        <div>
+            <button class="btn-auto-ads" id="autoAdsBtn" onclick="startAutoAds()">Auto Ads (0/30 Limit)</button>
+            <div class="timer-display" id="autoTimerDisplay" style="display: none; margin-top: 5px;">
+                <span class="loading-spinner"></span> Auto Running: <span id="autoTimeLeft">04:00:00</span>
+            </div>
         </div>
     </div>
 
-    <!-- Dynamic Auto Rotating Text Banner -->
-    <div class="rotating-ads-box" id="rotatingAdText" onclick="triggerBonusAd(0, 0.5)">
-        Sponsored: Premium Web3 & High Revenue Offers
+    <!-- Rotating Banner Text -->
+    <div class="rotating-ads-box" id="rotatingAdText" onclick="triggerDirectAd(0)">
+        Sponsored: Premium Web3 & Crypto Offers
     </div>
 
-    <!-- Bonus Ads (Formerly High Income Ads) -->
+    <!-- 3. Bonus Ads Section (4 High Income Items with 15s Countdown) -->
     <div class="scroll-ads-container">
-        <div class="scroll-ads-title">🔥 Bonus Ads (Click & View 15s)</div>
+        <div class="scroll-ads-title">🔥 Bonus Ads (15s View to Earn)</div>
         <div class="scroll-ads-list">
             <div class="scroll-ad-item" onclick="triggerBonusAd(0, 0.5)">
-                <p>Bonus Option 1</p>
+                <p>High Revenue #1</p>
                 <div class="reward">+0.5 Alta</div>
             </div>
             <div class="scroll-ad-item" onclick="triggerBonusAd(1, 1.0)">
-                <p>Bonus Option 2</p>
+                <p>High Revenue #2</p>
                 <div class="reward">+1.0 Alta</div>
             </div>
             <div class="scroll-ad-item" onclick="triggerBonusAd(2, 1.5)">
-                <p>Bonus Option 3</p>
+                <p>High Revenue #3</p>
                 <div class="reward">+1.5 Alta</div>
             </div>
-            <div class="scroll-ad-item" onclick="triggerBonusAd(0, 2.0)">
-                <p>Bonus Option 4</p>
-                <div class="reward">+2.0 Alta</div>
-            </div>
-            <div class="scroll-ad-item" onclick="triggerBonusAd(1, 2.5)">
-                <p>Bonus Option 5</p>
+            <div class="scroll-ad-item" onclick="triggerBonusAd(0, 2.5)">
+                <p>High Revenue #4</p>
                 <div class="reward">+2.5 Alta</div>
             </div>
+        </div>
+        <div class="timer-display" id="bonusTimerDisplay" style="display: none; text-align: center; margin-top: 8px;">
+            Bonus Ad timer: <span id="bonusSecondsLeft">15</span>s
         </div>
     </div>
 
@@ -440,62 +409,60 @@
 </div>
 
 <script>
-    // System Configurations & Data States
+    // System Core State
     let altaPoints = 50.00;
     let withdrawCount = 0;
-    let totalAdClicks = 0; // Tracks clicks towards 30
+    
+    // Ad Processing Locks
     let isDoubleAdRunning = false;
     let isBonusAdRunning = false;
-    let isAutoAdsRunning = false;
+    let autoAdsLimitCounter = 0; // Tracks 0/30 status
+    let isAutoAdsActive = false;
 
-    let doubleTimerInterval = null;
-    let bonusTimerInterval = null;
-    let autoTimerInterval = null;
-
-    // Direct High-Revenue Links
+    // High Revenue Direct Ad Links
     const directAdLinks = [
         "https://mammothsubway.com/vqvp77uv?key=e16f5adcebeee070d751d4132045f66e",
         "https://mammothsubway.com/sraj8zz1d?key=80fe52ed90673410b3bd8a6ef1e23f0b",
         "https://alta-rw4e.vercel.app/"
     ];
 
-    // Telegram Bot Details
+    // Telegram Bot Setup
     const TELEGRAM_BOT_TOKEN = "YOUR_TELEGRAM_BOT_TOKEN";
     const TELEGRAM_CHANNEL_ID = "@YOUR_CHANNEL_ID";
 
     function updateUI() {
         document.getElementById('altaBalance').innerText = altaPoints.toFixed(2);
         document.getElementById('withdrawCountText').innerText = withdrawCount + " Times";
-        document.getElementById('clickCounterText').innerText = `${totalAdClicks}/30`;
-
-        // Enable Auto Ads if 30 clicks reached
-        const autoBtn = document.getElementById('autoAdsBtn');
-        if (totalAdClicks >= 30 && !isAutoAdsRunning) {
-            autoBtn.disabled = false;
+        if (!isAutoAdsActive) {
+            document.getElementById('autoAdsBtn').innerText = `Auto Ads (${autoAdsLimitCounter}/30 Limit)`;
         }
     }
     updateUI();
 
-    // Middle Modal Alert Function
-    function showMiddleNotification(title, message) {
-        document.getElementById('modalTitle').innerText = title;
-        document.getElementById('modalMessage').innerText = message;
-        document.getElementById('middleModal').classList.add('active');
+    // Central Toast Notification Function
+    function showCenterNotification(message, isError = false) {
+        const container = document.getElementById('toastContainer');
+        const toast = document.createElement('div');
+        toast.className = `toast ${isError ? 'error' : ''}`;
+        toast.innerText = message;
+        container.appendChild(toast);
+
+        setTimeout(() => {
+            toast.remove();
+        }, 3500);
     }
 
-    function closeModal() {
-        document.getElementById('middleModal').classList.remove('active');
+    // Direct Link Launch
+    function triggerDirectAd(index) {
+        const targetUrl = directAdLinks[index % directAdLinks.length];
+        window.open(targetUrl, '_blank');
     }
 
-    // Double Ads 15-Second Action
+    // 1. Double Ads 15s Timer Logic
     function triggerDoubleAds() {
-        if (isDoubleAdRunning || isBonusAdRunning) {
-            showMiddleNotification("Warning", "An ad process is already running. Please wait for it to complete.");
-            return;
-        }
+        if (isDoubleAdRunning) return;
 
-        const selectedAd = directAdLinks[Math.floor(Math.random() * directAdLinks.length)];
-        window.open(selectedAd, '_blank');
+        triggerDirectAd(Math.floor(Math.random() * directAdLinks.length));
 
         isDoubleAdRunning = true;
         let timeLeft = 15;
@@ -508,19 +475,18 @@
         timerDisplay.style.display = "block";
         secondsText.innerText = timeLeft;
 
-        showMiddleNotification("Ad Started", "15-second ad timer has started! Keep the tab open to earn rewards.");
+        showCenterNotification("15-Second Ad Started!");
 
-        doubleTimerInterval = setInterval(() => {
+        const timer = setInterval(() => {
             timeLeft--;
             secondsText.innerText = timeLeft;
 
             if (timeLeft <= 0) {
-                clearInterval(doubleTimerInterval);
+                clearInterval(timer);
                 altaPoints += 0.50;
-                totalAdClicks++;
                 updateUI();
 
-                showMiddleNotification("Completed! 🎉", "15 seconds completed successfully! +0.5 Alta Points added to your balance.");
+                showCenterNotification("15s Completed! +0.5 Alta Added.");
 
                 btn.disabled = false;
                 timerDisplay.style.display = "none";
@@ -529,162 +495,174 @@
         }, 1000);
     }
 
-    // Bonus Ads (15 Seconds View with Variable Points)
-    function triggerBonusAd(linkIndex, rewardPoints) {
-        if (isDoubleAdRunning || isBonusAdRunning) {
-            showMiddleNotification("Warning", "An ad process is already running. Please wait for it to finish.");
+    // 2. Auto Ads Logic (Limit 30 trigger -> 4 Hours Duration -> +20 Alta Reward)
+    function startAutoAds() {
+        if (isAutoAdsActive) return;
+
+        // Open ad tab on user action
+        triggerDirectAd(0);
+
+        autoAdsLimitCounter++;
+        
+        if (autoAdsLimitCounter < 30) {
+            updateUI();
+            showCenterNotification(`Auto Ads Limit (${autoAdsLimitCounter}/30) Updated!`);
             return;
         }
 
-        const targetUrl = directAdLinks[linkIndex % directAdLinks.length];
-        window.open(targetUrl, '_blank');
+        // Triggered 30/30 limit reached -> Run 4-Hour Background Task
+        isAutoAdsActive = true;
+        autoAdsLimitCounter = 30;
+        updateUI();
+
+        const btn = document.getElementById('autoAdsBtn');
+        const timerDisplay = document.getElementById('autoTimerDisplay');
+        const timeText = document.getElementById('autoTimeLeft');
+
+        btn.disabled = true;
+        btn.innerText = "Auto Ads Running...";
+        timerDisplay.style.display = "block";
+
+        showCenterNotification("Auto Ads Started! Runs for 4 Hours.");
+
+        let remainingSeconds = 4 * 60 * 60; // 4 Hours
+
+        const autoInterval = setInterval(() => {
+            remainingSeconds--;
+
+            const hours = String(Math.floor(remainingSeconds / 3600)).padStart(2, '0');
+            const minutes = String(Math.floor((remainingSeconds % 3600) / 60)).padStart(2, '0');
+            const seconds = String(remainingSeconds % 60).padStart(2, '0');
+            timeText.innerText = `${hours}:${minutes}:${seconds}`;
+
+            if (remainingSeconds <= 0) {
+                clearInterval(autoInterval);
+                altaPoints += 20.00;
+                
+                // Reset State
+                autoAdsLimitCounter = 0;
+                isAutoAdsActive = false;
+                updateUI();
+
+                showCenterNotification("4 Hours Auto Ads Completed! +20 Alta Added.");
+
+                btn.disabled = false;
+                timerDisplay.style.display = "none";
+            }
+        }, 1000);
+    }
+
+    // 3. Bonus Ads (4 items with 15s timer & specific rewards: 0.5, 1.0, 1.5, 2.5)
+    function triggerBonusAd(linkIndex, rewardAmount) {
+        if (isBonusAdRunning) {
+            showCenterNotification("An ad timer is already active!", true);
+            return;
+        }
+
+        triggerDirectAd(linkIndex);
 
         isBonusAdRunning = true;
         let timeLeft = 15;
 
-        showMiddleNotification("Bonus Ad Started", `Viewing high revenue ad. Please wait 15 seconds to receive +${rewardPoints} Alta.`);
+        const timerDisplay = document.getElementById('bonusTimerDisplay');
+        const secondsText = document.getElementById('bonusSecondsLeft');
 
-        bonusTimerInterval = setInterval(() => {
+        timerDisplay.style.display = "block";
+        secondsText.innerText = timeLeft;
+
+        showCenterNotification(`Bonus Ad Started! Wait 15s for +${rewardAmount} Alta`);
+
+        const bonusInterval = setInterval(() => {
             timeLeft--;
+            secondsText.innerText = timeLeft;
+
             if (timeLeft <= 0) {
-                clearInterval(bonusTimerInterval);
-                altaPoints += rewardPoints;
-                totalAdClicks++;
+                clearInterval(bonusInterval);
+                altaPoints += rewardAmount;
                 updateUI();
 
-                showMiddleNotification("Bonus Claimed! 🌟", `15 seconds finished! You earned +${rewardPoints} Alta Points.`);
+                showCenterNotification(`15s Completed! +${rewardAmount} Alta Added.`);
+
+                timerDisplay.style.display = "none";
                 isBonusAdRunning = false;
             }
         }, 1000);
     }
 
-    // Auto Ads (4-Hour Mining Engine)
-    function startAutoAds() {
-        if (totalAdClicks < 30) {
-            showMiddleNotification("Locked", "You need to complete 30 ad clicks before activating Auto Ads.");
-            return;
-        }
-
-        if (isAutoAdsRunning) return;
-
-        isAutoAdsRunning = true;
-        totalAdClicks = 0; // Reset counter for next cycle
-
-        const btn = document.getElementById('autoAdsBtn');
-        const timerDisplay = document.getElementById('autoTimerDisplay');
-        const hoursText = document.getElementById('autoHoursLeft');
-
-        btn.disabled = true;
-        timerDisplay.style.display = "block";
-
-        let durationSeconds = 4 * 60 * 60; // 4 Hours in Seconds
-
-        showMiddleNotification("Auto Ads Activated", "Auto Ads process has started! It will run automatically for 4 hours. You will receive +20 Alta upon completion.");
-
-        autoTimerInterval = setInterval(() => {
-            durationSeconds--;
-
-            let h = Math.floor(durationSeconds / 3600);
-            let m = Math.floor((durationSeconds % 3600) / 60);
-            let s = durationSeconds % 60;
-
-            hoursText.innerText = `${h.toString().padStart(2, '0')}:${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
-
-            if (durationSeconds <= 0) {
-                clearInterval(autoTimerInterval);
-                altaPoints += 20.0;
-                isAutoAdsRunning = false;
-                updateUI();
-
-                timerDisplay.style.display = "none";
-                showMiddleNotification("4 Hours Completed! 🚀", "Auto Ads completed! +20 Alta Points have been added to your account.");
-            }
-        }, 1000);
-
-        updateUI();
-    }
-
-    // Dynamic Rotating Banner Text
-    const rotatingAdTexts = [
-        "Sponsored: High Income Mammoth Offer - Click to Earn!",
-        "Hot Deal: Visit Alta Platform for Bonus Points!",
-        "RichPartners Ad Network: Top CPM Rates Available!",
-        "TON Ecosystem: Connect Wallet & Earn Daily Rewards!"
+    // Rotating Banner text interval
+    const rotatingTexts = [
+        "Sponsored: High Income Offers Available!",
+        "Hot Deal: Complete Bonus Ads to Claim Alta Points!",
+        "RichPartners Ad Network: High eCPM Direct Links!",
+        "TON Ecosystem: Fast Withdrawals Enabled!"
     ];
-    let currentAdIndex = 0;
+    let bannerIdx = 0;
     setInterval(() => {
-        currentAdIndex = (currentAdIndex + 1) % rotatingAdTexts.length;
-        document.getElementById('rotatingAdText').innerText = rotatingAdTexts[currentAdIndex];
+        bannerIdx = (bannerIdx + 1) % rotatingTexts.length;
+        document.getElementById('rotatingAdText').innerText = rotatingTexts[bannerIdx];
     }, 4000);
 
-    // Telegram Withdrawal Broadcast
+    // Telegram Channel Dispatcher
     function sendTelegramRequest(tgName, amount, tonWallet) {
-        const messageText = `🚨 *NEW WITHDRAWAL REQUEST* 🚨\n\n` +
-                            `👤 *User:* ${tgName}\n` +
-                            `💰 *Amount:* ${amount} Alta Points\n` +
-                            `💎 *TON Wallet:* \`${tonWallet}\`\n` +
-                            `🔢 *Withdrawal Count:* ${withdrawCount + 1}\n` +
-                            `📅 *Status:* Pending Review`;
+        const payload = `🚨 *NEW WITHDRAWAL REQUEST* 🚨\n\n` +
+                        `👤 *User:* ${tgName}\n` +
+                        `💰 *Amount:* ${amount} Alta Points\n` +
+                        `💎 *TON Wallet:* \`${tonWallet}\`\n` +
+                        `🔢 *Withdrawal Count:* ${withdrawCount + 1}\n` +
+                        `📅 *Status:* Pending Review`;
 
         if (TELEGRAM_BOT_TOKEN !== "YOUR_TELEGRAM_BOT_TOKEN") {
-            const url = `https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`;
-            fetch(url, {
+            fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
                 body: JSON.stringify({
                     chat_id: TELEGRAM_CHANNEL_ID,
-                    text: messageText,
+                    text: payload,
                     parse_mode: 'Markdown'
                 })
-            }).catch(err => console.error("Telegram Error:", err));
-        } else {
-            console.log("Simulated Telegram Request:\n" + messageText);
+            }).catch(e => console.error(e));
         }
     }
 
-    // Withdrawal Form Logic
+    // Form Processing
     function submitWithdrawalRequest() {
         const tgName = document.getElementById('tgName').value.trim();
         const amount = parseFloat(document.getElementById('withdrawAmount').value);
         const tonWallet = document.getElementById('tonWallet').value.trim();
 
         if (!tgName.startsWith('@') || tgName.length < 2) {
-            showMiddleNotification("Invalid Input", "Please enter a valid Telegram username starting with @.");
+            showCenterNotification("Enter valid Telegram username (@Name)", true);
             return;
         }
 
         if (isNaN(amount) || amount <= 0) {
-            showMiddleNotification("Invalid Input", "Please enter a valid point amount.");
+            showCenterNotification("Enter a valid withdrawal amount", true);
             return;
         }
 
         if (tonWallet.length < 10) {
-            showMiddleNotification("Invalid Input", "Please enter a valid TON Wallet address.");
+            showCenterNotification("Enter a valid TON Wallet address", true);
             return;
         }
 
-        // Rules check
+        // Rules Check
         if (withdrawCount === 0) {
             if (amount < 50) {
-                showMiddleNotification("Rule Error", "First withdrawal requires a minimum of 50 Alta Points.");
+                showCenterNotification("1st withdrawal requires min 50 Alta", true);
                 return;
             }
             if (amount > altaPoints) {
-                showMiddleNotification("Insufficient Balance", "You do not have enough Alta Points.");
+                showCenterNotification("Insufficient Alta balance", true);
                 return;
             }
         } else {
-            const availableBalance = altaPoints - 150;
-            if (availableBalance < 50) {
-                showMiddleNotification("Reserve Rule", "You must maintain a 150 Alta reserve. Minimum withdrawal above reserve is 50 Alta.");
+            const available = altaPoints - 150;
+            if (available < 50) {
+                showCenterNotification("150 Alta reserve required. Excess must be min 50", true);
                 return;
             }
-            if (amount < 50) {
-                showMiddleNotification("Rule Error", "Minimum withdrawal amount is 50 Alta Points.");
-                return;
-            }
-            if (amount > availableBalance) {
-                showMiddleNotification("Exceeded Amount", `Max withdrawable amount with 150 reserve is ${availableBalance.toFixed(2)} Alta.`);
+            if (amount < 50 || amount > available) {
+                showCenterNotification(`Invalid amount. Max withdrawable: ${available.toFixed(2)} Alta`, true);
                 return;
             }
         }
@@ -694,7 +672,7 @@
         withdrawCount++;
         updateUI();
 
-        showMiddleNotification("Request Sent!", `Your request to withdraw ${amount} Alta has been submitted and sent to the channel for review.`);
+        showCenterNotification("Withdrawal Request Posted to Channel!");
 
         document.getElementById('withdrawAmount').value = "";
         document.getElementById('tonWallet').value = "";
