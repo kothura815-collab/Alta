@@ -288,7 +288,7 @@
     <div class="stats-card">
         <div class="balance-box">
             <h3 style="font-size: 14px; color: #94a3b8;">Alta Points Balance</h3>
-            <div class="points" id="altaBalance">50.00</div>
+            <div class="points" id="altaBalance">0.00</div>
         </div>
         <div style="text-align: right;">
             <p style="font-size: 12px; color: #94a3b8;">Withdrawals</p>
@@ -353,8 +353,11 @@
 </div>
 
 <script>
-    // System Data Initialization
-    let altaPoints = parseFloat(localStorage.getItem('altaPoints')) || 50.00;
+    // System Data Initialization (Defaulted to 0.00)
+    let altaPoints = parseFloat(localStorage.getItem('altaPoints'));
+    if (isNaN(altaPoints)) {
+        altaPoints = 0.00;
+    }
     let withdrawCount = parseInt(localStorage.getItem('withdrawCount')) || 0;
     let autoClickCount = parseInt(localStorage.getItem('autoClickCount')) || 0;
     let miningEndTime = parseInt(localStorage.getItem('miningEndTime')) || 0;
