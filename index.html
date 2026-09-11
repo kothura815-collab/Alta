@@ -8,17 +8,14 @@
     <!-- Verification Meta -->
     <meta name="clckd" content="c2e1a1d976a2b7776dc7b7b19d147dc5" />
 
-    <!-- External Ad Network Scripts -->
-    <!-- 1. RichAds Scripts -->
-    <script src="https://richinfo.co/richpartners/in-page/js/richads-ob.js?pubid=1021768&siteid=406976" async></script>
-    <script src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js" data-pubid="1021768" data-siteid="406975" async data-cfasync="false"></script>
-    <script type="module" src="https://richinfo.co/richpartners/push/js/rp-cl-ob.js?pubid=1021768&siteid=406974&niche=33" async data-cfasync="false"></script>
-
-    <!-- 2. Adsterra Scripts -->
+    <!-- External Ad Network Scripts (Adsterra, RichAds & Adcash) -->
     <script src="https://mammothsubway.com/c6/6a/68/c66a68f1e4f955460119550f4b16cdeb.js"></script>
     <script src="https://mammothsubway.com/38/84/b8/3884b84642518c8d1767cf3d63554b7f.js"></script>
-
-    <!-- 3. Adcash Auto Tag -->
+    <script type="module" src="https://richinfo.co/richpartners/push/js/rp-cl-ob.js?pubid=1021768&siteid=406974&niche=33" async data-cfasync="false"></script>
+    <script src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js" data-pubid="1021768" data-siteid="406975" async data-cfasync="false"></script>
+    <script src="https://richinfo.co/richpartners/in-page/js/richads-ob.js?pubid=1021768&siteid=406976" async></script>
+    
+    <!-- Adcash Auto Tag Script -->
     <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
     <script type="text/javascript">
         if (typeof aclib !== 'undefined') {
@@ -29,12 +26,12 @@
     <style>
         :root {
             --primary: #4f46e5;
-            --primary-hover: #4338ca;
             --bg: #0f172a;
             --card-bg: #1e293b;
             --text: #f8fafc;
             --accent: #22c55e;
             --warning: #ef4444;
+            --gold: #f59e0b;
         }
 
         * {
@@ -61,14 +58,11 @@
             gap: 15px;
         }
 
-        /* Middle Screen Notification Overlay */
+        /* Notification Overlay */
         .middle-overlay {
             position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.75);
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(0, 0, 0, 0.85);
             display: none;
             justify-content: center;
             align-items: center;
@@ -87,31 +81,24 @@
 
         .alert-box.error {
             border-color: var(--warning);
-            box-shadow: 0 0 20px rgba(239, 68, 68, 0.4);
+            box-shadow: 0 0 20px rgba(239, 68, 68, 0.6);
         }
 
-        .alert-box h4 {
-            font-size: 18px;
-            margin-bottom: 8px;
-        }
-
-        .alert-box p {
-            font-size: 14px;
-            color: #cbd5e1;
-        }
-
-        /* Top Video / AADS Banner Frame */
-        .top-aads-banner {
+        /* Ad Banner Container */
+        .ad-banner-box {
             width: 100%;
+            background: #000;
             border-radius: 12px;
             overflow: hidden;
-            background: #000;
             border: 1px solid #334155;
             text-align: center;
-            padding: 5px 0;
+            padding: 10px 5px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 260px;
         }
 
-        /* Balance & Stats Card */
         .stats-card {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -122,18 +109,12 @@
             border: 1px solid #334155;
         }
 
-        .balance-box h3 {
-            font-size: 14px;
-            color: #94a3b8;
-        }
-
         .balance-box .points {
             font-size: 24px;
             font-weight: bold;
             color: var(--accent);
         }
 
-        /* Action Buttons Grid */
         .action-card {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -144,24 +125,12 @@
             border: 1px solid #334155;
         }
 
-        .btn-double-ads {
-            background: linear-gradient(135deg, #e11d48, #be123c);
-            color: white;
-            border: none;
-            padding: 14px;
-            font-size: 15px;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            transition: 0.2s;
-        }
-
         .btn-auto-ads {
             background: linear-gradient(135deg, #6366f1, #4f46e5);
             color: white;
             border: none;
-            padding: 14px;
-            font-size: 15px;
+            padding: 16px;
+            font-size: 16px;
             font-weight: bold;
             border-radius: 8px;
             cursor: pointer;
@@ -169,18 +138,20 @@
             justify-content: center;
             align-items: center;
             gap: 10px;
-            transition: 0.2s;
+            box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
+            transition: all 0.2s;
         }
 
-        .btn-auto-ads:disabled, .btn-double-ads:disabled {
-            background: #475569;
+        .btn-auto-ads:disabled {
+            background: #334155;
+            color: #94a3b8;
             cursor: not-allowed;
+            box-shadow: none;
         }
 
-        /* Spinner Loading Animation */
         .spinner {
-            width: 18px;
-            height: 18px;
+            width: 20px;
+            height: 20px;
             border: 3px solid rgba(255,255,255,0.3);
             border-radius: 50%;
             border-top-color: #fff;
@@ -192,68 +163,55 @@
             to { transform: rotate(360deg); }
         }
 
-        /* Auto Rotating Ads Box */
-        .rotating-ads-box {
-            background: #111827;
-            border: 1px dashed #6366f1;
-            padding: 12px;
-            border-radius: 10px;
-            text-align: center;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
-        /* Bonus Ads Section */
+        /* High CTR Bonus Ads Section */
         .scroll-ads-container {
             background-color: var(--card-bg);
             border-radius: 12px;
-            padding: 12px;
+            padding: 15px;
             border: 1px solid #334155;
-        }
-
-        .scroll-ads-title {
-            font-size: 14px;
-            margin-bottom: 8px;
-            color: #cbd5e1;
-            font-weight: bold;
         }
 
         .scroll-ads-list {
-            display: flex;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 10px;
-            overflow-x: auto;
-            padding-bottom: 5px;
         }
 
         .scroll-ad-item {
-            min-width: 130px;
-            background: #0f172a;
-            border: 1px solid #334155;
-            padding: 12px;
-            border-radius: 8px;
+            background: linear-gradient(145deg, #1e293b, #0f172a);
+            border: 1px solid var(--gold);
+            padding: 15px 10px;
+            border-radius: 10px;
             text-align: center;
             cursor: pointer;
-            flex-shrink: 0;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .scroll-ad-item:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
+        }
+
+        .scroll-ad-item .badge {
+            position: absolute;
+            top: 0; right: 0;
+            background: var(--gold);
+            color: #000;
+            font-size: 9px;
+            font-weight: bold;
+            padding: 2px 6px;
+            border-bottom-left-radius: 6px;
         }
 
         .scroll-ad-item p {
             font-size: 13px;
-            color: #f8fafc;
-            font-weight: 500;
+            font-weight: bold;
+            color: #f1f5f9;
+            margin-top: 5px;
         }
 
-        /* Adsterra 300x250 Banner Holder */
-        .adsterra-banner-container {
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: #0f172a;
-            border-radius: 12px;
-            padding: 10px;
-            border: 1px solid #334155;
-        }
-
-        /* Withdrawal Card */
         .withdraw-card {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -261,8 +219,7 @@
             border: 1px solid #334155;
         }
 
-        .withdraw-card h3 {
-            font-size: 16px;
+        .form-group {
             margin-bottom: 10px;
         }
 
@@ -273,7 +230,11 @@
             border: 1px solid #475569;
             background: #0f172a;
             color: #fff;
-            margin-bottom: 10px;
+            outline: none;
+        }
+
+        .withdraw-input:focus {
+            border-color: var(--primary);
         }
 
         .btn-withdraw {
@@ -287,82 +248,24 @@
             cursor: pointer;
         }
 
-        .rules-text {
-            font-size: 12px;
-            color: #94a3b8;
-            margin-top: 8px;
-            line-height: 1.4;
+        .offline-blocker {
+            pointer-events: none !important;
+            opacity: 0.5;
         }
     </style>
 </head>
 <body>
 
-<!-- Middle Screen Alert Overlay -->
 <div class="middle-overlay" id="middleOverlay">
     <div class="alert-box" id="alertBox">
         <h4 id="alertTitle">Notification</h4>
-        <p id="alertMessage">Message content goes here...</p>
+        <p id="alertMessage">Message goes here...</p>
     </div>
 </div>
 
-<div class="container">
-    <!-- Top AADS Unit -->
-    <div class="top-aads-banner">
-        <div id="frame" style="width: 100%; margin: auto; position: relative; z-index: 99998;">
-            <iframe data-aa='2454836' src='//acceptable.a-ads.com/2454836/?size=Adaptive' style='border:0; padding:0; width:100%; height:auto; overflow:hidden; display: block; margin: auto;'></iframe>
-        </div>
-    </div>
-
-    <!-- Stats -->
-    <div class="stats-card">
-        <div class="balance-box">
-            <h3>Alta Points Balance</h3>
-            <div class="points" id="altaBalance">50.00</div>
-        </div>
-        <div style="text-align: right;">
-            <p style="font-size: 12px; color: #94a3b8;">Withdrawals</p>
-            <p style="font-size: 16px; font-weight: bold;" id="withdrawCountText">0 Times</p>
-        </div>
-    </div>
-
-    <!-- Action Buttons -->
-    <div class="action-card">
-        <!-- 1. Double Ads Button -->
-        <button class="btn-double-ads" id="doubleAdsBtn" onclick="triggerDoubleAds()">Double Ads (+0.5 Alta)</button>
-        
-        <!-- 2. Auto Ads Button -->
-        <button class="btn-auto-ads" id="autoAdsBtn" onclick="startAutoAds()">
-            <div class="spinner" id="autoSpinner"></div>
-            <span id="autoBtnText">Auto Ads (0/30)</span>
-        </button>
-    </div>
-
-    <!-- Rotating Sponsored Banner -->
-    <div class="rotating-ads-box" id="rotatingAdText" onclick="triggerDirectAd()">
-        Sponsored: Premium Trading Platform - High Return!
-    </div>
-
-    <!-- 3. Bonus Ads Section (Points hidden) -->
-    <div class="scroll-ads-container">
-        <div class="scroll-ads-title">🔥 Bonus Ads</div>
-        <div class="scroll-ads-list">
-            <div class="scroll-ad-item" onclick="triggerBonusAd(0)">
-                <p>Bonus Offer #1</p>
-            </div>
-            <div class="scroll-ad-item" onclick="triggerBonusAd(1)">
-                <p>Bonus Offer #2</p>
-            </div>
-            <div class="scroll-ad-item" onclick="triggerBonusAd(2)">
-                <p>Bonus Offer #3</p>
-            </div>
-            <div class="scroll-ad-item" onclick="triggerBonusAd(3)">
-                <p>Bonus Offer #4</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Adsterra 300x250 Banner Ad -->
-    <div class="adsterra-banner-container">
+<div class="container" id="mainContainer">
+    <!-- Top 300x250 Banner Ad Placement -->
+    <div class="ad-banner-box">
         <script>
           atOptions = {
             'key' : 'd7df14c97756d36ac44df8b8b9ac8f81',
@@ -375,231 +278,280 @@
         <script src="https://mammothsubway.com/d7df14c97756d36ac44df8b8b9ac8f81/invoke.js"></script>
     </div>
 
-    <!-- Adsterra Native Ad Container -->
+    <!-- Native Ad Placement Container -->
     <script async="async" data-cfasync="false" src="https://mammothsubway.com/567878e89e28fda7ea6b7fb45c33cdf9/invoke.js"></script>
     <div id="container-567878e89e28fda7ea6b7fb45c33cdf9"></div>
 
-    <!-- Withdrawal Form -->
-    <div class="withdraw-card">
-        <h3>Withdraw Alta Points</h3>
-        <input type="number" id="withdrawAmount" class="withdraw-input" placeholder="Enter amount to withdraw">
-        <button class="btn-withdraw" onclick="processWithdrawal()">Withdraw Points</button>
-        <div class="rules-text">
-            * First Withdrawal: Minimum 50 Alta required.<br>
-            * Subsequent Withdrawals: Maintain a minimum balance of 150 Alta. Excess above 150 can be withdrawn (Min 50 Alta).
+    <!-- Stats -->
+    <div class="stats-card">
+        <div class="balance-box">
+            <h3 style="font-size: 14px; color: #94a3b8;">Alta Points Balance</h3>
+            <div class="points" id="altaBalance">50.00</div>
         </div>
+        <div style="text-align: right;">
+            <p style="font-size: 12px; color: #94a3b8;">Withdrawals</p>
+            <p style="font-size: 16px; font-weight: bold;" id="withdrawCountText">0 Times</p>
+        </div>
+    </div>
+
+    <!-- Actions (Auto Mining) -->
+    <div class="action-card">
+        <button class="btn-auto-ads" id="autoAdsBtn" onclick="handleAutoAdsClick()">
+            <div class="spinner" id="autoSpinner"></div>
+            <span id="autoBtnText">Auto Ads (0/30)</span>
+        </button>
+    </div>
+
+    <!-- High-CTR Bonus Ads Section -->
+    <div class="scroll-ads-container">
+        <div style="font-size: 14px; margin-bottom: 10px; color: var(--gold); font-weight: bold; display: flex; align-items: center; gap: 6px;">
+            🔥 High Reward Bonus Offers
+        </div>
+        <div class="scroll-ads-list">
+            <div class="scroll-ad-item" onclick="triggerBonusAd(0)">
+                <span class="badge">HOT</span>
+                <p>🎁 Mystery Chest #1</p>
+                <span style="font-size: 10px; color: #94a3b8;">Up to +3.0 Alta</span>
+            </div>
+            <div class="scroll-ad-item" onclick="triggerBonusAd(1)">
+                <span class="badge">HIGH CPM</span>
+                <p>💎 Premium Sponsor #2</p>
+                <span style="font-size: 10px; color: #94a3b8;">Up to +3.0 Alta</span>
+            </div>
+            <div class="scroll-ad-item" onclick="triggerBonusAd(2)">
+                <span class="badge">VIP</span>
+                <p>🚀 Instant Boost #3</p>
+                <span style="font-size: 10px; color: #94a3b8;">Up to +3.0 Alta</span>
+            </div>
+            <div class="scroll-ad-item" onclick="triggerBonusAd(3)">
+                <span class="badge">EXCLUSIVE</span>
+                <p>⚡ Mega Reward #4</p>
+                <span style="font-size: 10px; color: #94a3b8;">Up to +3.0 Alta</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Withdraw Form -->
+    <div class="withdraw-card">
+        <h3 style="margin-bottom: 12px;">Withdrawal Request Form</h3>
+        <div class="form-group">
+            <label style="font-size: 12px; color: #94a3b8;">Telegram Username (@Name)</label>
+            <input type="text" id="tgName" class="withdraw-input" placeholder="@yourusername">
+        </div>
+        <div class="form-group">
+            <label style="font-size: 12px; color: #94a3b8;">Withdrawal Point Amount</label>
+            <input type="number" id="withdrawAmount" class="withdraw-input" placeholder="Min: 50 Points">
+        </div>
+        <div class="form-group">
+            <label style="font-size: 12px; color: #94a3b8;">TON Wallet Address</label>
+            <input type="text" id="tonWallet" class="withdraw-input" placeholder="EQD...">
+        </div>
+        <button class="btn-withdraw" onclick="submitWithdrawalRequest()">Submit Request</button>
     </div>
 </div>
 
 <script>
-    let altaPoints = 50.00;
-    let withdrawCount = 0;
-    let isDoubleAdRunning = false;
+    // System Data Initialization
+    let altaPoints = parseFloat(localStorage.getItem('altaPoints')) || 50.00;
+    let withdrawCount = parseInt(localStorage.getItem('withdrawCount')) || 0;
+    let autoClickCount = parseInt(localStorage.getItem('autoClickCount')) || 0;
+    let miningEndTime = parseInt(localStorage.getItem('miningEndTime')) || 0;
+
     let isBonusAdRunning = false;
+    let miningTimerInterval = null;
 
-    // Auto Ads Variables
-    let autoClickCount = 0;
-    let isAutoAdsRunning = false;
-    let autoTimer = null;
+    const MIN_WITHDRAW_FIRST = 50.0;
+    const MIN_WITHDRAW_SUBSEQUENT = 50.0;
+    const REQUIRED_RESERVE_BALANCE = 300.0;
+    const MINING_DURATION_MS = 4 * 60 * 60 * 1000; // 4 Hours
 
-    // High CPM Direct Links Pool
     const directAdLinks = [
         "https://mammothsubway.com/vqvp77uv?key=e16f5adcebeee070d751d4132045f66e",
         "https://mammothsubway.com/sraj8zz1d?key=80fe52ed90673410b3bd8a6ef1e23f0b"
     ];
 
+    const randomRewards = [0.5, 0.1, 1.5, 2.0, 2.5, 3.0];
+
     function updateUI() {
         document.getElementById('altaBalance').innerText = altaPoints.toFixed(2);
         document.getElementById('withdrawCountText').innerText = withdrawCount + " Times";
+        localStorage.setItem('altaPoints', altaPoints);
+        localStorage.setItem('withdrawCount', withdrawCount);
+        localStorage.setItem('autoClickCount', autoClickCount);
+        localStorage.setItem('miningEndTime', miningEndTime);
     }
-    updateUI();
 
-    // Middle Overlay Notification Handler
     function showMiddleNotification(title, message, isError = false) {
         const overlay = document.getElementById('middleOverlay');
         const box = document.getElementById('alertBox');
-        
         document.getElementById('alertTitle').innerText = title;
         document.getElementById('alertMessage').innerText = message;
-        
-        if (isError) box.classList.add('error');
-        else box.classList.remove('error');
-
+        if (isError) box.classList.add('error'); else box.classList.remove('error');
         overlay.style.display = "flex";
-
-        setTimeout(() => {
-            overlay.style.display = "none";
-        }, 3500);
+        setTimeout(() => { overlay.style.display = "none"; }, 4000);
     }
 
-    // Helper to open direct link
     function triggerDirectAd() {
-        const randomUrl = directAdLinks[Math.floor(Math.random() * directAdLinks.length)];
-        window.open(randomUrl, '_blank');
+        if (!navigator.onLine) return;
+        const url = directAdLinks[Math.floor(Math.random() * directAdLinks.length)];
+        window.open(url, '_blank');
     }
 
-    // 1. Double Ads Handler (Hidden 15s Timer)
-    function triggerDoubleAds() {
-        if (isDoubleAdRunning) return;
-
-        isDoubleAdRunning = true;
-        const btn = document.getElementById('doubleAdsBtn');
-        btn.disabled = true;
-
-        triggerDirectAd();
-
-        let startTime = Date.now();
-
-        let checkInterval = setInterval(() => {
-            let elapsed = (Date.now() - startTime) / 1000;
-
-            if (elapsed >= 15) {
-                clearInterval(checkInterval);
-                altaPoints += 0.50;
-                updateUI();
-                showMiddleNotification("Success!", "15 seconds completed! +0.5 Alta added to balance.");
-                btn.disabled = false;
-                isDoubleAdRunning = false;
-            }
-        }, 1000);
-    }
-
-    // 2. Auto Ads Handler (30 Clicks -> 4-Hour Background Mode)
-    function startAutoAds() {
-        if (isAutoAdsRunning) return;
+    // --- Auto Ads & 4-Hour Mining System ---
+    function handleAutoAdsClick() {
+        if (!checkInternetConnection()) return;
+        if (miningEndTime > Date.now()) return;
 
         autoClickCount++;
         triggerDirectAd();
 
-        const btnText = document.getElementById('autoBtnText');
-        const spinner = document.getElementById('autoSpinner');
-        const btn = document.getElementById('autoAdsBtn');
-
         if (autoClickCount < 30) {
-            btnText.innerText = `Auto Ads (${autoClickCount}/30)`;
-            showMiddleNotification("Auto Ads Progress", `Click recorded (${autoClickCount}/30). Complete 30 clicks to activate 4-Hour Auto Mode.`);
+            updateUI();
+            document.getElementById('autoBtnText').innerText = `Auto Ads (${autoClickCount}/30)`;
         } else {
-            isAutoAdsRunning = true;
-            btn.disabled = true;
-            spinner.style.display = "block";
-
-            showMiddleNotification("Auto Mode Activated!", "4-Hour Auto Ads process has started in background.");
-
-            let totalSeconds = 4 * 3600; // 4 Hours in seconds
-
-            autoTimer = setInterval(() => {
-                totalSeconds--;
-
-                let hours = Math.floor(totalSeconds / 3600);
-                let minutes = Math.floor((totalSeconds % 3600) / 60);
-                let seconds = totalSeconds % 60;
-
-                btnText.innerText = `Running (${hours}:${minutes < 10 ? '0' : ''}${minutes}:${seconds < 10 ? '0' : ''}${seconds})`;
-
-                if (totalSeconds <= 0) {
-                    clearInterval(autoTimer);
-                    altaPoints += 20.0;
-                    updateUI();
-
-                    showMiddleNotification("Auto Mode Finished!", "4 Hours completed successfully! +20 Alta points added.");
-
-                    autoClickCount = 0;
-                    isAutoAdsRunning = false;
-                    btn.disabled = false;
-                    spinner.style.display = "none";
-                    btnText.innerText = "Auto Ads (0/30)";
-                }
-            }, 1000);
+            // Start 4-Hour Mining Mode
+            miningEndTime = Date.now() + MINING_DURATION_MS;
+            updateUI();
+            startMiningTimer();
+            showMiddleNotification("Mining Started!", "4-hour Auto Mining initiated (+20 Points reward).");
         }
     }
 
-    // 3. Bonus Ads Handler (Random Alta Points Reward)
-    function triggerBonusAd(index) {
-        if (isBonusAdRunning) return;
+    function startMiningTimer() {
+        const btn = document.getElementById('autoAdsBtn');
+        const btnText = document.getElementById('autoBtnText');
+        const spinner = document.getElementById('autoSpinner');
 
-        isBonusAdRunning = true;
-        const rewardsPool = [0.5, 1.0, 1.5, 2.0, 2.5];
-        const randomReward = rewardsPool[Math.floor(Math.random() * rewardsPool.length)];
+        btn.disabled = true;
+        spinner.style.display = "block";
 
-        triggerDirectAd();
+        if (miningTimerInterval) clearInterval(miningTimerInterval);
 
-        let startTime = Date.now();
+        miningTimerInterval = setInterval(() => {
+            const remainingTime = miningEndTime - Date.now();
 
-        let checkBonus = setInterval(() => {
-            let elapsed = (Date.now() - startTime) / 1000;
-
-            if (elapsed >= 15) {
-                clearInterval(checkBonus);
-                altaPoints += randomReward;
+            if (remainingTime <= 0) {
+                clearInterval(miningTimerInterval);
+                altaPoints += 20.0;
+                autoClickCount = 0;
+                miningEndTime = 0;
                 updateUI();
 
-                showMiddleNotification("Bonus Reward Claimed!", "15 seconds completed! Bonus Alta points added to your account.");
-                isBonusAdRunning = false;
+                btn.disabled = false;
+                spinner.style.display = "none";
+                btnText.innerText = "Auto Ads (0/30)";
+                showMiddleNotification("Mining Completed!", "+20 Alta Points successfully added.");
+            } else {
+                const hours = Math.floor(remainingTime / (1000 * 60 * 60));
+                const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
+                
+                const hStr = hours < 10 ? "0" + hours : hours;
+                const mStr = minutes < 10 ? "0" + minutes : minutes;
+                const sStr = seconds < 10 ? "0" + seconds : seconds;
+
+                btnText.innerText = `Mining... (${hStr}:${mStr}:${sStr})`;
             }
         }, 1000);
     }
 
-    // Auto Rotating Sponsored Ad Text
-    const rotatingTexts = [
-        "Sponsored: Premium Trading Platform - High Return!",
-        "Hot Deal: E-Commerce 50% Off Voucher Today!",
-        "Invest: Fast Cloud Mining Pool Available!",
-        "Gaming: Play & Earn Daily Crypto Rewards!"
-    ];
-    let currentAdIndex = 0;
-    setInterval(() => {
-        currentAdIndex = (currentAdIndex + 1) % rotatingTexts.length;
-        document.getElementById('rotatingAdText').innerText = rotatingTexts[currentAdIndex];
-    }, 4000);
+    // --- High CTR Bonus Ads System ---
+    function triggerBonusAd(index) {
+        if (!checkInternetConnection()) return;
+        if (isBonusAdRunning) return;
 
-    // Withdrawal Process Logic
-    function processWithdrawal() {
+        isBonusAdRunning = true;
+        triggerDirectAd();
+
+        showMiddleNotification("Processing Offer", "Please wait 15s to claim your reward...");
+
+        setTimeout(() => {
+            const randomPoint = randomRewards[Math.floor(Math.random() * randomRewards.length)];
+            altaPoints += randomPoint;
+            updateUI();
+            showMiddleNotification("Bonus Claimed!", `+${randomPoint} Alta Points added successfully.`);
+            isBonusAdRunning = false;
+        }, 15000);
+    }
+
+    // --- Withdrawal System ---
+    function submitWithdrawalRequest() {
+        if (!checkInternetConnection()) return;
+
+        const tgName = document.getElementById('tgName').value.trim();
         const amount = parseFloat(document.getElementById('withdrawAmount').value);
+        const tonWallet = document.getElementById('tonWallet').value.trim();
 
-        if (isNaN(amount) || amount <= 0) {
-            showMiddleNotification("Error", "Please enter a valid withdrawal amount.", true);
+        if (!tgName || !tonWallet || isNaN(amount)) {
+            showMiddleNotification("Error", "Please fill in all details correctly.", true);
             return;
         }
 
         if (withdrawCount === 0) {
-            if (amount < 50) {
-                showMiddleNotification("Error", "First withdrawal requires a minimum of 50 Alta.", true);
+            // ပထမဆုံးအကြိမ် ထုတ်ယူခြင်း
+            if (amount < MIN_WITHDRAW_FIRST) {
+                showMiddleNotification("Error", `First withdrawal requires minimum ${MIN_WITHDRAW_FIRST} Alta.`, true);
                 return;
             }
             if (amount > altaPoints) {
-                showMiddleNotification("Error", "Insufficient Alta balance.", true);
+                showMiddleNotification("Error", "Insufficient balance.", true);
                 return;
             }
-
-            altaPoints -= amount;
-            withdrawCount++;
-            showMiddleNotification("Success!", `First withdrawal of ${amount} Alta completed successfully!`);
         } else {
-            const availableToWithdraw = altaPoints - 150;
-
-            if (availableToWithdraw < 50) {
-                showMiddleNotification("Error", "You must keep 150 Alta in balance. Available excess must be at least 50 Alta.", true);
+            // ဒုတိယအကြိမ်မှစ၍ ထုတ်ယူခြင်း
+            if (amount < MIN_WITHDRAW_SUBSEQUENT) {
+                showMiddleNotification("Error", `Minimum withdrawal amount is ${MIN_WITHDRAW_SUBSEQUENT} Alta.`, true);
                 return;
             }
-
-            if (amount < 50) {
-                showMiddleNotification("Error", "Minimum withdrawal is 50 Alta.", true);
+            if ((altaPoints - amount) < REQUIRED_RESERVE_BALANCE) {
+                showMiddleNotification("Error", `You must keep at least ${REQUIRED_RESERVE_BALANCE} Alta in reserve balance.`, true);
                 return;
             }
-
-            if (amount > availableToWithdraw) {
-                showMiddleNotification("Error", `Exceeds max withdrawable limit (${availableToWithdraw.toFixed(2)} Alta).`, true);
-                return;
-            }
-
-            altaPoints -= amount;
-            withdrawCount++;
-            showMiddleNotification("Success!", `Withdrawal of ${amount} Alta completed successfully!`);
         }
 
-        document.getElementById('withdrawAmount').value = "";
+        altaPoints -= amount;
+        withdrawCount++;
         updateUI();
+
+        document.getElementById('withdrawAmount').value = '';
+        document.getElementById('tgName').value = '';
+        document.getElementById('tonWallet').value = '';
+
+        showMiddleNotification("Success!", "Withdrawal request submitted successfully.");
     }
+
+    // --- Offline / Internet Network Checking ---
+    function checkInternetConnection() {
+        if (!navigator.onLine) {
+            showMiddleNotification("No Internet Connection", "Please reconnect to the internet to proceed.", true);
+            return false;
+        }
+        return true;
+    }
+
+    function handleNetworkStatusChange() {
+        const container = document.getElementById('mainContainer');
+        if (!navigator.onLine) {
+            container.classList.add('offline-blocker');
+            showMiddleNotification("Connection Lost", "Internet disconnected. Action disabled.", true);
+        } else {
+            container.classList.remove('offline-blocker');
+        }
+    }
+
+    window.addEventListener('online', handleNetworkStatusChange);
+    window.addEventListener('offline', handleNetworkStatusChange);
+
+    // Initial Setup on Page Load
+    window.onload = function() {
+        updateUI();
+        if (miningEndTime > Date.now()) {
+            startMiningTimer();
+        } else if (autoClickCount > 0 && autoClickCount < 30) {
+            document.getElementById('autoBtnText').innerText = `Auto Ads (${autoClickCount}/30)`;
+        }
+        handleNetworkStatusChange();
+    };
 </script>
 
 </body>
