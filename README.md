@@ -1,17 +1,3 @@
-<!DOCTYPE html>
-<html lang="my">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PTF Token Miner</title>
-  <script src="https://telegram.org/js/telegram-web-app.js"></script>
-  <style>
-    body { background: #0f172a; color: #fff; font-family: sans-serif; text-align: center; margin: 0; padding: 20px; }
-    .card { background: #1e293b; padding: 20px; border-radius: 12px; max-width: 400px; margin: auto; box-shadow: 0 4px 10px rgba(0,0,0,0.3); }
-    h2 { font-size: 20px; margin-bottom: 5px; }
-    #balance { font-size: 38px; color: #f59e0b; margin: 10px 0; }
-    .hammer-btn { font-size: 70px; background: none; border: none; margin: 20px 0; cursor: pointer; transition: transform 0.1s; }
-    .hammer-btn:active { transform: scale(0.9); }
     .btn { background: #22c55e; color: white; padding: 12px 24px; border: none; border-radius: 8px; width: 100%; font-size: 16px; cursor: pointer; font-weight: bold; margin-top: 10px; }
     .modal { display: none; position: fixed; top: 0; left: 0; width: 100%; height: 100%; background: rgba(0,0,0,0.8); }
     .modal-content { background: #1e293b; padding: 20px; margin: 25% auto; width: 80%; max-width: 320px; border-radius: 10px; text-align: left; }
