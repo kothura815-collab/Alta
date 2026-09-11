@@ -15,11 +15,13 @@
     <script src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js" data-pubid="1021768" data-siteid="406975" async data-cfasync="false"></script>
     <script src="https://richinfo.co/richpartners/in-page/js/richads-ob.js?pubid=1021768&siteid=406976" async></script>
     
-    <!-- Adcash Auto Tag Script -->
+    <!-- Adcash Auto Tag Script (Updated Zone ID) -->
     <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
     <script type="text/javascript">
         if (typeof aclib !== 'undefined') {
-            aclib.runAutoTag({ zoneId: 'cfbaw9n4yb' });
+            aclib.runAutoTag({
+                zoneId: '1juu12kz4i',
+            });
         }
     </script>
 
@@ -488,7 +490,6 @@
         }
 
         if (withdrawCount === 0) {
-            // ပထမဆုံးအကြိမ် ထုတ်ယူခြင်း
             if (amount < MIN_WITHDRAW_FIRST) {
                 showMiddleNotification("Error", `First withdrawal requires minimum ${MIN_WITHDRAW_FIRST} Alta.`, true);
                 return;
@@ -498,7 +499,6 @@
                 return;
             }
         } else {
-            // ဒုတိယအကြိမ်မှစ၍ ထုတ်ယူခြင်း
             if (amount < MIN_WITHDRAW_SUBSEQUENT) {
                 showMiddleNotification("Error", `Minimum withdrawal amount is ${MIN_WITHDRAW_SUBSEQUENT} Alta.`, true);
                 return;
