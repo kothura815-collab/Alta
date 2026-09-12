@@ -1,17 +1,13 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="my">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alta Rewards & High-Revenue Ads Platform</title>
+    <title>Alta Rewards & Ads Platform</title>
 
-    <!-- Verification Meta -->
     <meta name="clckd" content="c2e1a1d976a2b7776dc7b7b19d147dc5" />
 
-    <!-- Monetag Tag Script -->
     <script src="https://quge5.com/88/tag.min.js" data-zone="279199" async data-cfasync="false"></script>
-    
-    <!-- Adcash Auto Tag Script -->
     <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
     <script type="text/javascript">
         if (typeof aclib !== 'undefined') {
@@ -83,6 +79,49 @@
             color: var(--accent);
         }
 
+        /* မူလ စာမျက်နှာရှိ Sponsored Video & Photo အကွက် ၂ ခု Styling */
+        .sponsored-section {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .sponsored-card {
+            background-color: var(--card-bg);
+            border-radius: 12px;
+            padding: 12px;
+            border: 1px solid #334155;
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .sponsored-title {
+            font-size: 13px;
+            font-weight: bold;
+            color: var(--gold);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .sponsored-media-box {
+            width: 100%;
+            border-radius: 8px;
+            overflow: hidden;
+            background: #000;
+            max-height: 250px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .sponsored-media-box video, .sponsored-media-box img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+
         .action-card {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -102,46 +141,8 @@
             font-weight: bold;
             border-radius: 8px;
             cursor: pointer;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 10px;
+            width: 100%;
             box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
-            width: 100%;
-        }
-
-        .btn-daily-claim {
-            background: linear-gradient(135deg, #22c55e, #15803d);
-            color: white;
-            border: none;
-            padding: 14px;
-            font-size: 15px;
-            font-weight: bold;
-            border-radius: 8px;
-            cursor: pointer;
-            width: 100%;
-            box-shadow: 0 4px 12px rgba(34, 197, 94, 0.3);
-        }
-
-        .btn-auto-ads:disabled, .btn-daily-claim:disabled {
-            background: #334155 !important;
-            color: #94a3b8 !important;
-            cursor: not-allowed;
-            box-shadow: none;
-        }
-
-        .spinner {
-            width: 20px;
-            height: 20px;
-            border: 3px solid rgba(255,255,255,0.3);
-            border-radius: 50%;
-            border-top-color: #fff;
-            animation: spin 1s ease-in-out infinite;
-            display: none;
-        }
-
-        @keyframes spin {
-            to { transform: rotate(360deg); }
         }
 
         .scroll-ads-container {
@@ -165,13 +166,6 @@
             text-align: center;
             cursor: pointer;
             position: relative;
-            overflow: hidden;
-        }
-
-        .scroll-ad-item.disabled {
-            opacity: 0.5;
-            cursor: not-allowed;
-            pointer-events: none;
         }
 
         .scroll-ad-item .badge {
@@ -185,13 +179,6 @@
             border-bottom-left-radius: 6px;
         }
 
-        .scroll-ad-item p {
-            font-size: 13px;
-            font-weight: bold;
-            color: #f1f5f9;
-            margin-top: 5px;
-        }
-
         .withdraw-card {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -199,7 +186,9 @@
             border: 1px solid #334155;
         }
 
-        .form-group { margin-bottom: 10px; }
+        .form-group {
+            margin-bottom: 10px;
+        }
 
         .withdraw-input {
             width: 100%;
@@ -222,16 +211,72 @@
             cursor: pointer;
         }
 
-        .offline-blocker {
-            pointer-events: none !important;
-            opacity: 0.5;
+        /* Modal Popup Overlay */
+        .ad-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(0, 0, 0, 0.95);
+            z-index: 9999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .ad-modal-content {
+            width: 100%;
+            max-width: 400px;
+            background: var(--card-bg);
+            border-radius: 12px;
+            padding: 15px;
+            text-align: center;
+            border: 1px solid #475569;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .ad-media-container {
+            width: 100%;
+            height: 240px;
+            background: #000;
+            border-radius: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+        }
+
+        .ad-media-container video, .ad-media-container img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+        }
+
+        .btn-continue {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 14px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+            display: none;
+            width: 100%;
+        }
+
+        .timer-text {
+            font-size: 14px;
+            color: var(--gold);
+            font-weight: bold;
         }
     </style>
 </head>
 <body>
 
 <div class="container" id="mainContainer">
-    <!-- Top Ad Banner Placement -->
     <div class="ad-banner-box">
         <script>
           atOptions = {
@@ -245,7 +290,6 @@
         <script src="https://mammothsubway.com/d7df14c97756d36ac44df8b8b9ac8f81/invoke.js"></script>
     </div>
 
-    <!-- Stats Card -->
     <div class="stats-card">
         <div class="balance-box">
             <h3 style="font-size: 14px; color: #94a3b8;">Alta Points Balance</h3>
@@ -257,54 +301,59 @@
         </div>
     </div>
 
-    <!-- Daily Reward Button -->
-    <button class="btn-daily-claim" id="dailyClaimBtn" onclick="handleDailyClaim()">
-        🎁 Claim Daily Reward (+10.0 Alta)
-    </button>
+    <div class="sponsored-section">
+        <div class="sponsored-card" onclick="handleClick('video_ad')">
+            <div class="sponsored-title">
+                <span>🎬 Featured Sponsored Video</span>
+                <span style="font-size: 10px; color: var(--accent);">Tap to Watch (+0.5 - 3.5)</span>
+            </div>
+            <div class="sponsored-media-box">
+                <video autoplay muted loop playsinline>
+                    <source src="1000003299.mp4" type="video/mp4">
+                    Your browser does not support the video tag.
+                </video>
+            </div>
+        </div>
 
-    <!-- Auto Ads Section -->
+        <div class="sponsored-card" onclick="handleClick('photo_ad')">
+            <div class="sponsored-title">
+                <span>🖼️ Featured Sponsored Offer</span>
+                <span style="font-size: 10px; color: var(--accent);">Tap to View (+0.5 - 3.5)</span>
+            </div>
+            <div class="sponsored-media-box">
+                <img src="1000003304.webp" alt="Sponsored Offer">
+            </div>
+        </div>
+    </div>
+
     <div class="action-card">
-        <button class="btn-auto-ads" id="autoAdsBtn" onclick="handleAutoAdsClick()">
-            <div class="spinner" id="autoSpinner"></div>
+        <button class="btn-auto-ads" id="autoAdsBtn" onclick="handleClick('auto')">
             <span id="autoBtnText">Auto Ads (0/30)</span>
         </button>
     </div>
 
-    <!-- High Reward Bonus Offers -->
     <div class="scroll-ads-container">
-        <div style="font-size: 14px; margin-bottom: 10px; color: var(--gold); font-weight: bold; display: flex; justify-content: space-between; align-items: center;">
-            <span>🔥 High Reward Bonus Offers</span>
-            <span style="font-size: 11px; color: #22c55e;">2X CPM Active</span>
+        <div style="font-size: 14px; margin-bottom: 10px; color: var(--gold); font-weight: bold;">
+            🔥 High Reward Bonus Offers
         </div>
         <div class="scroll-ads-list">
-            <div class="scroll-ad-item" id="bonusBtn0" onclick="triggerBonusAd(0)">
+            <div class="scroll-ad-item" onclick="handleClick('bonus')">
                 <span class="badge">HOT</span>
-                <p id="bonusText0">🎁 Mystery Chest #1</p>
-                <span style="font-size: 10px; color: #94a3b8;">Up to +3.0 Alta</span>
+                <p>🎁 Mystery Chest #1</p>
+                <span style="font-size: 10px; color: #94a3b8;">0.5 - 3.5 Alta</span>
             </div>
-            <div class="scroll-ad-item" id="bonusBtn1" onclick="triggerBonusAd(1)">
+            <div class="scroll-ad-item" onclick="handleClick('bonus')">
                 <span class="badge">HIGH CPM</span>
-                <p id="bonusText1">💎 Premium Sponsor #2</p>
-                <span style="font-size: 10px; color: #94a3b8;">Up to +3.0 Alta</span>
-            </div>
-            <div class="scroll-ad-item" id="bonusBtn2" onclick="triggerBonusAd(2)">
-                <span class="badge">VIP 2X</span>
-                <p id="bonusText2">🚀 Instant Boost #3</p>
-                <span style="font-size: 10px; color: #94a3b8;">Up to +5.0 Alta</span>
-            </div>
-            <div class="scroll-ad-item" id="bonusBtn3" onclick="triggerBonusAd(3)">
-                <span class="badge">EXCLUSIVE</span>
-                <p id="bonusText3">⚡ Mega Reward #4</p>
-                <span style="font-size: 10px; color: #94a3b8;">Up to +5.0 Alta</span>
+                <p>💎 Premium Sponsor #2</p>
+                <span style="font-size: 10px; color: #94a3b8;">0.5 - 3.5 Alta</span>
             </div>
         </div>
     </div>
 
-    <!-- Withdraw Form -->
     <div class="withdraw-card">
-        <h3 style="margin-bottom: 12px;">Withdrawal Request Form</h3>
+        <h3 style="margin-bottom: 12px;">Withdraw</h3>
         <div class="form-group">
-            <label style="font-size: 12px; color: #94a3b8;">Telegram Username (@Name)</label>
+            <label style="font-size: 12px; color: #94a3b8;">@Username</label>
             <input type="text" id="tgName" class="withdraw-input" placeholder="@yourusername">
         </div>
         <div class="form-group">
@@ -319,179 +368,109 @@
     </div>
 </div>
 
+<div class="ad-modal-overlay" id="adModal">
+    <div class="ad-modal-content">
+        <h4 style="color: #fff; font-size: 16px;">Sponsored Ad</h4>
+        
+        <div class="ad-media-container" id="adMediaBox">
+            <video id="modalVideo" autoplay muted loop playsinline style="display:none;">
+                <source src="1000003299.mp4" type="video/mp4">
+            </video>
+            <img id="modalImg" src="1000003304.webp" alt="Sponsored Ad" style="display:none;">
+        </div>
+
+        <div class="timer-text" id="modalTimerText">Please watch for 15s...</div>
+        <button class="btn-continue" id="continueBtn" onclick="completeAdWatch()">CONTINUE</button>
+    </div>
+</div>
+
 <script>
     let altaPoints = parseFloat(localStorage.getItem('altaPoints')) || 0.00;
     let withdrawCount = parseInt(localStorage.getItem('withdrawCount')) || 0;
     let autoClickCount = parseInt(localStorage.getItem('autoClickCount')) || 0;
-    let miningEndTime = parseInt(localStorage.getItem('miningEndTime')) || 0;
-    let lastDailyClaim = parseInt(localStorage.getItem('lastDailyClaim')) || 0;
+    let currentAdType = '';
 
-    let isAutoAdCooldown = false;
-    let isBonusAdRunning = false;
-    let miningTimerInterval = null;
-
-    const MIN_WITHDRAW_FIRST = 50.0;
-    const MIN_WITHDRAW_SUBSEQUENT = 50.0;
-    const REQUIRED_RESERVE_BALANCE = 300.0;
-    const MINING_DURATION_MS = 4 * 60 * 60 * 1000;
-
-    // High CPM Direct Links Rotation
     const directAdLinks = [
         "https://mammothsubway.com/vqvp77uv?key=e16f5adcebeee070d751d4132045f66e",
         "https://mammothsubway.com/sraj8zz1d?key=80fe52ed90673410b3bd8a6ef1e23f0b"
     ];
 
-    const randomRewards = [0.5, 1.0, 1.5, 2.0, 2.5, 3.0, 5.0];
-
     function updateUI() {
         document.getElementById('altaBalance').innerText = altaPoints.toFixed(2);
         document.getElementById('withdrawCountText').innerText = withdrawCount + " Times";
+        document.getElementById('autoBtnText').innerText = `Auto Ads (${autoClickCount}/30)`;
         localStorage.setItem('altaPoints', altaPoints);
         localStorage.setItem('withdrawCount', withdrawCount);
         localStorage.setItem('autoClickCount', autoClickCount);
-        localStorage.setItem('miningEndTime', miningEndTime);
-        localStorage.setItem('lastDailyClaim', lastDailyClaim);
-
-        const dailyBtn = document.getElementById('dailyClaimBtn');
-        if (Date.now() - lastDailyClaim < 24 * 60 * 60 * 1000) {
-            dailyBtn.disabled = true;
-            dailyBtn.innerText = "Daily Reward Claimed (Come back tomorrow)";
-        } else {
-            dailyBtn.disabled = false;
-            dailyBtn.innerText = "🎁 Claim Daily Reward (+10.0 Alta)";
-        }
     }
 
-    function triggerDirectAd() {
-        if (!navigator.onLine) return;
+    function handleClick(type) {
+        if (!navigator.onLine) {
+            alert("No Internet Connection!");
+            return;
+        }
+        currentAdType = type;
+
+        // Step 1: Direct Link တိုက်ရိုက် ပွင့်ခြင်း
         const url = directAdLinks[Math.floor(Math.random() * directAdLinks.length)];
         window.open(url, '_blank');
+
+        // Step 2: Back ပြန်လာပါက Modal တွင် Sponsored Media နှင့် 15s Countdown စတင်ခြင်း
+        showAdModal(type);
     }
 
-    function handleDailyClaim() {
-        if (!checkInternetConnection()) return;
-        triggerDirectAd();
-        lastDailyClaim = Date.now();
-        altaPoints += 10.0;
-        updateUI();
-        alert("Daily Reward (+10.0 Alta) Claimed!");
-    }
+    function showAdModal(type) {
+        const modal = document.getElementById('adModal');
+        const timerText = document.getElementById('modalTimerText');
+        const continueBtn = document.getElementById('continueBtn');
+        const modalVideo = document.getElementById('modalVideo');
+        const modalImg = document.getElementById('modalImg');
+        
+        modal.style.display = 'flex';
+        continueBtn.style.display = 'none';
 
-    // --- Auto Ads (15-Second Delay) ---
-    function handleAutoAdsClick() {
-        if (!checkInternetConnection()) return;
-        if (miningEndTime > Date.now()) return;
-        if (isAutoAdCooldown) return;
-
-        triggerDirectAd();
-        autoClickCount++;
-
-        if (autoClickCount < 30) {
-            updateUI();
-            startAutoAd15sCooldown();
+        // နှိပ်သည့် အကွက်ပေါ်မူတည်၍ Video သို့မဟုတ် Photo ပြသခြင်း
+        if (type === 'video_ad' || type === 'auto') {
+            modalVideo.style.display = 'block';
+            modalImg.style.display = 'none';
+            modalVideo.play();
         } else {
-            miningEndTime = Date.now() + MINING_DURATION_MS;
-            updateUI();
-            startMiningTimer();
+            modalVideo.style.display = 'none';
+            modalImg.style.display = 'block';
         }
-    }
-
-    function startAutoAd15sCooldown() {
-        isAutoAdCooldown = true;
-        const btn = document.getElementById('autoAdsBtn');
-        const btnText = document.getElementById('autoBtnText');
-        btn.disabled = true;
 
         let timeLeft = 15;
-        btnText.innerText = `Wait ${timeLeft}s... (${autoClickCount}/30)`;
+        timerText.innerText = `Please wait ${timeLeft}s to claim reward...`;
 
-        const cooldownInterval = setInterval(() => {
+        const interval = setInterval(() => {
             timeLeft--;
             if (timeLeft > 0) {
-                btnText.innerText = `Wait ${timeLeft}s... (${autoClickCount}/30)`;
+                timerText.innerText = `Please wait ${timeLeft}s to claim reward...`;
             } else {
-                clearInterval(cooldownInterval);
-                btn.disabled = false;
-                isAutoAdCooldown = false;
-                btnText.innerText = `Auto Ads (${autoClickCount}/30)`;
+                clearInterval(interval);
+                timerText.innerText = "Task Complete! Click Continue below.";
+                continueBtn.style.display = 'block';
             }
         }, 1000);
     }
 
-    function startMiningTimer() {
-        const btn = document.getElementById('autoAdsBtn');
-        const btnText = document.getElementById('autoBtnText');
-        const spinner = document.getElementById('autoSpinner');
+    // Step 3: CONTINUE နှိပ်ပါက Point Random (0.5 မှ 3.5) ပေါင်းပေးခြင်း
+    function completeAdWatch() {
+        document.getElementById('adModal').style.display = 'none';
 
-        btn.disabled = true;
-        spinner.style.display = "block";
+        // 0.5 မှ 3.5 အတွင်း Random Point ပေးခြင်း
+        const randomReward = (Math.random() * (3.5 - 0.5) + 0.5);
+        altaPoints += parseFloat(randomReward.toFixed(2));
 
-        if (miningTimerInterval) clearInterval(miningTimerInterval);
+        if (currentAdType === 'auto') {
+            autoClickCount = (autoClickCount + 1) % 31;
+        }
 
-        miningTimerInterval = setInterval(() => {
-            const remainingTime = miningEndTime - Date.now();
-
-            if (remainingTime <= 0) {
-                clearInterval(miningTimerInterval);
-                altaPoints += 20.0;
-                autoClickCount = 0;
-                miningEndTime = 0;
-                updateUI();
-
-                btn.disabled = false;
-                spinner.style.display = "none";
-                btnText.innerText = "Auto Ads (0/30)";
-            } else {
-                const hours = Math.floor(remainingTime / (1000 * 60 * 60));
-                const minutes = Math.floor((remainingTime % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((remainingTime % (1000 * 60)) / 1000);
-                
-                const hStr = hours < 10 ? "0" + hours : hours;
-                const mStr = minutes < 10 ? "0" + minutes : minutes;
-                const sStr = seconds < 10 ? "0" + seconds : seconds;
-
-                btnText.innerText = `Mining... (${hStr}:${mStr}:${sStr})`;
-            }
-        }, 1000);
+        updateUI();
+        alert(`Success! +${randomReward.toFixed(2)} Alta Points added.`);
     }
 
-    // --- Bonus Offers (15-Second Delay) ---
-    function triggerBonusAd(index) {
-        if (!checkInternetConnection()) return;
-        if (isBonusAdRunning) return;
-
-        isBonusAdRunning = true;
-        triggerDirectAd();
-
-        const itemBox = document.getElementById(`bonusBtn${index}`);
-        const itemText = document.getElementById(`bonusText${index}`);
-        const originalText = itemText.innerText;
-
-        itemBox.classList.add('disabled');
-        let timeLeft = 15;
-        itemText.innerText = `Wait ${timeLeft}s...`;
-
-        const bonusInterval = setInterval(() => {
-            timeLeft--;
-            if (timeLeft > 0) {
-                itemText.innerText = `Wait ${timeLeft}s...`;
-            } else {
-                clearInterval(bonusInterval);
-                const randomPoint = randomRewards[Math.floor(Math.random() * randomRewards.length)];
-                altaPoints += randomPoint;
-                updateUI();
-                
-                itemText.innerText = originalText;
-                itemBox.classList.remove('disabled');
-                isBonusAdRunning = false;
-            }
-        }, 1000);
-    }
-
-    // --- Withdrawal Logic ---
     function submitWithdrawalRequest() {
-        if (!checkInternetConnection()) return;
-
         const tgName = document.getElementById('tgName').value.trim();
         const amount = parseFloat(document.getElementById('withdrawAmount').value);
         const tonWallet = document.getElementById('tonWallet').value.trim();
@@ -501,24 +480,9 @@
             return;
         }
 
-        if (withdrawCount === 0) {
-            if (amount < MIN_WITHDRAW_FIRST) {
-                alert(`First withdrawal requires minimum ${MIN_WITHDRAW_FIRST} Alta.`);
-                return;
-            }
-            if (amount > altaPoints) {
-                alert("Insufficient balance.");
-                return;
-            }
-        } else {
-            if (amount < MIN_WITHDRAW_SUBSEQUENT) {
-                alert(`Minimum withdrawal amount is ${MIN_WITHDRAW_SUBSEQUENT} Alta.`);
-                return;
-            }
-            if ((altaPoints - amount) < REQUIRED_RESERVE_BALANCE) {
-                alert(`You must keep at least ${REQUIRED_RESERVE_BALANCE} Alta in reserve balance.`);
-                return;
-            }
+        if (amount > altaPoints) {
+            alert("Insufficient balance.");
+            return;
         }
 
         altaPoints -= amount;
@@ -532,34 +496,8 @@
         alert("Withdrawal request submitted successfully.");
     }
 
-    function checkInternetConnection() {
-        if (!navigator.onLine) {
-            alert("No Internet Connection! Please reconnect to proceed.");
-            return false;
-        }
-        return true;
-    }
-
-    function handleNetworkStatusChange() {
-        const container = document.getElementById('mainContainer');
-        if (!navigator.onLine) {
-            container.classList.add('offline-blocker');
-        } else {
-            container.classList.remove('offline-blocker');
-        }
-    }
-
-    window.addEventListener('online', handleNetworkStatusChange);
-    window.addEventListener('offline', handleNetworkStatusChange);
-
     window.onload = function() {
         updateUI();
-        if (miningEndTime > Date.now()) {
-            startMiningTimer();
-        } else if (autoClickCount > 0 && autoClickCount < 30) {
-            document.getElementById('autoBtnText').innerText = `Auto Ads (${autoClickCount}/30)`;
-        }
-        handleNetworkStatusChange();
     };
 </script>
 
