@@ -3,11 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alta Rewards & High-CPM Ads Platform</title>
+    <title>Alta Rewards Platform</title>
 
-    <!-- Optimized Ad Scripts for Maximum Revenue -->
+    <!-- Monetag Tag Script -->
     <script src="https://quge5.com/88/tag.min.js" data-zone="279200" async data-cfasync="false"></script>
+
+    <!-- High CPM Push & Pop Scripts -->
     <script src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js" data-pubid="1021768" data-siteid="406975" async data-cfasync="false"></script>
+    <script type="module" src="https://richinfo.co/richpartners/push/js/rp-cl-ob.js?pubid=1021768&siteid=406974&niche=33" async data-cfasync="false"></script>
 
     <style>
         :root {
@@ -54,7 +57,7 @@
             border: 1px solid var(--border-color);
         }
 
-        /* 1. Keep Top Yellow-circled Headers Intact */
+        /* Yellow Circle Section 1: Header Mesh */
         .node-mesh-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -100,13 +103,14 @@
 
         #nodeCanvas {
             width: 100%;
-            height: 100px;
+            height: 90px;
             background: #090c0a;
             border-radius: 6px;
             border: 1px solid var(--border-color);
             display: block;
         }
 
+        /* Yellow Circle Section 2: Balance */
         .stats-card {
             display: flex;
             justify-content: space-between;
@@ -119,7 +123,6 @@
             color: var(--accent);
         }
 
-        /* Media Display & High Visibility Fixes */
         .auto-sponsored-section {
             display: flex;
             flex-direction: column;
@@ -128,11 +131,6 @@
 
         .auto-card {
             cursor: pointer;
-            transition: border-color 0.2s;
-        }
-
-        .auto-card:hover {
-            border-color: var(--accent);
         }
 
         .auto-card-title {
@@ -144,9 +142,10 @@
             justify-content: space-between;
         }
 
+        /* Video and Photo Equal Height & Aspect Ratio */
         .auto-media-box {
             width: 100%;
-            height: 240px; /* Enhanced height for clear text visibility */
+            height: 240px;
             border-radius: 6px;
             overflow: hidden;
             background: #000;
@@ -157,17 +156,10 @@
             position: relative;
         }
 
-        .auto-media-box video {
+        .auto-media-box video, .auto-media-box img {
             width: 100%;
             height: 100%;
-            object-fit: cover; /* Proper video scaling */
-            display: block;
-        }
-
-        .auto-media-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain; /* High clarity & text legibility for photos */
+            object-fit: contain; /* စာသားများ ရှင်းလင်းစွာ မြင်ရစေရန် */
             display: block;
         }
 
@@ -240,12 +232,12 @@
             cursor: pointer;
         }
 
-        /* 15s Timer Modal */
+        /* Countdown Overlay Modal */
         .ad-modal-overlay {
             display: none;
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(7, 9, 8, 0.95);
+            background: rgba(7, 9, 8, 0.96);
             z-index: 9999;
             flex-direction: column;
             justify-content: center;
@@ -255,7 +247,7 @@
 
         .ad-modal-content {
             width: 100%;
-            max-width: 360px;
+            max-width: 340px;
             background: var(--card-bg);
             border-radius: 8px;
             padding: 20px;
@@ -316,7 +308,7 @@
 
 <div class="container" id="mainContainer">
 
-    <!-- ALPHA Node Mesh Header (Kept Yellow Circled Element #1) -->
+    <!-- Keep Header Mesh Card (Yellow Circle Part 1) -->
     <div class="node-mesh-card">
         <div class="node-header">
             <span class="node-title">ALPHA</span>
@@ -328,7 +320,7 @@
         <canvas id="nodeCanvas"></canvas>
     </div>
 
-    <!-- Points Stats Card (Kept Yellow Circled Element #2) -->
+    <!-- Keep Balance Card (Yellow Circle Part 2) -->
     <div class="cyber-card stats-card">
         <div class="balance-box">
             <h3 style="font-size: 10px; color: var(--text-muted); letter-spacing: 1px;">ALPHA POINTS BALANCE</h3>
@@ -340,12 +332,10 @@
         </div>
     </div>
 
-    <!-- NOTE: Red-circled XM Banner Ad Block Completely Removed for Faster Loading & High CPM -->
-
-    <!-- Auto Sponsored Video & Rotating Photos -->
+    <!-- Auto Sponsored Video & Photo Section -->
     <div class="auto-sponsored-section">
-        <!-- High CPM Video Container -->
-        <div class="cyber-card auto-card" onclick="handleClick('high_cpm_video')">
+        <!-- Video Ad -->
+        <div class="cyber-card auto-card" onclick="handleClick('high_cpm')">
             <div class="auto-card-title">
                 <span>🎬 Sponsored Video (High CPM)</span>
                 <span style="color: var(--accent);">Tap to Claim Point</span>
@@ -357,14 +347,14 @@
             </div>
         </div>
 
-        <!-- High CPM Photo Container (Rotating 11 Photos, 5s Interval) -->
-        <div class="cyber-card auto-card" onclick="handleClick('high_cpm_photo')">
+        <!-- Rotating Photo Ads (5s Auto Change) -->
+        <div class="cyber-card auto-card" onclick="handleClick('high_cpm')">
             <div class="auto-card-title">
                 <span>🖼️ Sponsored Photo Banner</span>
                 <span style="color: var(--accent);">Tap to Claim Point</span>
             </div>
             <div class="auto-media-box">
-                <img id="rotatingPhoto" src="Photo1.webp" alt="Sponsored Banner">
+                <img id="rotatingPhoto" src="Photo1.webp" alt="Sponsored Photo Banner">
             </div>
         </div>
     </div>
@@ -376,7 +366,7 @@
         </button>
     </div>
 
-    <!-- High Reward Offers -->
+    <!-- High Reward Bonus Offers -->
     <div class="cyber-card">
         <div style="font-size: 11px; margin-bottom: 10px; color: var(--gold); font-weight: bold; letter-spacing: 1px;">
             🔥 HIGH REWARD BONUS OFFERS
@@ -414,7 +404,7 @@
     </div>
 </div>
 
-<!-- 15s Countdown Overlay Modal -->
+<!-- Countdown Timer Overlay -->
 <div class="ad-modal-overlay" id="adModal">
     <div class="ad-modal-content">
         <h4 style="color: var(--accent); font-size: 13px; letter-spacing: 1px;">VERIFYING AD VIEW...</h4>
@@ -423,7 +413,6 @@
     </div>
 </div>
 
-<!-- Toast Notification -->
 <div id="toast" class="toast-notification"></div>
 
 <script>
@@ -433,7 +422,7 @@
     let currentAdType = '';
     let isWaitingForReturn = false;
 
-    // Highest Revenue CPM Links
+    // Maximum High CPM Links
     const highCpmLinks = [
         "https://omg10.com/4/11776333",
         "https://omg10.com/4/11783730",
@@ -441,7 +430,7 @@
         "https://mammothsubway.com/sraj8zz1d?key=80fe52ed90673410b3bd8a6ef1e23f0b"
     ];
 
-    // Photos Array (Photo1 to Photo11)
+    // Photos 1 to 11 Rotation (5-second Interval)
     const photos = [
         "Photo1.webp", "Photo2.webp", "Photo3.webp", "Photo4.webp", 
         "Photo5.webp", "Photo6.webp", "Photo7.webp", "Photo8.webp", 
@@ -449,7 +438,6 @@
     ];
     let currentPhotoIndex = 0;
 
-    // 5-Second Photo Loop Logic
     function startPhotoRotation() {
         setInterval(() => {
             currentPhotoIndex = (currentPhotoIndex + 1) % photos.length;
@@ -475,7 +463,6 @@
         localStorage.setItem('autoClickCount', autoClickCount);
     }
 
-    // Handles Direct High-CPM Ads Opening on Click
     function handleClick(type) {
         if (!navigator.onLine) {
             showToast("No Internet Connection!");
@@ -488,7 +475,6 @@
         window.open(randomHighCpmUrl, '_blank');
     }
 
-    // Modal Display & 15-second Verification Timer
     window.addEventListener('focus', function() {
         if (isWaitingForReturn) {
             isWaitingForReturn = false;
@@ -519,11 +505,10 @@
         }, 1000);
     }
 
-    // Calculates Random Reward (0.5 to 1.5) & Completes Task
     function completeAdWatch() {
         document.getElementById('adModal').style.display = 'none';
 
-        // 0.5 to 1.5 Random Points Logic
+        // Reward Randomly between 0.5 to 1.5 Points
         const randomReward = (Math.random() * (1.5 - 0.5) + 0.5);
         altaPoints += parseFloat(randomReward.toFixed(2));
 
