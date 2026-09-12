@@ -5,10 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alta Rewards Platform</title>
 
-    <!-- Monetag Tag Script -->
-    <script src="https://quge5.com/88/tag.min.js" data-zone="279200" async data-cfasync="false"></script>
-
-    <!-- High CPM Push & Pop Scripts -->
+    <!-- RichAds Integration (Kept Intact) -->
     <script src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js" data-pubid="1021768" data-siteid="406975" async data-cfasync="false"></script>
     <script type="module" src="https://richinfo.co/richpartners/push/js/rp-cl-ob.js?pubid=1021768&siteid=406974&niche=33" async data-cfasync="false"></script>
 
@@ -57,7 +54,6 @@
             border: 1px solid var(--border-color);
         }
 
-        /* Yellow Circle Section 1: Header Mesh */
         .node-mesh-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -110,7 +106,6 @@
             display: block;
         }
 
-        /* Yellow Circle Section 2: Balance */
         .stats-card {
             display: flex;
             justify-content: space-between;
@@ -142,7 +137,6 @@
             justify-content: space-between;
         }
 
-        /* Video and Photo Equal Height & Aspect Ratio */
         .auto-media-box {
             width: 100%;
             height: 240px;
@@ -153,13 +147,12 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            position: relative;
         }
 
         .auto-media-box video, .auto-media-box img {
             width: 100%;
             height: 100%;
-            object-fit: contain; /* စာသားများ ရှင်းလင်းစွာ မြင်ရစေရန် */
+            object-fit: contain;
             display: block;
         }
 
@@ -232,7 +225,6 @@
             cursor: pointer;
         }
 
-        /* Countdown Overlay Modal */
         .ad-modal-overlay {
             display: none;
             position: fixed;
@@ -308,7 +300,6 @@
 
 <div class="container" id="mainContainer">
 
-    <!-- Keep Header Mesh Card (Yellow Circle Part 1) -->
     <div class="node-mesh-card">
         <div class="node-header">
             <span class="node-title">ALPHA</span>
@@ -320,7 +311,6 @@
         <canvas id="nodeCanvas"></canvas>
     </div>
 
-    <!-- Keep Balance Card (Yellow Circle Part 2) -->
     <div class="cyber-card stats-card">
         <div class="balance-box">
             <h3 style="font-size: 10px; color: var(--text-muted); letter-spacing: 1px;">ALPHA POINTS BALANCE</h3>
@@ -332,12 +322,10 @@
         </div>
     </div>
 
-    <!-- Auto Sponsored Video & Photo Section -->
     <div class="auto-sponsored-section">
-        <!-- Video Ad -->
         <div class="cyber-card auto-card" onclick="handleClick('high_cpm')">
             <div class="auto-card-title">
-                <span>🎬 Sponsored Video (High CPM)</span>
+                <span>🎬 Sponsored Video (Highest CPM)</span>
                 <span style="color: var(--accent);">Tap to Claim Point</span>
             </div>
             <div class="auto-media-box">
@@ -347,7 +335,6 @@
             </div>
         </div>
 
-        <!-- Rotating Photo Ads (5s Auto Change) -->
         <div class="cyber-card auto-card" onclick="handleClick('high_cpm')">
             <div class="auto-card-title">
                 <span>🖼️ Sponsored Photo Banner</span>
@@ -359,21 +346,19 @@
         </div>
     </div>
 
-    <!-- Auto Ads Action Button -->
     <div class="cyber-card">
         <button class="btn-auto-ads" id="autoAdsBtn" onclick="handleClick('auto')">
             <span id="autoBtnText">Auto Ads (0/30)</span>
         </button>
     </div>
 
-    <!-- High Reward Bonus Offers -->
     <div class="cyber-card">
         <div style="font-size: 11px; margin-bottom: 10px; color: var(--gold); font-weight: bold; letter-spacing: 1px;">
             🔥 HIGH REWARD BONUS OFFERS
         </div>
         <div class="scroll-ads-list">
-            <div class="scroll-ad-item" onclick="handleClick('high_cpm')">
-                <span class="badge">HOT</span>
+            <div class="scroll-ad-item" onclick="handleClick('adsterra')">
+                <span class="badge">ADSTERRA</span>
                 <p style="font-size: 11px;">🎁 Mystery Chest #1</p>
                 <span style="font-size: 10px; color: var(--text-muted);">0.5 - 1.5 Alpha</span>
             </div>
@@ -385,7 +370,6 @@
         </div>
     </div>
 
-    <!-- Withdrawal Form -->
     <div class="cyber-card">
         <h3 style="margin-bottom: 10px; font-size: 12px; color: var(--accent); letter-spacing: 1px;">WITHDRAW</h3>
         <div class="form-group">
@@ -404,7 +388,6 @@
     </div>
 </div>
 
-<!-- Countdown Timer Overlay -->
 <div class="ad-modal-overlay" id="adModal">
     <div class="ad-modal-content">
         <h4 style="color: var(--accent); font-size: 13px; letter-spacing: 1px;">VERIFYING AD VIEW...</h4>
@@ -422,7 +405,7 @@
     let currentAdType = '';
     let isWaitingForReturn = false;
 
-    // Maximum High CPM Links
+    // High CPM Revenue Pool (Adsterra, RichAds, MammothSubway/Monetag)
     const highCpmLinks = [
         "https://omg10.com/4/11776333",
         "https://omg10.com/4/11783730",
@@ -430,7 +413,6 @@
         "https://mammothsubway.com/sraj8zz1d?key=80fe52ed90673410b3bd8a6ef1e23f0b"
     ];
 
-    // Photos 1 to 11 Rotation (5-second Interval)
     const photos = [
         "Photo1.webp", "Photo2.webp", "Photo3.webp", "Photo4.webp", 
         "Photo5.webp", "Photo6.webp", "Photo7.webp", "Photo8.webp", 
@@ -471,8 +453,8 @@
         currentAdType = type;
         isWaitingForReturn = true;
 
-        const randomHighCpmUrl = highCpmLinks[Math.floor(Math.random() * highCpmLinks.length)];
-        window.open(randomHighCpmUrl, '_blank');
+        const targetUrl = highCpmLinks[Math.floor(Math.random() * highCpmLinks.length)];
+        window.open(targetUrl, '_blank');
     }
 
     window.addEventListener('focus', function() {
@@ -507,8 +489,6 @@
 
     function completeAdWatch() {
         document.getElementById('adModal').style.display = 'none';
-
-        // Reward Randomly between 0.5 to 1.5 Points
         const randomReward = (Math.random() * (1.5 - 0.5) + 0.5);
         altaPoints += parseFloat(randomReward.toFixed(2));
 
