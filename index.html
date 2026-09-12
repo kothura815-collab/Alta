@@ -3,19 +3,11 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alta Rewards & Ads Platform</title>
+    <title>Alta Rewards & High-CPM Ads Platform</title>
 
-    <!-- Monetag Tag Script -->
+    <!-- Optimized Ad Scripts for Maximum Revenue -->
     <script src="https://quge5.com/88/tag.min.js" data-zone="279200" async data-cfasync="false"></script>
-
-    <!-- RichAds Scripts -->
-    <script src="https://richinfo.co/richpartners/in-page/js/richads-ob.js?pubid=1021768&siteid=406976" async></script>
     <script src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js" data-pubid="1021768" data-siteid="406975" async data-cfasync="false"></script>
-    <script type="module" src="https://richinfo.co/richpartners/push/js/rp-cl-ob.js?pubid=1021768&siteid=406974&niche=33" async data-cfasync="false"></script>
-
-    <!-- MammothSubway Ad Scripts -->
-    <script src="https://mammothsubway.com/c6/6a/68/c66a68f1e4f955460119550f4b16cdeb.js"></script>
-    <script src="https://mammothsubway.com/38/84/b8/3884b84642518c8d1767cf3d63554b7f.js"></script>
 
     <style>
         :root {
@@ -62,6 +54,7 @@
             border: 1px solid var(--border-color);
         }
 
+        /* 1. Keep Top Yellow-circled Headers Intact */
         .node-mesh-card {
             background: var(--card-bg);
             border: 1px solid var(--border-color);
@@ -126,6 +119,7 @@
             color: var(--accent);
         }
 
+        /* Media Display & High Visibility Fixes */
         .auto-sponsored-section {
             display: flex;
             flex-direction: column;
@@ -134,6 +128,11 @@
 
         .auto-card {
             cursor: pointer;
+            transition: border-color 0.2s;
+        }
+
+        .auto-card:hover {
+            border-color: var(--accent);
         }
 
         .auto-card-title {
@@ -145,13 +144,12 @@
             justify-content: space-between;
         }
 
-        /* Video နှင့် Photo အရွယ်အစား ညီညာအောင် ပြုပြင်ထားသော CSS */
         .auto-media-box {
             width: 100%;
-            height: 220px;
+            height: 240px; /* Enhanced height for clear text visibility */
             border-radius: 6px;
             overflow: hidden;
-            background: #090c0a;
+            background: #000;
             border: 1px solid var(--border-color);
             display: flex;
             justify-content: center;
@@ -159,20 +157,18 @@
             position: relative;
         }
 
-        .auto-media-box video, .auto-media-box img {
+        .auto-media-box video {
             width: 100%;
             height: 100%;
-            object-fit: cover;
+            object-fit: cover; /* Proper video scaling */
             display: block;
         }
 
-        .banner-ad-box {
-            display: flex;
-            justify-content: center;
-            align-items: center;
+        .auto-media-box img {
             width: 100%;
-            margin: 5px 0;
-            overflow: hidden;
+            height: 100%;
+            object-fit: contain; /* High clarity & text legibility for photos */
+            display: block;
         }
 
         .btn-auto-ads {
@@ -244,6 +240,7 @@
             cursor: pointer;
         }
 
+        /* 15s Timer Modal */
         .ad-modal-overlay {
             display: none;
             position: fixed;
@@ -283,7 +280,7 @@
         }
 
         .timer-text {
-            font-size: 13px;
+            font-size: 14px;
             color: var(--gold);
             font-weight: bold;
         }
@@ -319,21 +316,7 @@
 
 <div class="container" id="mainContainer">
 
-    <!-- 1. Banner Ad Box (အနီရောင်ဝိုင်းပြထားသည့်နေရာကို အပေါ်ဆုံးသို့ ရွှေ့ထားသည်) -->
-    <div class="banner-ad-box">
-        <script>
-          atOptions = {
-            'key' : 'd7df14c97756d36ac44df8b8b9ac8f81',
-            'format' : 'iframe',
-            'height' : 250,
-            'width' : 300,
-            'params' : {}
-          };
-        </script>
-        <script src="https://mammothsubway.com/d7df14c97756d36ac44df8b8b9ac8f81/invoke.js"></script>
-    </div>
-
-    <!-- 2. ALPHA Node Mesh Header (အဝါရောင်ဝိုင်းနေရာကို Banner Ad အောက်သို့ ရွှေ့ထားသည်) -->
+    <!-- ALPHA Node Mesh Header (Kept Yellow Circled Element #1) -->
     <div class="node-mesh-card">
         <div class="node-header">
             <span class="node-title">ALPHA</span>
@@ -345,7 +328,7 @@
         <canvas id="nodeCanvas"></canvas>
     </div>
 
-    <!-- 3. Points Stats Card -->
+    <!-- Points Stats Card (Kept Yellow Circled Element #2) -->
     <div class="cyber-card stats-card">
         <div class="balance-box">
             <h3 style="font-size: 10px; color: var(--text-muted); letter-spacing: 1px;">ALPHA POINTS BALANCE</h3>
@@ -357,10 +340,12 @@
         </div>
     </div>
 
-    <!-- Auto Sponsored Video & Rotating Photo Ads (အရွယ်အစား ညီညာအောင် ပြင်ဆင်ထားသည်) -->
+    <!-- NOTE: Red-circled XM Banner Ad Block Completely Removed for Faster Loading & High CPM -->
+
+    <!-- Auto Sponsored Video & Rotating Photos -->
     <div class="auto-sponsored-section">
-        <!-- Video 1.mp4 -->
-        <div class="cyber-card auto-card" onclick="handleClick('video_ad')">
+        <!-- High CPM Video Container -->
+        <div class="cyber-card auto-card" onclick="handleClick('high_cpm_video')">
             <div class="auto-card-title">
                 <span>🎬 Sponsored Video (High CPM)</span>
                 <span style="color: var(--accent);">Tap to Claim Point</span>
@@ -372,8 +357,8 @@
             </div>
         </div>
 
-        <!-- Photos (5s Rotation) -->
-        <div class="cyber-card auto-card" onclick="handleClick('photo_ad')">
+        <!-- High CPM Photo Container (Rotating 11 Photos, 5s Interval) -->
+        <div class="cyber-card auto-card" onclick="handleClick('high_cpm_photo')">
             <div class="auto-card-title">
                 <span>🖼️ Sponsored Photo Banner</span>
                 <span style="color: var(--accent);">Tap to Claim Point</span>
@@ -400,12 +385,12 @@
             <div class="scroll-ad-item" onclick="handleClick('high_cpm')">
                 <span class="badge">HOT</span>
                 <p style="font-size: 11px;">🎁 Mystery Chest #1</p>
-                <span style="font-size: 10px; color: var(--text-muted);">0.5 - 3.5 Alpha</span>
+                <span style="font-size: 10px; color: var(--text-muted);">0.5 - 1.5 Alpha</span>
             </div>
             <div class="scroll-ad-item" onclick="handleClick('high_cpm')">
                 <span class="badge">HIGH CPM</span>
                 <p style="font-size: 11px;">💎 Premium Sponsor #2</p>
-                <span style="font-size: 10px; color: var(--text-muted);">0.5 - 3.5 Alpha</span>
+                <span style="font-size: 10px; color: var(--text-muted);">0.5 - 1.5 Alpha</span>
             </div>
         </div>
     </div>
@@ -429,7 +414,7 @@
     </div>
 </div>
 
-<!-- Modal Overlay for Timer -->
+<!-- 15s Countdown Overlay Modal -->
 <div class="ad-modal-overlay" id="adModal">
     <div class="ad-modal-content">
         <h4 style="color: var(--accent); font-size: 13px; letter-spacing: 1px;">VERIFYING AD VIEW...</h4>
@@ -438,7 +423,7 @@
     </div>
 </div>
 
-<!-- Middle Center Custom Notification Element -->
+<!-- Toast Notification -->
 <div id="toast" class="toast-notification"></div>
 
 <script>
@@ -448,7 +433,7 @@
     let currentAdType = '';
     let isWaitingForReturn = false;
 
-    // High CPM Direct Ad Links
+    // Highest Revenue CPM Links
     const highCpmLinks = [
         "https://omg10.com/4/11776333",
         "https://omg10.com/4/11783730",
@@ -456,13 +441,7 @@
         "https://mammothsubway.com/sraj8zz1d?key=80fe52ed90673410b3bd8a6ef1e23f0b"
     ];
 
-    // Monetag Links
-    const monetagLinks = [
-        "https://omg10.com/4/11776333",
-        "https://omg10.com/4/11783730"
-    ];
-
-    // Photos Array (Photo1.webp to Photo11.webp)
+    // Photos Array (Photo1 to Photo11)
     const photos = [
         "Photo1.webp", "Photo2.webp", "Photo3.webp", "Photo4.webp", 
         "Photo5.webp", "Photo6.webp", "Photo7.webp", "Photo8.webp", 
@@ -470,6 +449,7 @@
     ];
     let currentPhotoIndex = 0;
 
+    // 5-Second Photo Loop Logic
     function startPhotoRotation() {
         setInterval(() => {
             currentPhotoIndex = (currentPhotoIndex + 1) % photos.length;
@@ -495,6 +475,7 @@
         localStorage.setItem('autoClickCount', autoClickCount);
     }
 
+    // Handles Direct High-CPM Ads Opening on Click
     function handleClick(type) {
         if (!navigator.onLine) {
             showToast("No Internet Connection!");
@@ -507,6 +488,7 @@
         window.open(randomHighCpmUrl, '_blank');
     }
 
+    // Modal Display & 15-second Verification Timer
     window.addEventListener('focus', function() {
         if (isWaitingForReturn) {
             isWaitingForReturn = false;
@@ -537,13 +519,12 @@
         }, 1000);
     }
 
+    // Calculates Random Reward (0.5 to 1.5) & Completes Task
     function completeAdWatch() {
         document.getElementById('adModal').style.display = 'none';
 
-        const randomMonetagUrl = monetagLinks[Math.floor(Math.random() * monetagLinks.length)];
-        window.open(randomMonetagUrl, '_blank');
-
-        const randomReward = (Math.random() * (3.5 - 0.5) + 0.5);
+        // 0.5 to 1.5 Random Points Logic
+        const randomReward = (Math.random() * (1.5 - 0.5) + 0.5);
         altaPoints += parseFloat(randomReward.toFixed(2));
 
         if (currentAdType === 'auto') {
@@ -647,4 +628,4 @@
 </script>
 
 </body>
-            </html>
+</html>
