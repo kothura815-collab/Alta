@@ -145,10 +145,10 @@
             justify-content: space-between;
         }
 
+        /* Video နှင့် Photo အရွယ်အစား ညီညာအောင် ပြုပြင်ထားသော CSS */
         .auto-media-box {
             width: 100%;
-            min-height: 130px;
-            max-height: 180px;
+            height: 220px;
             border-radius: 6px;
             overflow: hidden;
             background: #090c0a;
@@ -162,8 +162,7 @@
         .auto-media-box video, .auto-media-box img {
             width: 100%;
             height: 100%;
-            max-height: 180px;
-            object-fit: contain;
+            object-fit: cover;
             display: block;
         }
 
@@ -320,31 +319,7 @@
 
 <div class="container" id="mainContainer">
 
-    <!-- ALPHA Node Mesh Header -->
-    <div class="node-mesh-card">
-        <div class="node-header">
-            <span class="node-title">ALPHA</span>
-            <div class="sync-status">
-                <span class="dot-pulsing"></span>
-                <span>Syncing</span>
-            </div>
-        </div>
-        <canvas id="nodeCanvas"></canvas>
-    </div>
-
-    <!-- Points Stats Card -->
-    <div class="cyber-card stats-card">
-        <div class="balance-box">
-            <h3 style="font-size: 10px; color: var(--text-muted); letter-spacing: 1px;">ALPHA POINTS BALANCE</h3>
-            <div class="points" id="altaBalance">0.00</div>
-        </div>
-        <div style="text-align: right;">
-            <p style="font-size: 10px; color: var(--text-muted); letter-spacing: 1px;">WITHDRAWALS</p>
-            <p style="font-size: 14px; font-weight: bold; color: var(--text-main);" id="withdrawCountText">0 Times</p>
-        </div>
-    </div>
-
-    <!-- Banner Ad Container -->
+    <!-- 1. Banner Ad Box (အနီရောင်ဝိုင်းပြထားသည့်နေရာကို အပေါ်ဆုံးသို့ ရွှေ့ထားသည်) -->
     <div class="banner-ad-box">
         <script>
           atOptions = {
@@ -358,9 +333,33 @@
         <script src="https://mammothsubway.com/d7df14c97756d36ac44df8b8b9ac8f81/invoke.js"></script>
     </div>
 
-    <!-- Auto Sponsored Video & Rotating Photo Ads -->
+    <!-- 2. ALPHA Node Mesh Header (အဝါရောင်ဝိုင်းနေရာကို Banner Ad အောက်သို့ ရွှေ့ထားသည်) -->
+    <div class="node-mesh-card">
+        <div class="node-header">
+            <span class="node-title">ALPHA</span>
+            <div class="sync-status">
+                <span class="dot-pulsing"></span>
+                <span>Syncing</span>
+            </div>
+        </div>
+        <canvas id="nodeCanvas"></canvas>
+    </div>
+
+    <!-- 3. Points Stats Card -->
+    <div class="cyber-card stats-card">
+        <div class="balance-box">
+            <h3 style="font-size: 10px; color: var(--text-muted); letter-spacing: 1px;">ALPHA POINTS BALANCE</h3>
+            <div class="points" id="altaBalance">0.00</div>
+        </div>
+        <div style="text-align: right;">
+            <p style="font-size: 10px; color: var(--text-muted); letter-spacing: 1px;">WITHDRAWALS</p>
+            <p style="font-size: 14px; font-weight: bold; color: var(--text-main);" id="withdrawCountText">0 Times</p>
+        </div>
+    </div>
+
+    <!-- Auto Sponsored Video & Rotating Photo Ads (အရွယ်အစား ညီညာအောင် ပြင်ဆင်ထားသည်) -->
     <div class="auto-sponsored-section">
-        <!-- Video 1.mp4 Auto Playing -->
+        <!-- Video 1.mp4 -->
         <div class="cyber-card auto-card" onclick="handleClick('video_ad')">
             <div class="auto-card-title">
                 <span>🎬 Sponsored Video (High CPM)</span>
@@ -373,7 +372,7 @@
             </div>
         </div>
 
-        <!-- Rotating Photos 1 to 11 (Changes every 5s) -->
+        <!-- Photos (5s Rotation) -->
         <div class="cyber-card auto-card" onclick="handleClick('photo_ad')">
             <div class="auto-card-title">
                 <span>🖼️ Sponsored Photo Banner</span>
@@ -463,7 +462,7 @@
         "https://omg10.com/4/11783730"
     ];
 
-    // 5 Seconds Photo Rotation Logic (Photo1.webp to Photo11.webp)
+    // Photos Array (Photo1.webp to Photo11.webp)
     const photos = [
         "Photo1.webp", "Photo2.webp", "Photo3.webp", "Photo4.webp", 
         "Photo5.webp", "Photo6.webp", "Photo7.webp", "Photo8.webp", 
@@ -475,7 +474,7 @@
         setInterval(() => {
             currentPhotoIndex = (currentPhotoIndex + 1) % photos.length;
             document.getElementById('rotatingPhoto').src = photos[currentPhotoIndex];
-        }, 5000); // Every 5 seconds
+        }, 5000);
     }
 
     function showToast(message) {
@@ -648,4 +647,4 @@
 </script>
 
 </body>
-</html>
+            </html>
