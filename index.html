@@ -1,40 +1,50 @@
 <!DOCTYPE html>
-<html lang="my">
+<html lang="en">
 <head>
-    <script src="https://quge5.com/88/tag.min.js" data-zone="279200" async data-cfasync="false"></script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alpha Rewards & Ads Platform</title>
+    <title>Alta Rewards & Ads Platform</title>
+
+    <!-- Monetag Tag Script -->
+    <script src="https://quge5.com/88/tag.min.js" data-zone="279200" async data-cfasync="false"></script>
+
+    <!-- RichAds Scripts -->
+    <script src="https://richinfo.co/richpartners/in-page/js/richads-ob.js?pubid=1021768&siteid=406976" async></script>
+    <script src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js" data-pubid="1021768" data-siteid="406975" async data-cfasync="false"></script>
+    <script type="module" src="https://richinfo.co/richpartners/push/js/rp-cl-ob.js?pubid=1021768&siteid=406974&niche=33" async data-cfasync="false"></script>
+
+    <!-- MammothSubway Ad Scripts -->
+    <script src="https://mammothsubway.com/c6/6a/68/c66a68f1e4f955460119550f4b16cdeb.js"></script>
+    <script src="https://mammothsubway.com/38/84/b8/3884b84642518c8d1767cf3d63554b7f.js"></script>
 
     <style>
         :root {
-            --primary: #10b981;
-            --primary-glow: #00ff66;
-            --bg: #030a06;
-            --card-bg: rgba(6, 22, 14, 0.85);
-            --text: #e2e8f0;
-            --accent: #00ff66;
-            --gold: #ffb703;
-            --border: #143823;
+            --primary: #059669;
+            --primary-glow: #10b981;
+            --bg: #020d08;
+            --card-bg: rgba(6, 28, 18, 0.85);
+            --border-color: #054e2e;
+            --text: #ecfdf5;
+            --accent: #00ff88;
+            --gold: #fbbf24;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Courier New', Courier, monospace, monospace;
+            font-family: 'Courier New', Courier, monospace;
         }
 
         body {
             background-color: var(--bg);
-            /* Dark Green Dot Grid Background */
-            background-image: radial-gradient(#0d2b1a 1.5px, transparent 1.5px);
+            background-image: radial-gradient(#064e3b 1.5px, transparent 1.5px);
             background-size: 18px 18px;
             color: var(--text);
             display: flex;
             flex-direction: column;
             align-items: center;
-            padding: 10px;
+            padding: 12px;
         }
 
         .container {
@@ -45,23 +55,21 @@
             gap: 15px;
         }
 
-        /* Dark Green Cyberpunk Node Mesh Card */
         .node-mesh-card {
             background: var(--card-bg);
             border: 1px solid var(--accent);
-            border-radius: 12px;
+            border-radius: 10px;
             padding: 15px;
             position: relative;
-            backdrop-filter: blur(10px);
-            margin-top: 10px;
-            box-shadow: 0 0 15px rgba(0, 255, 102, 0.2);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 0 15px rgba(0, 255, 136, 0.15);
         }
 
         .node-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 10px;
         }
 
         .node-title {
@@ -69,7 +77,7 @@
             letter-spacing: 2px;
             color: var(--accent);
             font-weight: bold;
-            text-shadow: 0 0 8px var(--accent);
+            text-shadow: 0 0 8px rgba(0, 255, 136, 0.6);
         }
 
         .sync-status {
@@ -77,9 +85,8 @@
             align-items: center;
             gap: 6px;
             color: var(--accent);
-            font-size: 13px;
+            font-size: 12px;
             font-weight: bold;
-            text-shadow: 0 0 5px var(--accent);
         }
 
         .dot-pulsing {
@@ -93,35 +100,37 @@
 
         @keyframes pulse {
             0% { opacity: 0.2; transform: scale(0.8); }
-            100% { opacity: 1; transform: scale(1.4); }
+            100% { opacity: 1; transform: scale(1.3); }
         }
 
-        /* Node Mesh Canvas */
         #nodeCanvas {
             width: 100%;
-            height: 130px;
-            background: #020604;
-            border-radius: 8px;
-            border: 1px solid #0d3820;
+            height: 110px;
+            background: #01140b;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
             display: block;
         }
 
-        .stats-card {
+        .cyber-card {
             background-color: var(--card-bg);
-            border-radius: 12px;
+            border-radius: 10px;
             padding: 15px;
+            border: 1px solid var(--border-color);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+        }
+
+        .stats-card {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            border: 1px solid var(--border);
-            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
         }
 
         .balance-box .points {
             font-size: 26px;
             font-weight: bold;
             color: var(--accent);
-            text-shadow: 0 0 10px rgba(0, 255, 102, 0.4);
+            text-shadow: 0 0 10px rgba(0, 255, 136, 0.5);
         }
 
         .auto-sponsored-section {
@@ -131,15 +140,16 @@
         }
 
         .auto-card {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 12px;
-            border: 1px solid var(--border);
             cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .auto-card:hover {
+            border-color: var(--accent);
         }
 
         .auto-card-title {
-            font-size: 13px;
+            font-size: 12px;
             font-weight: bold;
             color: var(--gold);
             margin-bottom: 10px;
@@ -147,14 +157,13 @@
             justify-content: space-between;
         }
 
-        /* Glowing Frame for Video & Photo Containers */
         .auto-media-box {
             width: 100%;
             min-height: 120px;
-            border-radius: 8px;
+            border-radius: 6px;
             overflow: hidden;
-            background: #020604;
-            border: 1px dashed #0f522e;
+            background: #01140b;
+            border: 1px dashed var(--border-color);
             display: flex;
             justify-content: center;
             align-items: center;
@@ -164,40 +173,49 @@
         .auto-media-box video, .auto-media-box img {
             width: 100%;
             height: auto;
-            max-height: 300px;
+            max-height: 200px;
             object-fit: contain;
             display: block;
         }
 
-        .action-card {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 15px;
+        .media-placeholder {
+            color: var(--accent);
+            font-size: 11px;
+            letter-spacing: 1px;
+            text-align: center;
+            padding: 20px;
+            animation: blink 2s infinite;
+        }
+
+        .banner-ad-box {
             display: flex;
-            flex-direction: column;
-            gap: 12px;
-            border: 1px solid var(--border);
+            justify-content: center;
+            align-items: center;
+            width: 100%;
+            margin: 10px 0;
+            overflow: hidden;
+        }
+
+        @keyframes blink {
+            50% { opacity: 0.5; }
         }
 
         .btn-auto-ads {
             background: linear-gradient(135deg, #059669, #047857);
-            color: white;
+            color: #fff;
             border: 1px solid var(--accent);
-            padding: 16px;
-            font-size: 16px;
+            padding: 15px;
+            font-size: 15px;
             font-weight: bold;
             border-radius: 8px;
             cursor: pointer;
             width: 100%;
-            box-shadow: 0 0 12px rgba(0, 255, 102, 0.2);
-            letter-spacing: 1px;
+            box-shadow: 0 0 12px rgba(5, 150, 105, 0.4);
+            text-shadow: 0 0 5px #000;
         }
 
-        .scroll-ads-container {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 15px;
-            border: 1px solid var(--border);
+        .btn-auto-ads:active {
+            transform: scale(0.98);
         }
 
         .scroll-ads-list {
@@ -207,13 +225,17 @@
         }
 
         .scroll-ad-item {
-            background: linear-gradient(145deg, #061f12, #020a05);
-            border: 1px solid var(--gold);
-            padding: 15px 10px;
-            border-radius: 10px;
+            background: #021a0e;
+            border: 1px solid var(--border-color);
+            padding: 12px 8px;
+            border-radius: 8px;
             text-align: center;
             cursor: pointer;
             position: relative;
+        }
+
+        .scroll-ad-item:hover {
+            border-color: var(--gold);
         }
 
         .scroll-ad-item .badge {
@@ -221,39 +243,34 @@
             top: 0; right: 0;
             background: var(--gold);
             color: #000;
-            font-size: 9px;
+            font-size: 8px;
             font-weight: bold;
-            padding: 2px 6px;
-            border-bottom-left-radius: 6px;
-        }
-
-        .withdraw-card {
-            background-color: var(--card-bg);
-            border-radius: 12px;
-            padding: 15px;
-            border: 1px solid var(--border);
+            padding: 2px 5px;
+            border-bottom-left-radius: 4px;
         }
 
         .form-group {
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .withdraw-input {
             width: 100%;
             padding: 10px;
             border-radius: 6px;
-            border: 1px solid #134e2a;
-            background: #020804;
-            color: #fff;
+            border: 1px solid var(--border-color);
+            background: #01140b;
+            color: var(--accent);
             outline: none;
+            font-size: 13px;
         }
 
         .withdraw-input:focus {
             border-color: var(--accent);
+            box-shadow: 0 0 5px rgba(0, 255, 136, 0.3);
         }
 
         .btn-withdraw {
-            background-color: #047857;
+            background-color: var(--primary);
             color: white;
             border: 1px solid var(--accent);
             padding: 12px;
@@ -267,7 +284,7 @@
             display: none;
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(0, 0, 0, 0.95);
+            background: rgba(1, 15, 9, 0.95);
             z-index: 9999;
             flex-direction: column;
             justify-content: center;
@@ -277,12 +294,13 @@
 
         .ad-modal-content {
             width: 100%;
-            max-width: 400px;
+            max-width: 380px;
             background: var(--card-bg);
-            border-radius: 12px;
-            padding: 15px;
+            border-radius: 10px;
+            padding: 20px;
             text-align: center;
             border: 1px solid var(--accent);
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.2);
             display: flex;
             flex-direction: column;
             gap: 15px;
@@ -292,19 +310,47 @@
             background: var(--accent);
             color: #000;
             border: none;
-            padding: 14px;
-            font-size: 16px;
+            padding: 12px;
+            font-size: 15px;
             font-weight: bold;
-            border-radius: 8px;
+            border-radius: 6px;
             cursor: pointer;
             display: none;
             width: 100%;
         }
 
         .timer-text {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--gold);
             font-weight: bold;
+        }
+
+        /* Middle Center Custom Notification Styling */
+        .toast-notification {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0.8);
+            background: rgba(6, 28, 18, 0.95);
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 16px 24px;
+            border-radius: 12px;
+            font-size: 14px;
+            font-weight: bold;
+            text-align: center;
+            box-shadow: 0 0 20px rgba(0, 255, 136, 0.4);
+            z-index: 10000;
+            opacity: 0;
+            visibility: hidden;
+            transition: all 0.3s ease-in-out;
+            max-width: 85%;
+        }
+
+        .toast-notification.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translate(-50%, -50%) scale(1);
         }
     </style>
 </head>
@@ -312,10 +358,10 @@
 
 <div class="container" id="mainContainer">
 
-    <!-- Alpha Node Mesh Section -->
+    <!-- ALPHA Node Mesh Header -->
     <div class="node-mesh-card">
         <div class="node-header">
-            <span class="node-title">ALPHA NODE MESH</span>
+            <span class="node-title">ALPHA</span>
             <div class="sync-status">
                 <span class="dot-pulsing"></span>
                 <span>Syncing</span>
@@ -324,102 +370,150 @@
         <canvas id="nodeCanvas"></canvas>
     </div>
 
-    <div class="stats-card">
+    <!-- Points Stats Card -->
+    <div class="cyber-card stats-card">
         <div class="balance-box">
-            <h3 style="font-size: 13px; color: #64748b;">Alta Points Balance</h3>
+            <h3 style="font-size: 11px; color: #6ee7b7; letter-spacing: 1px;">ALPHA POINTS BALANCE</h3>
             <div class="points" id="altaBalance">0.00</div>
         </div>
         <div style="text-align: right;">
-            <p style="font-size: 12px; color: #64748b;">Withdrawals</p>
-            <p style="font-size: 16px; font-weight: bold; color: #e2e8f0;" id="withdrawCountText">0 Times</p>
+            <p style="font-size: 11px; color: #6ee7b7; letter-spacing: 1px;">WITHDRAWALS</p>
+            <p style="font-size: 15px; font-weight: bold; color: var(--text);" id="withdrawCountText">0 Times</p>
         </div>
     </div>
 
+    <!-- Banner Ad Container -->
+    <div class="banner-ad-box">
+        <script>
+          atOptions = {
+            'key' : 'd7df14c97756d36ac44df8b8b9ac8f81',
+            'format' : 'iframe',
+            'height' : 250,
+            'width' : 300,
+            'params' : {}
+          };
+        </script>
+        <script src="https://mammothsubway.com/d7df14c97756d36ac44df8b8b9ac8f81/invoke.js"></script>
+    </div>
+
+    <!-- Auto Sponsored Video & Photo Ads -->
     <div class="auto-sponsored-section">
-        <div class="auto-card" onclick="handleClick('video_ad')">
+        <div class="cyber-card auto-card" onclick="handleClick('video_ad')">
             <div class="auto-card-title">
-                <span>🎬 Sponsored Video (Auto Play)</span>
+                <span>🎬 Sponsored Video (High CPM)</span>
                 <span style="color: var(--accent);">Tap to Claim Point</span>
             </div>
             <div class="auto-media-box">
-                <video autoplay muted loop playsinline id="autoMainVideo">
+                <video autoplay muted loop playsinline id="autoMainVideo" onerror="this.style.display='none'; document.getElementById('vidFallback').style.display='block';">
                     <source src="1000003299.mp4" type="video/mp4">
-                    Your browser does not support video.
                 </video>
+                <div id="vidFallback" class="media-placeholder" style="display: none;">
+                    [ SPONSORED VIDEO STREAM ACTIVE ]
+                </div>
             </div>
         </div>
 
-        <div class="auto-card" onclick="handleClick('photo_ad')">
+        <div class="cyber-card auto-card" onclick="handleClick('photo_ad')">
             <div class="auto-card-title">
                 <span>🖼️ Sponsored Photo Banner</span>
                 <span style="color: var(--accent);">Tap to Claim Point</span>
             </div>
             <div class="auto-media-box">
-                <img src="1000003304.webp" alt="Sponsored Photo Banner">
+                <img src="1000003304.webp" alt="Sponsored Banner" onerror="this.style.display='none'; document.getElementById('imgFallback').style.display='block';">
+                <div id="imgFallback" class="media-placeholder" style="display: none;">
+                    [ SPONSORED PHOTO BANNER DISPLAY ]
+                </div>
             </div>
         </div>
     </div>
 
-    <div class="action-card">
+    <!-- Auto Ads Action Button -->
+    <div class="cyber-card">
         <button class="btn-auto-ads" id="autoAdsBtn" onclick="handleClick('auto')">
             <span id="autoBtnText">Auto Ads (0/30)</span>
         </button>
     </div>
 
-    <div class="scroll-ads-container">
-        <div style="font-size: 14px; margin-bottom: 10px; color: var(--gold); font-weight: bold;">
-            🔥 High Reward Bonus Offers
+    <!-- High Reward Offers -->
+    <div class="cyber-card">
+        <div style="font-size: 12px; margin-bottom: 10px; color: var(--gold); font-weight: bold; letter-spacing: 1px;">
+            🔥 HIGH REWARD BONUS OFFERS
         </div>
         <div class="scroll-ads-list">
-            <div class="scroll-ad-item" onclick="handleClick('bonus')">
+            <div class="scroll-ad-item" onclick="handleClick('high_cpm')">
                 <span class="badge">HOT</span>
-                <p>🎁 Mystery Chest #1</p>
-                <span style="font-size: 10px; color: #64748b;">0.5 - 3.5 Alta</span>
+                <p style="font-size: 12px;">🎁 Mystery Chest #1</p>
+                <span style="font-size: 10px; color: #6ee7b7;">0.5 - 3.5 Alpha</span>
             </div>
-            <div class="scroll-ad-item" onclick="handleClick('bonus')">
+            <div class="scroll-ad-item" onclick="handleClick('high_cpm')">
                 <span class="badge">HIGH CPM</span>
-                <p>💎 Premium Sponsor #2</p>
-                <span style="font-size: 10px; color: #64748b;">0.5 - 3.5 Alta</span>
+                <p style="font-size: 12px;">💎 Premium Sponsor #2</p>
+                <span style="font-size: 10px; color: #6ee7b7;">0.5 - 3.5 Alpha</span>
             </div>
         </div>
     </div>
 
-    <div class="withdraw-card">
-        <h3 style="margin-bottom: 12px; color: var(--accent);">Withdraw</h3>
+    <!-- Withdrawal Form -->
+    <div class="cyber-card">
+        <h3 style="margin-bottom: 12px; font-size: 14px; color: var(--accent); letter-spacing: 1px;">WITHDRAW</h3>
         <div class="form-group">
-            <label style="font-size: 12px; color: #64748b;">@Username</label>
+            <label style="font-size: 10px; color: #6ee7b7;">@USERNAME</label>
             <input type="text" id="tgName" class="withdraw-input" placeholder="@yourusername">
         </div>
         <div class="form-group">
-            <label style="font-size: 12px; color: #64748b;">Withdrawal Point Amount</label>
+            <label style="font-size: 10px; color: #6ee7b7;">WITHDRAWAL POINT AMOUNT</label>
             <input type="number" id="withdrawAmount" class="withdraw-input" placeholder="Min: 50 Points">
         </div>
         <div class="form-group">
-            <label style="font-size: 12px; color: #64748b;">TON Wallet Address</label>
+            <label style="font-size: 10px; color: #6ee7b7;">TON WALLET ADDRESS</label>
             <input type="text" id="tonWallet" class="withdraw-input" placeholder="EQD...">
         </div>
-        <button class="btn-withdraw" onclick="submitWithdrawalRequest()">Submit Request</button>
+        <button class="btn-withdraw" onclick="submitWithdrawalRequest()">SUBMIT REQUEST</button>
     </div>
 </div>
 
+<!-- Modal Overlay for Timer -->
 <div class="ad-modal-overlay" id="adModal">
     <div class="ad-modal-content">
-        <h4 style="color: #fff; font-size: 16px;">Verifying Ad View...</h4>
+        <h4 style="color: var(--accent); font-size: 14px; letter-spacing: 1px;">VERIFYING AD VIEW...</h4>
         <div class="timer-text" id="modalTimerText">Please wait 15s...</div>
         <button class="btn-continue" id="continueBtn" onclick="completeAdWatch()">CONTINUE</button>
     </div>
 </div>
+
+<!-- Middle Center Toast Notification Element -->
+<div id="toast" class="toast-notification"></div>
 
 <script>
     let altaPoints = parseFloat(localStorage.getItem('altaPoints')) || 0.00;
     let withdrawCount = parseInt(localStorage.getItem('withdrawCount')) || 0;
     let autoClickCount = parseInt(localStorage.getItem('autoClickCount')) || 0;
     let currentAdType = '';
+    let isWaitingForReturn = false;
 
-    const directAdLinks = [
+    // High CPM Direct Ad Links
+    const highCpmLinks = [
+        "https://omg10.com/4/11776333",
+        "https://omg10.com/4/11783730",
         "https://mammothsubway.com/vqvp77uv?key=e16f5adcebeee070d751d4132045f66e",
         "https://mammothsubway.com/sraj8zz1d?key=80fe52ed90673410b3bd8a6ef1e23f0b"
     ];
+
+    // Monetag Links
+    const monetagLinks = [
+        "https://omg10.com/4/11776333",
+        "https://omg10.com/4/11783730"
+    ];
+
+    // Function for Middle Center Custom Notification
+    function showToast(message) {
+        const toast = document.getElementById('toast');
+        toast.innerText = message;
+        toast.classList.add('show');
+        setTimeout(() => {
+            toast.classList.remove('show');
+        }, 2500);
+    }
 
     function updateUI() {
         document.getElementById('altaBalance').innerText = altaPoints.toFixed(2);
@@ -432,16 +526,24 @@
 
     function handleClick(type) {
         if (!navigator.onLine) {
-            alert("No Internet Connection!");
+            showToast("No Internet Connection!");
             return;
         }
         currentAdType = type;
+        isWaitingForReturn = true;
 
-        const url = directAdLinks[Math.floor(Math.random() * directAdLinks.length)];
-        window.open(url, '_blank');
-
-        showAdModal();
+        // Open High Revenue Ad Link
+        const randomHighCpmUrl = highCpmLinks[Math.floor(Math.random() * highCpmLinks.length)];
+        window.open(randomHighCpmUrl, '_blank');
     }
+
+    // Trigger 15s Timer when User returns back to page
+    window.addEventListener('focus', function() {
+        if (isWaitingForReturn) {
+            isWaitingForReturn = false;
+            showAdModal();
+        }
+    });
 
     function showAdModal() {
         const modal = document.getElementById('adModal');
@@ -469,6 +571,11 @@
     function completeAdWatch() {
         document.getElementById('adModal').style.display = 'none';
 
+        // Open Monetag Ad Link after timer
+        const randomMonetagUrl = monetagLinks[Math.floor(Math.random() * monetagLinks.length)];
+        window.open(randomMonetagUrl, '_blank');
+
+        // Add Points Reward
         const randomReward = (Math.random() * (3.5 - 0.5) + 0.5);
         altaPoints += parseFloat(randomReward.toFixed(2));
 
@@ -477,7 +584,7 @@
         }
 
         updateUI();
-        alert(`Success! +${randomReward.toFixed(2)} Alta Points added.`);
+        showToast(`Success! +${randomReward.toFixed(2)} Alta Points added.`);
     }
 
     function submitWithdrawalRequest() {
@@ -486,12 +593,12 @@
         const tonWallet = document.getElementById('tonWallet').value.trim();
 
         if (!tgName || !tonWallet || isNaN(amount)) {
-            alert("Please fill in all details correctly.");
+            showToast("Please fill in all details correctly.");
             return;
         }
 
         if (amount > altaPoints) {
-            alert("Insufficient balance.");
+            showToast("Insufficient balance.");
             return;
         }
 
@@ -503,10 +610,10 @@
         document.getElementById('tgName').value = '';
         document.getElementById('tonWallet').value = '';
 
-        alert("Withdrawal request submitted successfully.");
+        showToast("Withdrawal request submitted successfully.");
     }
 
-    /* Glowing Bright Green Canvas Animation Script */
+    /* Node Mesh Canvas Animation */
     function initNodeMesh() {
         const canvas = document.getElementById('nodeCanvas');
         const ctx = canvas.getContext('2d');
@@ -521,7 +628,7 @@
             nodes.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
-                radius: Math.random() * 2 + 2,
+                radius: Math.random() * 2 + 1,
                 vx: (Math.random() - 0.5) * 0.5,
                 vy: (Math.random() - 0.5) * 0.5
             });
@@ -530,17 +637,16 @@
         function draw() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-            // Lines
             for (let i = 0; i < numNodes; i++) {
                 for (let j = i + 1; j < numNodes; j++) {
                     const dx = nodes[i].x - nodes[j].x;
                     const dy = nodes[i].y - nodes[j].y;
                     const dist = Math.sqrt(dx * dx + dy * dy);
 
-                    if (dist < 100) {
+                    if (dist < 85) {
                         ctx.beginPath();
-                        ctx.strokeStyle = `rgba(0, 255, 102, ${1 - dist / 100})`;
-                        ctx.lineWidth = 1;
+                        ctx.strokeStyle = `rgba(0, 255, 136, ${1 - dist / 85 - 0.1})`;
+                        ctx.lineWidth = 0.8;
                         ctx.moveTo(nodes[i].x, nodes[i].y);
                         ctx.lineTo(nodes[j].x, nodes[j].y);
                         ctx.stroke();
@@ -548,13 +654,12 @@
                 }
             }
 
-            // Glowing Dots
             nodes.forEach(node => {
                 ctx.beginPath();
                 ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-                ctx.fillStyle = '#00ff66';
-                ctx.shadowBlur = 10;
-                ctx.shadowColor = '#00ff66';
+                ctx.fillStyle = '#00ff88';
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = '#00ff88';
                 ctx.fill();
                 ctx.shadowBlur = 0;
 
@@ -578,4 +683,4 @@
 </script>
 
 </body>
-</html>
+    </html>
