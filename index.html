@@ -5,17 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alta Rewards & Ads Platform</title>
 
-    <meta name="clckd" content="c2e1a1d976a2b7776dc7b7b19d147dc5" />
-
-    <!-- External Monetag & Adcash Scripts -->
-    <script src="https://quge5.com/88/tag.min.js" data-zone="279199" async data-cfasync="false"></script>
-    <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
-    <script type="text/javascript">
-        if (typeof aclib !== 'undefined') {
-            aclib.runAutoTag({ zoneId: '1juu12kz4i' });
-        }
-    </script>
-
     <style>
         :root {
             --primary: #4f46e5;
@@ -50,20 +39,6 @@
             gap: 15px;
         }
 
-        .ad-banner-box {
-            width: 100%;
-            background: #000;
-            border-radius: 12px;
-            overflow: hidden;
-            border: 1px solid #334155;
-            text-align: center;
-            padding: 10px 5px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            min-height: 250px;
-        }
-
         .stats-card {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -72,6 +47,7 @@
             justify-content: space-between;
             align-items: center;
             border: 1px solid #334155;
+            margin-top: 10px;
         }
 
         .balance-box .points {
@@ -260,21 +236,7 @@
 <body>
 
 <div class="container" id="mainContainer">
-    <!-- Top Banner -->
-    <div class="ad-banner-box">
-        <script>
-          atOptions = {
-            'key' : 'd7df14c97756d36ac44df8b8b9ac8f81',
-            'format' : 'iframe',
-            'height' : 250,
-            'width' : 300,
-            'params' : {}
-          };
-        </script>
-        <script src="https://mammothsubway.com/d7df14c97756d36ac44df8b8b9ac8f81/invoke.js"></script>
-    </div>
 
-    <!-- Stats -->
     <div class="stats-card">
         <div class="balance-box">
             <h3 style="font-size: 14px; color: #94a3b8;">Alta Points Balance</h3>
@@ -286,9 +248,7 @@
         </div>
     </div>
 
-    <!-- မူလ Page တွင် Auto တိုက်ရိုက် ပေါ်နေမည့် Sponsored Media အကွက်များ -->
     <div class="auto-sponsored-section">
-        <!-- 1. Auto Video Card -->
         <div class="auto-card" onclick="handleClick('video_ad')">
             <div class="auto-card-title">
                 <span>🎬 Sponsored Video (Auto Play)</span>
@@ -302,7 +262,6 @@
             </div>
         </div>
 
-        <!-- 2. Auto Photo Card -->
         <div class="auto-card" onclick="handleClick('photo_ad')">
             <div class="auto-card-title">
                 <span>🖼️ Sponsored Photo Banner</span>
@@ -314,14 +273,12 @@
         </div>
     </div>
 
-    <!-- Auto Ads Button -->
     <div class="action-card">
         <button class="btn-auto-ads" id="autoAdsBtn" onclick="handleClick('auto')">
             <span id="autoBtnText">Auto Ads (0/30)</span>
         </button>
     </div>
 
-    <!-- Bonus Offers -->
     <div class="scroll-ads-container">
         <div style="font-size: 14px; margin-bottom: 10px; color: var(--gold); font-weight: bold;">
             🔥 High Reward Bonus Offers
@@ -340,7 +297,6 @@
         </div>
     </div>
 
-    <!-- Withdraw Form -->
     <div class="withdraw-card">
         <h3 style="margin-bottom: 12px;">Withdraw</h3>
         <div class="form-group">
@@ -359,7 +315,6 @@
     </div>
 </div>
 
-<!-- 15-Second Modal Overlay -->
 <div class="ad-modal-overlay" id="adModal">
     <div class="ad-modal-content">
         <h4 style="color: #fff; font-size: 16px;">Verifying Ad View...</h4>
@@ -395,11 +350,11 @@
         }
         currentAdType = type;
 
-        // Step 1: Direct Link တိုက်ရိုက် ပွင့်မည်
+        // Direct Link
         const url = directAdLinks[Math.floor(Math.random() * directAdLinks.length)];
         window.open(url, '_blank');
 
-        // Step 2: 15s Timer စတင်မည်
+        // 15s Timer
         showAdModal();
     }
 
@@ -426,7 +381,6 @@
         }, 1000);
     }
 
-    // Step 3: CONTINUE နှိပ်ပါက Point (0.5 - 3.5) ပေါင်းပေးမည်
     function completeAdWatch() {
         document.getElementById('adModal').style.display = 'none';
 
@@ -473,4 +427,4 @@
 </script>
 
 </body>
-</html>
+    </html>
