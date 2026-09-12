@@ -376,13 +376,6 @@
         </div>
     </div>
 
-    <!-- Daily 24 Hours Claim Box -->
-    <div class="cyber-card">
-        <button class="btn-daily-claim" id="dailyClaimBtn" onclick="handleDailyClick()">
-            🎁 Daily Reward (+10 Alpha)
-        </button>
-    </div>
-
     <div class="auto-sponsored-section">
         <div class="cyber-card auto-card" onclick="handleClick('high_cpm')">
             <div class="auto-card-title">
@@ -413,6 +406,13 @@
         </button>
     </div>
 
+    <!-- Daily Reward Box Below Auto Ads -->
+    <div class="cyber-card">
+        <button class="btn-daily-claim" id="dailyClaimBtn" onclick="handleDailyClick()">
+            🎁 Daily Reward (+10 Alpha)
+        </button>
+    </div>
+
     <div class="cyber-card">
         <div style="font-size: 11px; margin-bottom: 10px; color: var(--gold); font-weight: bold; letter-spacing: 1px;">
             🔥 HIGH REWARD BONUS OFFERS
@@ -421,12 +421,12 @@
             <div class="scroll-ad-item" onclick="handleClick('adsterra')">
                 <span class="badge">ADSTERRA</span>
                 <p style="font-size: 11px;">🎁 Mystery Chest #1</p>
-                <span style="font-size: 10px; color: var(--text-muted);">0.1 - 0.3 Alpha</span>
+                <span style="font-size: 10px; color: var(--text-muted);">0.1 - 2.0 Alpha</span>
             </div>
             <div class="scroll-ad-item" onclick="handleClick('high_cpm')">
                 <span class="badge">HIGH CPM</span>
                 <p style="font-size: 11px;">💎 Premium Sponsor #2</p>
-                <span style="font-size: 10px; color: var(--text-muted);">0.1 - 0.3 Alpha</span>
+                <span style="font-size: 10px; color: var(--text-muted);">0.1 - 2.0 Alpha</span>
             </div>
         </div>
     </div>
@@ -469,7 +469,6 @@
     let isWaitingForReturn = false;
     let isTaskVerified = false;
     let timerInterval = null;
-
     let lastClickTime = 0;
 
     const highCpmLinks = [
@@ -483,18 +482,20 @@
     const photos = ["Photo1.webp", "Photo2.webp", "Photo3.webp", "Photo4.webp", "Photo5.webp"];
     let currentPhotoIndex = 0;
 
-    // Trigger Monetag In-App Interstitial on load
+    // Trigger Monetag In-App Interstitial on load safely
     if (typeof show_11786265 === 'function') {
-        show_11786265({
-            type: 'inApp',
-            inAppSettings: {
-                frequency: 2,
-                capping: 0.1,
-                interval: 30,
-                timeout: 5,
-                everyPage: false
-            }
-        });
+        try {
+            show_11786265({
+                type: 'inApp',
+                inAppSettings: {
+                    frequency: 2,
+                    capping: 0.1,
+                    interval: 30,
+                    timeout: 5,
+                    everyPage: false
+                }
+            });
+        } catch(e){}
     }
 
     // Absolute Network Lock Guard
@@ -508,7 +509,7 @@
                 timerInterval = null;
             }
             document.getElementById('adModal').style.display = 'none';
-            if (isWaitingForReturn || !isTaskVerified) {
+            if (isWaitingForReturn || isTaskVerified) {
                 showToast("⚠️ Task Canceled: Network Disconnected");
             }
             isTaskVerified = false;
@@ -587,7 +588,6 @@
         guardNetwork();
         if (!navigator.onLine) return;
 
-        // Anti Auto-Clicker Cooldown Guard
         const now = Date.now();
         if (now - lastClickTime < 1000) {
             showToast("⚠️ Speed Click Blocked!");
@@ -658,7 +658,7 @@
 
         document.getElementById('adModal').style.display = 'none';
 
-        // Trigger Monetag Rewarded Ad or Pop-up Ad after Continue
+        // Trigger Monetag Pop Ad upon clicking Continue, then give Random (0.10 to 2.00) Reward
         if (typeof show_11786265 === 'function') {
             show_11786265('pop').then(() => {
                 grantReward();
@@ -671,7 +671,8 @@
     }
 
     function grantReward() {
-        const randomReward = (Math.random() * (0.30 - 0.10) + 0.10);
+        // Random 0.1 to 2.0 Alpha points
+        const randomReward = (Math.random() * (2.00 - 0.10) + 0.10);
         altaPoints += parseFloat(randomReward.toFixed(2));
 
         if (currentAdType === 'auto') {
@@ -691,17 +692,24 @@
         const amount = parseFloat(document.getElementById('withdrawAmount').value);
         const tonWallet = document.getElementById('tonWallet').value.trim();
 
-        if (!tgName || !tonWallet || isNaN(amount)) {
-            showToast("Please fill in all details.");
+        if (!tgName || !tonWallet || isNaN(amount) || amount < 50) {
+            showToast("Min withdrawal amount is 50 Points.");
             return;
         }
 
-        if (amount > altaPoints) {
-            showToast("Insufficient balance.");
-            return;
+        // Logic Check: 2nd Withdrawal Rules (Must leave 150 points balance)
+        if (withdrawCount === 1) {
+            if (altaPoints - amount < 150) {
+                showToast("2nd withdrawal requires leaving at least 150 Points balance.");
+                return;
+            }
+        } else {
+            if (amount > altaPoints) {
+                showToast("Insufficient balance.");
+                return;
+            }
         }
 
-        // Deduct points instantly
         altaPoints -= amount;
         withdrawCount++;
         updateUI();
@@ -713,7 +721,7 @@
         showToast("Request submitted successfully.");
     }
 
-    // Lightweight Node Canvas Animation
+    // Lightweight Node Canvas Animation (Optimized for performance)
     function initNodeMesh() {
         const canvas = document.getElementById('nodeCanvas');
         const ctx = canvas.getContext('2d');
@@ -721,12 +729,12 @@
         canvas.height = canvas.offsetHeight;
 
         const nodes = [];
-        for (let i = 0; i < 8; i++) {
+        for (let i = 0; i < 5; i++) {
             nodes.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
-                vx: (Math.random() - 0.5) * 0.3,
-                vy: (Math.random() - 0.5) * 0.3
+                vx: (Math.random() - 0.5) * 0.2,
+                vy: (Math.random() - 0.5) * 0.2
             });
         }
 
