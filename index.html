@@ -5,12 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Alta Rewards Platform</title>
 
-    <!-- RichAds Integration -->
+    <!-- External Ad Scripts -->
     <script src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js" data-pubid="1021768" data-siteid="406975" async data-cfasync="false"></script>
     <script type="module" src="https://richinfo.co/richpartners/push/js/rp-cl-ob.js?pubid=1021768&siteid=406974&niche=33" async data-cfasync="false"></script>
-
-    <!-- Adsterra Direct Script Integrated -->
     <script src="https://mammothsubway.com/38/84/b8/3884b84642518c8d1767cf3d63554b7f.js" async data-cfasync="false"></script>
+    <script src="//libtl.com/sdk.js" data-zone="11786265" data-sdk="show_11786265" async></script>
 
     <style>
         :root {
@@ -45,7 +44,6 @@
             padding: 12px;
         }
 
-        /* Strict Offline Lock Screen */
         .offline-lock {
             display: none;
             position: fixed;
@@ -58,7 +56,6 @@
             color: var(--danger);
             text-align: center;
             padding: 20px;
-            pointer-events: all !important;
         }
 
         body.offline-active .container {
@@ -86,7 +83,6 @@
             border: 1px solid var(--border-color);
             border-radius: 8px;
             padding: 14px;
-            position: relative;
         }
 
         .node-header {
@@ -126,7 +122,7 @@
 
         #nodeCanvas {
             width: 100%;
-            height: 70px;
+            height: 60px;
             background: #090c0a;
             border-radius: 6px;
             border: 1px solid var(--border-color);
@@ -166,33 +162,30 @@
 
         .auto-media-box {
             width: 100%;
-            height: 200px;
+            height: 180px;
             border-radius: 6px;
             overflow: hidden;
             background: #000;
             border: 1px solid var(--border-color);
-            display: flex;
-            justify-content: center;
-            align-items: center;
         }
 
         .auto-media-box video, .auto-media-box img {
             width: 100%;
             height: 100%;
             object-fit: contain;
-            display: block;
         }
 
-        .btn-auto-ads {
+        .btn-action {
             background: #0f2e20;
             color: var(--accent);
             border: 1px solid var(--border-color);
-            padding: 14px;
-            font-size: 14px;
+            padding: 12px;
+            font-size: 13px;
             font-weight: bold;
             border-radius: 6px;
             cursor: pointer;
             width: 100%;
+            margin-bottom: 6px;
         }
 
         .scroll-ads-list {
@@ -241,17 +234,6 @@
             border-color: var(--accent);
         }
 
-        .btn-withdraw {
-            background-color: #0f2e20;
-            color: var(--accent);
-            border: 1px solid var(--border-color);
-            padding: 12px;
-            border-radius: 6px;
-            width: 100%;
-            font-weight: bold;
-            cursor: pointer;
-        }
-
         .ad-modal-overlay {
             display: none;
             position: fixed;
@@ -266,7 +248,7 @@
 
         .ad-modal-content {
             width: 100%;
-            max-width: 340px;
+            max-width: 320px;
             background: var(--card-bg);
             border-radius: 8px;
             padding: 20px;
@@ -290,12 +272,6 @@
             width: 100%;
         }
 
-        .timer-text {
-            font-size: 14px;
-            color: var(--gold);
-            font-weight: bold;
-        }
-
         .toast-notification {
             position: fixed;
             top: 50%; left: 50%;
@@ -303,15 +279,15 @@
             background: #0e1210;
             border: 1px solid var(--accent);
             color: var(--accent);
-            padding: 14px 20px;
+            padding: 12px 18px;
             border-radius: 8px;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: bold;
             text-align: center;
             z-index: 10000;
             opacity: 0;
             visibility: hidden;
-            transition: all 0.25s ease-in-out;
+            transition: all 0.2s ease-in-out;
             max-width: 80%;
         }
 
@@ -325,12 +301,11 @@
 <body>
 
 <div class="offline-lock" id="offlineLock">
-    <h2 style="font-size: 18px; margin-bottom: 8px;">🚫 NO INTERNET CONNECTION</h2>
-    <p style="font-size: 12px; color: #808a85;">Network disconnected. Please check your internet connection...</p>
+    <h2 style="font-size: 16px; margin-bottom: 6px;">🚫 CONNECTION LOST</h2>
+    <p style="font-size: 11px; color: #808a85;">Internet disconnected. Task failed and point blocked.</p>
 </div>
 
 <div class="container" id="mainContainer">
-
     <div class="node-mesh-card">
         <div class="node-header">
             <span class="node-title">ALPHA</span>
@@ -357,7 +332,7 @@
         <div class="cyber-card auto-card" onclick="handleClick('high_cpm')">
             <div class="auto-card-title">
                 <span>🎬 Sponsored Video (Highest CPM)</span>
-                <span style="color: var(--accent);">Tap to Claim Point</span>
+                <span style="color: var(--accent);">Tap to Claim</span>
             </div>
             <div class="auto-media-box">
                 <video autoplay muted loop playsinline id="autoMainVideo">
@@ -368,8 +343,8 @@
 
         <div class="cyber-card auto-card" onclick="handleClick('high_cpm')">
             <div class="auto-card-title">
-                <span>🖼️ Sponsored Photo Banner</span>
-                <span style="color: var(--accent);">Tap to Claim Point</span>
+                <span>🖼️ Sponsored Banner</span>
+                <span style="color: var(--accent);">Tap to Claim</span>
             </div>
             <div class="auto-media-box">
                 <img id="rotatingPhoto" src="Photo1.webp" alt="Sponsored Photo Banner">
@@ -378,7 +353,9 @@
     </div>
 
     <div class="cyber-card">
-        <button class="btn-auto-ads" id="autoAdsBtn" onclick="handleClick('auto')">
+        <button class="btn-action" onclick="triggerMonetagRewarded()">🎁 Rewarded Interstitial (Monetag)</button>
+        <button class="btn-action" onclick="triggerMonetagPopup()">🚀 Rewarded Popup (Monetag)</button>
+        <button class="btn-action" id="autoAdsBtn" onclick="handleClick('auto')">
             <span id="autoBtnText">Auto Ads (0/30)</span>
         </button>
     </div>
@@ -408,21 +385,21 @@
             <input type="text" id="tgName" class="withdraw-input" placeholder="@yourusername">
         </div>
         <div class="form-group">
-            <label style="font-size: 9px; color: var(--text-muted);">WITHDRAWAL POINT AMOUNT</label>
+            <label style="font-size: 9px; color: var(--text-muted);">WITHDRAWAL AMOUNT</label>
             <input type="number" id="withdrawAmount" class="withdraw-input" placeholder="Min: 50 Points">
         </div>
         <div class="form-group">
             <label style="font-size: 9px; color: var(--text-muted);">TON WALLET ADDRESS</label>
             <input type="text" id="tonWallet" class="withdraw-input" placeholder="EQD...">
         </div>
-        <button class="btn-withdraw" onclick="submitWithdrawalRequest()">SUBMIT REQUEST</button>
+        <button class="btn-action" style="background: #059669; color: #fff;" onclick="submitWithdrawalRequest()">SUBMIT REQUEST</button>
     </div>
 </div>
 
 <div class="ad-modal-overlay" id="adModal">
     <div class="ad-modal-content">
         <h4 style="color: var(--accent); font-size: 13px; letter-spacing: 1px;">VERIFYING AD VIEW...</h4>
-        <div class="timer-text" id="modalTimerText">Please wait 15s...</div>
+        <div style="font-size: 14px; color: var(--gold); font-weight: bold;" id="modalTimerText">Please wait 15s...</div>
         <button class="btn-continue" id="continueBtn" onclick="completeAdWatch()">CONTINUE</button>
     </div>
 </div>
@@ -430,41 +407,46 @@
 <div id="toast" class="toast-notification"></div>
 
 <script>
-    // TELEGRAM BOT & CHANNEL CONFIGURATION
-    const BOT_TOKEN = '8905835211:AAEyfN35MWKVNHG7TZvg866bRUL16-VDGiI';
-    const CHANNEL_CHAT_ID = '@Withdraw_History'; // Enter your channel username or Private Channel ID (e.g. -100xxxxxxxxxx)
+    const TELEGRAM_BOT_TOKEN = "YOUR_BOT_TOKEN_HERE";
+    const TELEGRAM_CHANNEL_ID = "@YOUR_CHANNEL_USERNAME";
 
     let altaPoints = parseFloat(localStorage.getItem('altaPoints')) || 0.00;
     let withdrawCount = parseInt(localStorage.getItem('withdrawCount')) || 0;
     let autoClickCount = parseInt(localStorage.getItem('autoClickCount')) || 0;
-    
+
     let currentAdType = '';
     let isWaitingForReturn = false;
     let isTaskVerified = false;
     let timerInterval = null;
-
     let lastClickTime = 0;
 
     const highCpmLinks = [
         "https://omg10.com/4/11776333",
         "https://omg10.com/4/11783730",
         "https://mammothsubway.com/vqvp77uv?key=e16f5adcebeee070d751d4132045f66e",
-        "https://mammothsubway.com/sraj8zz1d?key=80fe52ed90673410b3bd8a6ef1e23f0b"
+        "https://mammothsubway.com/sraj8zz1d?key=80fe52ed90673410b3bd8a6ef1e23f0b",
+        "https://omg10.com/4/11786275"
     ];
 
     const photos = ["Photo1.webp", "Photo2.webp", "Photo3.webp", "Photo4.webp", "Photo5.webp"];
     let currentPhotoIndex = 0;
 
-    // Absolute Network Lock Guard
+    // Strict Offline & Anti-Cheat Lock Guard
     function guardNetwork() {
         const lockScreen = document.getElementById('offlineLock');
         if (!navigator.onLine) {
             document.body.classList.add('offline-active');
             lockScreen.style.display = 'flex';
-            if (timerInterval) clearInterval(timerInterval);
+
+            // Cancel running ad validation on network loss
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
             document.getElementById('adModal').style.display = 'none';
             isTaskVerified = false;
             isWaitingForReturn = false;
+            showToast("❌ Network lost! Task invalidated.");
         } else {
             document.body.classList.remove('offline-active');
             lockScreen.style.display = 'none';
@@ -474,20 +456,58 @@
     window.addEventListener('online', guardNetwork);
     window.addEventListener('offline', guardNetwork);
 
+    function triggerMonetagRewarded() {
+        guardNetwork();
+        if (!navigator.onLine) return;
+
+        if (typeof show_11786265 === 'function') {
+            show_11786265().then(() => {
+                if (!navigator.onLine) return;
+                rewardUser(0.25);
+                showToast("Ad Completed! +0.25 Points");
+            }).catch(() => {
+                showToast("Ad failed or cancelled.");
+            });
+        }
+    }
+
+    function triggerMonetagPopup() {
+        guardNetwork();
+        if (!navigator.onLine) return;
+
+        if (typeof show_11786265 === 'function') {
+            show_11786265('pop').then(() => {
+                if (!navigator.onLine) return;
+                rewardUser(0.30);
+                showToast("Popup Completed! +0.30 Points");
+            }).catch(() => {
+                showToast("Popup cancelled.");
+            });
+        }
+    }
+
+    function rewardUser(customAmount = null) {
+        if (!navigator.onLine) return 0;
+        const randomReward = customAmount || (Math.random() * (0.30 - 0.10) + 0.10);
+        altaPoints += parseFloat(randomReward.toFixed(2));
+        updateUI();
+        return randomReward;
+    }
+
     function startPhotoRotation() {
         setInterval(() => {
             if (navigator.onLine) {
                 currentPhotoIndex = (currentPhotoIndex + 1) % photos.length;
                 document.getElementById('rotatingPhoto').src = photos[currentPhotoIndex];
             }
-        }, 5000);
+        }, 6000);
     }
 
     function showToast(msg) {
         const toast = document.getElementById('toast');
         toast.innerText = msg;
         toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 2200);
+        setTimeout(() => toast.classList.remove('show'), 2000);
     }
 
     function updateUI() {
@@ -503,7 +523,6 @@
         guardNetwork();
         if (!navigator.onLine) return;
 
-        // Anti Auto-Clicker Cooldown Guard
         const now = Date.now();
         if (now - lastClickTime < 1000) {
             showToast("⚠️ Speed Click Blocked!");
@@ -527,10 +546,12 @@
     });
 
     function showAdModal() {
+        if (!navigator.onLine) return;
+
         const modal = document.getElementById('adModal');
         const timerText = document.getElementById('modalTimerText');
         const continueBtn = document.getElementById('continueBtn');
-        
+
         modal.style.display = 'flex';
         continueBtn.style.display = 'none';
 
@@ -560,20 +581,14 @@
 
     function completeAdWatch() {
         guardNetwork();
-        if (!navigator.onLine) return;
-
-        // Anti-Cheat Verification Check
-        if (!isTaskVerified) {
+        if (!navigator.onLine || !isTaskVerified) {
             showToast("❌ Verification Failed!");
             document.getElementById('adModal').style.display = 'none';
             return;
         }
 
         document.getElementById('adModal').style.display = 'none';
-        
-        // Reward Point Rate (0.10 to 0.30)
-        const randomReward = (Math.random() * (0.30 - 0.10) + 0.10);
-        altaPoints += parseFloat(randomReward.toFixed(2));
+        const earned = rewardUser();
 
         if (currentAdType === 'auto') {
             autoClickCount = (autoClickCount + 1) % 31;
@@ -581,11 +596,10 @@
 
         isTaskVerified = false;
         updateUI();
-        showToast(`Success! +${randomReward.toFixed(2)} Points added.`);
+        showToast(`Success! +${earned.toFixed(2)} Points added.`);
     }
 
-    // AUTOMATED TELEGRAM CHANNEL WITHDRAWAL SYSTEM
-    function submitWithdrawalRequest() {
+    async function submitWithdrawalRequest() {
         guardNetwork();
         if (!navigator.onLine) return;
 
@@ -593,95 +607,85 @@
         const amount = parseFloat(document.getElementById('withdrawAmount').value);
         const tonWallet = document.getElementById('tonWallet').value.trim();
 
-        if (!tgName || !tonWallet || isNaN(amount) || amount <= 0) {
-            showToast("Please fill in all details correctly.");
+        if (!tgName || !tonWallet || isNaN(amount)) {
+            showToast("Please fill in all details.");
+            return;
+        }
+
+        if (amount < 50) {
+            showToast("Minimum withdrawal is 50 Points.");
             return;
         }
 
         if (amount > altaPoints) {
-            showToast("Insufficient point balance.");
+            showToast("Insufficient balance.");
             return;
         }
 
-        // Deduct points & update status
+        // Automatic Point Deduction
         altaPoints -= amount;
         withdrawCount++;
         updateUI();
 
-        // Format Withdrawal Message
-        const message = `💸 **NEW WITHDRAWAL REQUEST** 💸\n\n` +
-                        `🤖 **Bot:** @AlphaAdsReward_bot\n` +
-                        `👤 **User:** ${tgName}\n` +
-                        `💰 **Amount:** ${amount} Points\n` +
-                        `💎 **TON Wallet:** \`${tonWallet}\` \n\n` +
-                        `🚀 *Status: Pending Verification*`;
-
-        // Send to Telegram Channel via Bot API
-        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
-                chat_id: CHANNEL_CHAT_ID,
-                text: message,
-                parse_mode: 'Markdown'
-            })
-        })
-        .then(response => response.json())
-        .then(data => {
-            if (data.ok) {
-                showToast("Withdrawal request submitted!");
-            } else {
-                showToast("Failed to post to channel.");
-                console.error(data);
-            }
-        })
-        .catch(error => {
-            showToast("Network error. Try again.");
-            console.error(error);
-        });
-
-        // Reset inputs
         document.getElementById('withdrawAmount').value = '';
         document.getElementById('tgName').value = '';
         document.getElementById('tonWallet').value = '';
+
+        showToast("Request submitted successfully.");
+
+        if (TELEGRAM_BOT_TOKEN !== "YOUR_BOT_TOKEN_HERE") {
+            const message = `💸 *NEW WITHDRAWAL REQUEST*\n\n` +
+                            `👤 *User:* ${tgName}\n` +
+                            `💰 *Amount:* ${amount.toFixed(2)} ALPHA Points\n` +
+                            `💎 *TON Wallet:* \`${tonWallet}\`\n` +
+                            `📊 *Total Withdrawals:* ${withdrawCount} Times\n` +
+                            `⏰ *Status:* Pending Processing`;
+
+            try {
+                await fetch(`https://api.telegram.org/bot${TELEGRAM_BOT_TOKEN}/sendMessage`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        chat_id: TELEGRAM_CHANNEL_ID,
+                        text: message,
+                        parse_mode: 'Markdown'
+                    })
+                });
+            } catch (err) {
+                console.error("Telegram post failed:", err);
+            }
+        }
     }
 
-    // Lightweight Node Canvas Animation
+    // Optimized Canvas Loop
     function initNodeMesh() {
         const canvas = document.getElementById('nodeCanvas');
         const ctx = canvas.getContext('2d');
         canvas.width = canvas.offsetWidth;
         canvas.height = canvas.offsetHeight;
 
-        const nodes = [];
-        for (let i = 0; i < 8; i++) {
-            nodes.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                vx: (Math.random() - 0.5) * 0.3,
-                vy: (Math.random() - 0.5) * 0.3
-            });
-        }
+        const nodes = Array.from({ length: 5 }, () => ({
+            x: Math.random() * canvas.width,
+            y: Math.random() * canvas.height,
+            vx: (Math.random() - 0.5) * 0.2,
+            vy: (Math.random() - 0.5) * 0.2
+        }));
 
         function draw() {
-            if (!navigator.onLine) {
-                requestAnimationFrame(draw);
-                return;
-            }
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#10b981';
+            if (navigator.onLine) {
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.fillStyle = '#10b981';
 
-            nodes.forEach(node => {
-                ctx.beginPath();
-                ctx.arc(node.x, node.y, 1.5, 0, Math.PI * 2);
-                ctx.fill();
-                node.x += node.vx;
-                node.y += node.vy;
-                if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
-                if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
-            });
+                nodes.forEach(node => {
+                    ctx.beginPath();
+                    ctx.arc(node.x, node.y, 1.5, 0, Math.PI * 2);
+                    ctx.fill();
+                    node.x += node.vx;
+                    node.y += node.vy;
+                    if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
+                    if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
+                });
+            }
             requestAnimationFrame(draw);
         }
         draw();
