@@ -8,10 +8,10 @@
     <style>
         :root {
             --primary: #4f46e5;
-            --bg: #0f172a;
-            --card-bg: #1e293b;
+            --bg: #0b0f19;
+            --card-bg: rgba(30, 41, 59, 0.7);
             --text: #f8fafc;
-            --accent: #22c55e;
+            --accent: #10b981;
             --gold: #f59e0b;
         }
 
@@ -19,11 +19,14 @@
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            font-family: 'Courier New', Courier, monospace, sans-serif;
         }
 
         body {
             background-color: var(--bg);
+            /* Dot Grid Background */
+            background-image: radial-gradient(#1e293b 1px, transparent 1px);
+            background-size: 20px 20px;
             color: var(--text);
             display: flex;
             flex-direction: column;
@@ -39,6 +42,65 @@
             gap: 15px;
         }
 
+        /* Node Mesh UI Card Component */
+        .node-mesh-card {
+            background: rgba(15, 23, 42, 0.8);
+            border: 1px solid #1e293b;
+            border-radius: 12px;
+            padding: 15px;
+            position: relative;
+            backdrop-filter: blur(8px);
+            margin-top: 10px;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.5);
+        }
+
+        .node-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .node-title {
+            font-size: 12px;
+            letter-spacing: 1.5px;
+            color: #64748b;
+            font-weight: bold;
+        }
+
+        .sync-status {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            color: var(--accent);
+            font-size: 13px;
+            font-weight: bold;
+        }
+
+        .dot-pulsing {
+            width: 8px;
+            height: 8px;
+            background-color: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 8px var(--accent);
+            animation: pulse 1.5s infinite alternate;
+        }
+
+        @keyframes pulse {
+            0% { opacity: 0.3; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
+        }
+
+        /* Canvas element for active Node Animation */
+        #nodeCanvas {
+            width: 100%;
+            height: 120px;
+            background: #030712;
+            border-radius: 8px;
+            border: 1px solid #111827;
+            display: block;
+        }
+
         .stats-card {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -47,7 +109,6 @@
             justify-content: space-between;
             align-items: center;
             border: 1px solid #334155;
-            margin-top: 10px;
         }
 
         .balance-box .points {
@@ -56,7 +117,6 @@
             color: var(--accent);
         }
 
-        /* ပင်မစာမျက်နှာ Auto Display Container */
         .auto-sponsored-section {
             display: flex;
             flex-direction: column;
@@ -237,6 +297,18 @@
 
 <div class="container" id="mainContainer">
 
+    <!-- Syncing Section -->
+    <div class="node-mesh-card">
+        <div class="node-header">
+            <span class="node-title">NODE MESH</span>
+            <div class="sync-status">
+                <span class="dot-pulsing"></span>
+                <span>Syncing</span>
+            </div>
+        </div>
+        <canvas id="nodeCanvas"></canvas>
+    </div>
+
     <div class="stats-card">
         <div class="balance-box">
             <h3 style="font-size: 14px; color: #94a3b8;">Alta Points Balance</h3>
@@ -350,11 +422,9 @@
         }
         currentAdType = type;
 
-        // Direct Link
         const url = directAdLinks[Math.floor(Math.random() * directAdLinks.length)];
         window.open(url, '_blank');
 
-        // 15s Timer
         showAdModal();
     }
 
@@ -421,10 +491,76 @@
         alert("Withdrawal request submitted successfully.");
     }
 
+    /* Canvas Animation Script for Node Mesh */
+    function initNodeMesh() {
+        const canvas = document.getElementById('nodeCanvas');
+        const ctx = canvas.getContext('2d');
+
+        canvas.width = canvas.offsetWidth;
+        canvas.height = canvas.offsetHeight;
+
+        const nodes = [];
+        const numNodes = 14;
+
+        for (let i = 0; i < numNodes; i++) {
+            nodes.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 2 + 1.5,
+                vx: (Math.random() - 0.5) * 0.4,
+                vy: (Math.random() - 0.5) * 0.4
+            });
+        }
+
+        function draw() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+            // Lines
+            for (let i = 0; i < numNodes; i++) {
+                for (let j = i + 1; j < numNodes; j++) {
+                    const dx = nodes[i].x - nodes[j].x;
+                    const dy = nodes[i].y - nodes[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 90) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(16, 185, 129, ${1 - dist / 90 - 0.2})`;
+                        ctx.lineWidth = 0.6;
+                        ctx.moveTo(nodes[i].x, nodes[i].y);
+                        ctx.lineTo(nodes[j].x, nodes[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+
+            // Dots
+            nodes.forEach(node => {
+                ctx.beginPath();
+                ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+                ctx.fillStyle = '#10b981';
+                ctx.shadowBlur = 6;
+                ctx.shadowColor = '#10b981';
+                ctx.fill();
+                ctx.shadowBlur = 0;
+
+                node.x += node.vx;
+                node.y += node.vy;
+
+                if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
+                if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
+            });
+
+            requestAnimationFrame(draw);
+        }
+
+        draw();
+    }
+
     window.onload = function() {
         updateUI();
+        initNodeMesh();
     };
 </script>
 
 </body>
-    </html>
+</html>
