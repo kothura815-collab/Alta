@@ -12,7 +12,7 @@
     <!-- Adsterra Direct Script Integrated -->
     <script src="https://mammothsubway.com/38/84/b8/3884b84642518c8d1767cf3d63554b7f.js" async data-cfasync="false"></script>
 
-    <!-- Monetag SDK Script Integrated -->
+    <!-- Monetag SDK Script -->
     <script src='//libtl.com/sdk.js' data-zone='11786265' data-sdk='show_11786265'></script>
 
     <style>
@@ -186,7 +186,7 @@
             display: block;
         }
 
-        .btn-auto-ads, .btn-monetag-ads {
+        .btn-auto-ads {
             background: #0f2e20;
             color: var(--accent);
             border: 1px solid var(--border-color);
@@ -196,7 +196,26 @@
             border-radius: 6px;
             cursor: pointer;
             width: 100%;
-            margin-bottom: 6px;
+        }
+
+        .btn-daily-claim {
+            background: linear-gradient(135deg, #d97706, #059669);
+            color: #ffffff;
+            border: none;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 0 10px rgba(217, 119, 6, 0.3);
+        }
+
+        .btn-daily-claim:disabled {
+            background: #1f2937;
+            color: #6b7280;
+            cursor: not-allowed;
+            box-shadow: none;
         }
 
         .scroll-ads-list {
@@ -330,7 +349,7 @@
 
 <div class="offline-lock" id="offlineLock">
     <h2 style="font-size: 18px; margin-bottom: 8px;">🚫 NO INTERNET CONNECTION</h2>
-    <p style="font-size: 12px; color: #808a85;">အင်တာနက်ပြတ်တောက်နေသဖြင့် အသုံးပြု၍မရပါ။ ပြန်လည်ချိတ်ဆက်ပါ...</p>
+    <p style="font-size: 12px; color: #808a85;">Connection lost. Reconnecting...</p>
 </div>
 
 <div class="container" id="mainContainer">
@@ -357,6 +376,13 @@
         </div>
     </div>
 
+    <!-- Daily 24 Hours Claim Box -->
+    <div class="cyber-card">
+        <button class="btn-daily-claim" id="dailyClaimBtn" onclick="handleDailyClick()">
+            🎁 Daily Reward (+10 Alpha)
+        </button>
+    </div>
+
     <div class="auto-sponsored-section">
         <div class="cyber-card auto-card" onclick="handleClick('high_cpm')">
             <div class="auto-card-title">
@@ -379,16 +405,6 @@
                 <img id="rotatingPhoto" src="Photo1.webp" alt="Sponsored Photo Banner">
             </div>
         </div>
-    </div>
-
-    <!-- Monetag Extra Reward Buttons -->
-    <div class="cyber-card">
-        <button class="btn-monetag-ads" onclick="triggerMonetagRewarded()">
-            <span>🎁 Rewarded Interstitial (Monetag)</span>
-        </button>
-        <button class="btn-monetag-ads" onclick="triggerMonetagPopup()">
-            <span>🚀 Rewarded Popup (Monetag)</span>
-        </button>
     </div>
 
     <div class="cyber-card">
@@ -447,6 +463,7 @@
     let altaPoints = parseFloat(localStorage.getItem('altaPoints')) || 0.00;
     let withdrawCount = parseInt(localStorage.getItem('withdrawCount')) || 0;
     let autoClickCount = parseInt(localStorage.getItem('autoClickCount')) || 0;
+    let lastDailyClaim = parseInt(localStorage.getItem('lastDailyClaim')) || 0;
     
     let currentAdType = '';
     let isWaitingForReturn = false;
@@ -458,13 +475,27 @@
     const highCpmLinks = [
         "https://omg10.com/4/11776333",
         "https://omg10.com/4/11783730",
+        "https://omg10.com/4/11786275",
         "https://mammothsubway.com/vqvp77uv?key=e16f5adcebeee070d751d4132045f66e",
-        "https://mammothsubway.com/sraj8zz1d?key=80fe52ed90673410b3bd8a6ef1e23f0b",
-        "https://omg10.com/4/11786275"
+        "https://mammothsubway.com/sraj8zz1d?key=80fe52ed90673410b3bd8a6ef1e23f0b"
     ];
 
     const photos = ["Photo1.webp", "Photo2.webp", "Photo3.webp", "Photo4.webp", "Photo5.webp"];
     let currentPhotoIndex = 0;
+
+    // Trigger Monetag In-App Interstitial on load
+    if (typeof show_11786265 === 'function') {
+        show_11786265({
+            type: 'inApp',
+            inAppSettings: {
+                frequency: 2,
+                capping: 0.1,
+                interval: 30,
+                timeout: 5,
+                everyPage: false
+            }
+        });
+    }
 
     // Absolute Network Lock Guard
     function guardNetwork() {
@@ -472,8 +503,14 @@
         if (!navigator.onLine) {
             document.body.classList.add('offline-active');
             lockScreen.style.display = 'flex';
-            if (timerInterval) clearInterval(timerInterval);
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
             document.getElementById('adModal').style.display = 'none';
+            if (isWaitingForReturn || !isTaskVerified) {
+                showToast("⚠️ Task Canceled: Network Disconnected");
+            }
             isTaskVerified = false;
             isWaitingForReturn = false;
         } else {
@@ -484,59 +521,6 @@
 
     window.addEventListener('online', guardNetwork);
     window.addEventListener('offline', guardNetwork);
-
-    // Initialize Monetag In-App Interstitial Automatically
-    function initMonetagInApp() {
-        if (typeof show_11786265 === 'function') {
-            show_11786265({
-                type: 'inApp',
-                inAppSettings: {
-                    frequency: 2,
-                    capping: 0.1,
-                    interval: 30,
-                    timeout: 5,
-                    everyPage: false
-                }
-            });
-        }
-    }
-
-    // Monetag Rewarded Interstitial trigger function
-    function triggerMonetagRewarded() {
-        guardNetwork();
-        if (!navigator.onLine) return;
-
-        if (typeof show_11786265 === 'function') {
-            show_11786265().then(() => {
-                rewardUser(0.25);
-                showToast("Rewarded Ad Finished! +0.25 Points");
-            }).catch(e => {
-                showToast("Ad Display Error or Closed Early.");
-            });
-        }
-    }
-
-    // Monetag Rewarded Popup trigger function
-    function triggerMonetagPopup() {
-        guardNetwork();
-        if (!navigator.onLine) return;
-
-        if (typeof show_11786265 === 'function') {
-            show_11786265('pop').then(() => {
-                rewardUser(0.30);
-                showToast("Rewarded Popup Finished! +0.30 Points");
-            }).catch(e => {
-                showToast("Ad Display Error.");
-            });
-        }
-    }
-
-    function rewardUser(customReward = null) {
-        const reward = customReward || (Math.random() * (0.30 - 0.10) + 0.10);
-        altaPoints += parseFloat(reward.toFixed(2));
-        updateUI();
-        return reward;
-    }
 
     function startPhotoRotation() {
         setInterval(() => {
@@ -554,6 +538,41 @@
         setTimeout(() => toast.classList.remove('show'), 2200);
     }
 
+    function checkDailyRewardStatus() {
+        const btn = document.getElementById('dailyClaimBtn');
+        const now = Date.now();
+        const twentyFourHours = 24 * 60 * 60 * 1000;
+        const timePassed = now - lastDailyClaim;
+
+        if (timePassed < twentyFourHours) {
+            btn.disabled = true;
+            const remaining = twentyFourHours - timePassed;
+            const hours = Math.floor(remaining / (1000 * 60 * 60));
+            const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
+            btn.innerText = `⏳ Next Claim in ${hours}h ${minutes}m`;
+        } else {
+            btn.disabled = false;
+            btn.innerText = `🎁 Daily Reward (+10 Alpha)`;
+        }
+    }
+
+    function handleDailyClick() {
+        guardNetwork();
+        if (!navigator.onLine) return;
+
+        const now = Date.now();
+        const twentyFourHours = 24 * 60 * 60 * 1000;
+
+        if (now - lastDailyClaim >= twentyFourHours) {
+            altaPoints += 10.00;
+            lastDailyClaim = now;
+            localStorage.setItem('lastDailyClaim', lastDailyClaim);
+            updateUI();
+            showToast("🎉 Daily Bonus Claimed! +10 Points");
+            checkDailyRewardStatus();
+        }
+    }
+
     function updateUI() {
         document.getElementById('altaBalance').innerText = altaPoints.toFixed(2);
         document.getElementById('withdrawCountText').innerText = withdrawCount + " Times";
@@ -561,6 +580,7 @@
         localStorage.setItem('altaPoints', altaPoints);
         localStorage.setItem('withdrawCount', withdrawCount);
         localStorage.setItem('autoClickCount', autoClickCount);
+        checkDailyRewardStatus();
     }
 
     function handleClick(type) {
@@ -606,6 +626,9 @@
         timerInterval = setInterval(() => {
             if (!navigator.onLine) {
                 clearInterval(timerInterval);
+                timerInterval = null;
+                isTaskVerified = false;
+                modal.style.display = 'none';
                 guardNetwork();
                 return;
             }
@@ -615,6 +638,7 @@
                 timerText.innerText = `Please wait ${timeLeft}s to claim reward...`;
             } else {
                 clearInterval(timerInterval);
+                timerInterval = null;
                 isTaskVerified = true;
                 timerText.innerText = "Task Complete! Click Continue below.";
                 continueBtn.style.display = 'block';
@@ -626,7 +650,6 @@
         guardNetwork();
         if (!navigator.onLine) return;
 
-        // Hacker Anti-Cheat Check
         if (!isTaskVerified) {
             showToast("❌ Verification Failed!");
             document.getElementById('adModal').style.display = 'none';
@@ -634,9 +657,22 @@
         }
 
         document.getElementById('adModal').style.display = 'none';
-        
-        // Optimised Point Rate (0.10 to 0.30)
-        const randomReward = rewardUser();
+
+        // Trigger Monetag Rewarded Ad or Pop-up Ad after Continue
+        if (typeof show_11786265 === 'function') {
+            show_11786265('pop').then(() => {
+                grantReward();
+            }).catch(e => {
+                grantReward();
+            });
+        } else {
+            grantReward();
+        }
+    }
+
+    function grantReward() {
+        const randomReward = (Math.random() * (0.30 - 0.10) + 0.10);
+        altaPoints += parseFloat(randomReward.toFixed(2));
 
         if (currentAdType === 'auto') {
             autoClickCount = (autoClickCount + 1) % 31;
@@ -645,9 +681,6 @@
         isTaskVerified = false;
         updateUI();
         showToast(`Success! +${randomReward.toFixed(2)} Points added.`);
-
-        // Trigger Monetag Popup on completion for extra revenue
-        triggerMonetagPopup();
     }
 
     function submitWithdrawalRequest() {
@@ -668,7 +701,7 @@
             return;
         }
 
-        // Deduct points automatically upon submission
+        // Deduct points instantly
         altaPoints -= amount;
         withdrawCount++;
         updateUI();
@@ -724,7 +757,7 @@
         updateUI();
         initNodeMesh();
         startPhotoRotation();
-        initMonetagInApp();
+        setInterval(checkDailyRewardStatus, 60000);
     };
 </script>
 
