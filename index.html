@@ -3,21 +3,19 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alta Rewards & Ads Platform</title>
+    <title>Alta Rewards & High-Revenue Ads Platform</title>
 
     <!-- Verification Meta -->
     <meta name="clckd" content="c2e1a1d976a2b7776dc7b7b19d147dc5" />
 
-    <!-- External Monetag Verification / Tag Script -->
+    <!-- Monetag Tag Script -->
     <script src="https://quge5.com/88/tag.min.js" data-zone="279199" async data-cfasync="false"></script>
     
     <!-- Adcash Auto Tag Script -->
     <script id="aclib" type="text/javascript" src="//acscdn.com/script/aclib.js"></script>
     <script type="text/javascript">
         if (typeof aclib !== 'undefined') {
-            aclib.runAutoTag({
-                zoneId: '1juu12kz4i',
-            });
+            aclib.runAutoTag({ zoneId: '1juu12kz4i' });
         }
     </script>
 
@@ -28,7 +26,6 @@
             --card-bg: #1e293b;
             --text: #f8fafc;
             --accent: #22c55e;
-            --warning: #ef4444;
             --gold: #f59e0b;
         }
 
@@ -56,7 +53,6 @@
             gap: 15px;
         }
 
-        /* Ad Banner Container */
         .ad-banner-box {
             width: 100%;
             background: #000;
@@ -68,7 +64,7 @@
             display: flex;
             justify-content: center;
             align-items: center;
-            min-height: 260px;
+            min-height: 250px;
         }
 
         .stats-card {
@@ -111,7 +107,6 @@
             align-items: center;
             gap: 10px;
             box-shadow: 0 4px 12px rgba(79, 70, 229, 0.3);
-            transition: all 0.2s;
             width: 100%;
         }
 
@@ -129,8 +124,8 @@
         }
 
         .btn-auto-ads:disabled, .btn-daily-claim:disabled {
-            background: #334155;
-            color: #94a3b8;
+            background: #334155 !important;
+            color: #94a3b8 !important;
             cursor: not-allowed;
             box-shadow: none;
         }
@@ -149,7 +144,6 @@
             to { transform: rotate(360deg); }
         }
 
-        /* High CTR Bonus Ads Section */
         .scroll-ads-container {
             background-color: var(--card-bg);
             border-radius: 12px;
@@ -170,7 +164,6 @@
             border-radius: 10px;
             text-align: center;
             cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
             position: relative;
             overflow: hidden;
         }
@@ -179,11 +172,6 @@
             opacity: 0.5;
             cursor: not-allowed;
             pointer-events: none;
-        }
-
-        .scroll-ad-item:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 0 12px rgba(245, 158, 11, 0.4);
         }
 
         .scroll-ad-item .badge {
@@ -211,9 +199,7 @@
             border: 1px solid #334155;
         }
 
-        .form-group {
-            margin-bottom: 10px;
-        }
+        .form-group { margin-bottom: 10px; }
 
         .withdraw-input {
             width: 100%;
@@ -223,10 +209,6 @@
             background: #0f172a;
             color: #fff;
             outline: none;
-        }
-
-        .withdraw-input:focus {
-            border-color: var(--primary);
         }
 
         .btn-withdraw {
@@ -249,7 +231,7 @@
 <body>
 
 <div class="container" id="mainContainer">
-    <!-- Top Banner Ad Placement -->
+    <!-- Top Ad Banner Placement -->
     <div class="ad-banner-box">
         <script>
           atOptions = {
@@ -263,7 +245,7 @@
         <script src="https://mammothsubway.com/d7df14c97756d36ac44df8b8b9ac8f81/invoke.js"></script>
     </div>
 
-    <!-- Stats -->
+    <!-- Stats Card -->
     <div class="stats-card">
         <div class="balance-box">
             <h3 style="font-size: 14px; color: #94a3b8;">Alta Points Balance</h3>
@@ -275,12 +257,12 @@
         </div>
     </div>
 
-    <!-- Daily High-Revenue Claim Option -->
+    <!-- Daily Reward Button -->
     <button class="btn-daily-claim" id="dailyClaimBtn" onclick="handleDailyClaim()">
         🎁 Claim Daily Reward (+10.0 Alta)
     </button>
 
-    <!-- Actions (Auto Mining) -->
+    <!-- Auto Ads Section -->
     <div class="action-card">
         <button class="btn-auto-ads" id="autoAdsBtn" onclick="handleAutoAdsClick()">
             <div class="spinner" id="autoSpinner"></div>
@@ -288,11 +270,11 @@
         </button>
     </div>
 
-    <!-- High-CTR Bonus Ads Section -->
+    <!-- High Reward Bonus Offers -->
     <div class="scroll-ads-container">
         <div style="font-size: 14px; margin-bottom: 10px; color: var(--gold); font-weight: bold; display: flex; justify-content: space-between; align-items: center;">
             <span>🔥 High Reward Bonus Offers</span>
-            <span style="font-size: 11px; color: #22c55e;">2X CPM Boost Active</span>
+            <span style="font-size: 11px; color: #22c55e;">2X CPM Active</span>
         </div>
         <div class="scroll-ads-list">
             <div class="scroll-ad-item" id="bonusBtn0" onclick="triggerBonusAd(0)">
@@ -338,11 +320,7 @@
 </div>
 
 <script>
-    // System Data Initialization
-    let altaPoints = parseFloat(localStorage.getItem('altaPoints'));
-    if (isNaN(altaPoints)) {
-        altaPoints = 0.00;
-    }
+    let altaPoints = parseFloat(localStorage.getItem('altaPoints')) || 0.00;
     let withdrawCount = parseInt(localStorage.getItem('withdrawCount')) || 0;
     let autoClickCount = parseInt(localStorage.getItem('autoClickCount')) || 0;
     let miningEndTime = parseInt(localStorage.getItem('miningEndTime')) || 0;
@@ -355,9 +333,9 @@
     const MIN_WITHDRAW_FIRST = 50.0;
     const MIN_WITHDRAW_SUBSEQUENT = 50.0;
     const REQUIRED_RESERVE_BALANCE = 300.0;
-    const MINING_DURATION_MS = 4 * 60 * 60 * 1000; // 4 Hours
+    const MINING_DURATION_MS = 4 * 60 * 60 * 1000;
 
-    // Monetag & High-CPM Direct Ad Links Rotation
+    // High CPM Direct Links Rotation
     const directAdLinks = [
         "https://mammothsubway.com/vqvp77uv?key=e16f5adcebeee070d751d4132045f66e",
         "https://mammothsubway.com/sraj8zz1d?key=80fe52ed90673410b3bd8a6ef1e23f0b"
@@ -374,10 +352,8 @@
         localStorage.setItem('miningEndTime', miningEndTime);
         localStorage.setItem('lastDailyClaim', lastDailyClaim);
 
-        // Daily Claim Button Check
-        const now = Date.now();
         const dailyBtn = document.getElementById('dailyClaimBtn');
-        if (now - lastDailyClaim < 24 * 60 * 60 * 1000) {
+        if (Date.now() - lastDailyClaim < 24 * 60 * 60 * 1000) {
             dailyBtn.disabled = true;
             dailyBtn.innerText = "Daily Reward Claimed (Come back tomorrow)";
         } else {
@@ -386,14 +362,12 @@
         }
     }
 
-    // High Revenue Dual-Tab Ad Opener
     function triggerDirectAd() {
         if (!navigator.onLine) return;
-        const url1 = directAdLinks[Math.floor(Math.random() * directAdLinks.length)];
-        window.open(url1, '_blank');
+        const url = directAdLinks[Math.floor(Math.random() * directAdLinks.length)];
+        window.open(url, '_blank');
     }
 
-    // --- Daily Claim System ---
     function handleDailyClaim() {
         if (!checkInternetConnection()) return;
         triggerDirectAd();
@@ -403,7 +377,7 @@
         alert("Daily Reward (+10.0 Alta) Claimed!");
     }
 
-    // --- Auto Ads & 15-Second Cooldown System ---
+    // --- Auto Ads (15-Second Delay) ---
     function handleAutoAdsClick() {
         if (!checkInternetConnection()) return;
         if (miningEndTime > Date.now()) return;
@@ -416,7 +390,6 @@
             updateUI();
             startAutoAd15sCooldown();
         } else {
-            // Start 4-Hour Mining Mode
             miningEndTime = Date.now() + MINING_DURATION_MS;
             updateUI();
             startMiningTimer();
@@ -482,7 +455,7 @@
         }, 1000);
     }
 
-    // --- High CTR Bonus Ads (15-Second Delay) ---
+    // --- Bonus Offers (15-Second Delay) ---
     function triggerBonusAd(index) {
         if (!checkInternetConnection()) return;
         if (isBonusAdRunning) return;
@@ -515,7 +488,7 @@
         }, 1000);
     }
 
-    // --- Withdrawal System ---
+    // --- Withdrawal Logic ---
     function submitWithdrawalRequest() {
         if (!checkInternetConnection()) return;
 
@@ -559,7 +532,6 @@
         alert("Withdrawal request submitted successfully.");
     }
 
-    // --- Offline / Internet Network Checking ---
     function checkInternetConnection() {
         if (!navigator.onLine) {
             alert("No Internet Connection! Please reconnect to proceed.");
@@ -580,7 +552,6 @@
     window.addEventListener('online', handleNetworkStatusChange);
     window.addEventListener('offline', handleNetworkStatusChange);
 
-    // Initial Setup on Page Load
     window.onload = function() {
         updateUI();
         if (miningEndTime > Date.now()) {
