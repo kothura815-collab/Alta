@@ -326,7 +326,7 @@
 
 <div class="offline-lock" id="offlineLock">
     <h2 style="font-size: 18px; margin-bottom: 8px;">🚫 NO INTERNET CONNECTION</h2>
-    <p style="font-size: 12px; color: #808a85;">အင်တာနက်ပြတ်တောက်နေသဖြင့် အသုံးပြု၍မရပါ။ ပြန်လည်ချိတ်ဆက်ပါ...</p>
+    <p style="font-size: 12px; color: #808a85;">Network disconnected. Please check your internet connection...</p>
 </div>
 
 <div class="container" id="mainContainer">
@@ -430,6 +430,10 @@
 <div id="toast" class="toast-notification"></div>
 
 <script>
+    // TELEGRAM BOT & CHANNEL CONFIGURATION
+    const BOT_TOKEN = '8905835211:AAEyfN35MWKVNHG7TZvg866bRUL16-VDGiI';
+    const CHANNEL_CHAT_ID = '@Withdraw_History'; // Enter your channel username or Private Channel ID (e.g. -100xxxxxxxxxx)
+
     let altaPoints = parseFloat(localStorage.getItem('altaPoints')) || 0.00;
     let withdrawCount = parseInt(localStorage.getItem('withdrawCount')) || 0;
     let autoClickCount = parseInt(localStorage.getItem('autoClickCount')) || 0;
@@ -558,7 +562,7 @@
         guardNetwork();
         if (!navigator.onLine) return;
 
-        // Hacker Anti-Cheat Check
+        // Anti-Cheat Verification Check
         if (!isTaskVerified) {
             showToast("❌ Verification Failed!");
             document.getElementById('adModal').style.display = 'none';
@@ -567,7 +571,7 @@
 
         document.getElementById('adModal').style.display = 'none';
         
-        // Optimised Point Rate (0.10 to 0.30)
+        // Reward Point Rate (0.10 to 0.30)
         const randomReward = (Math.random() * (0.30 - 0.10) + 0.10);
         altaPoints += parseFloat(randomReward.toFixed(2));
 
@@ -580,6 +584,7 @@
         showToast(`Success! +${randomReward.toFixed(2)} Points added.`);
     }
 
+    // AUTOMATED TELEGRAM CHANNEL WITHDRAWAL SYSTEM
     function submitWithdrawalRequest() {
         guardNetwork();
         if (!navigator.onLine) return;
@@ -588,25 +593,59 @@
         const amount = parseFloat(document.getElementById('withdrawAmount').value);
         const tonWallet = document.getElementById('tonWallet').value.trim();
 
-        if (!tgName || !tonWallet || isNaN(amount)) {
-            showToast("Please fill in all details.");
+        if (!tgName || !tonWallet || isNaN(amount) || amount <= 0) {
+            showToast("Please fill in all details correctly.");
             return;
         }
 
         if (amount > altaPoints) {
-            showToast("Insufficient balance.");
+            showToast("Insufficient point balance.");
             return;
         }
 
+        // Deduct points & update status
         altaPoints -= amount;
         withdrawCount++;
         updateUI();
 
+        // Format Withdrawal Message
+        const message = `💸 **NEW WITHDRAWAL REQUEST** 💸\n\n` +
+                        `🤖 **Bot:** @AlphaAdsReward_bot\n` +
+                        `👤 **User:** ${tgName}\n` +
+                        `💰 **Amount:** ${amount} Points\n` +
+                        `💎 **TON Wallet:** \`${tonWallet}\` \n\n` +
+                        `🚀 *Status: Pending Verification*`;
+
+        // Send to Telegram Channel via Bot API
+        fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({
+                chat_id: CHANNEL_CHAT_ID,
+                text: message,
+                parse_mode: 'Markdown'
+            })
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.ok) {
+                showToast("Withdrawal request submitted!");
+            } else {
+                showToast("Failed to post to channel.");
+                console.error(data);
+            }
+        })
+        .catch(error => {
+            showToast("Network error. Try again.");
+            console.error(error);
+        });
+
+        // Reset inputs
         document.getElementById('withdrawAmount').value = '';
         document.getElementById('tgName').value = '';
         document.getElementById('tonWallet').value = '';
-
-        showToast("Request submitted successfully.");
     }
 
     // Lightweight Node Canvas Animation
