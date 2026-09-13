@@ -2,61 +2,65 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Alta Rewards Platform</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>ALTA ADS MINER</title>
 
-    <!-- RichAds Integration -->
+    <!-- Telegram Web App SDK -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
+    <!-- 1. Monetag SDKs -->
+    <script src='//libtl.com/sdk.js' data-zone='11786265' data-sdk='show_11786265'></script>
+    <script src="https://quge5.com/88/tag.min.js" data-zone="279200" async data-cfasync="false"></script>
+
+    <!-- 2. RichAds Integration -->
+    <script src="https://richinfo.co/richpartners/in-page/js/richads-ob.js?pubid=1021768&siteid=406976" async></script>
     <script src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js" data-pubid="1021768" data-siteid="406975" async data-cfasync="false"></script>
     <script type="module" src="https://richinfo.co/richpartners/push/js/rp-cl-ob.js?pubid=1021768&siteid=406974&niche=33" async data-cfasync="false"></script>
 
-    <!-- Adsterra Direct Script Integrated -->
+    <!-- 3. Adsterra Anti-Adblock Scripts -->
+    <script src="https://mammothsubway.com/c6/6a/68/c66a68f1e4f955460119550f4b16cdeb.js" async data-cfasync="false"></script>
     <script src="https://mammothsubway.com/38/84/b8/3884b84642518c8d1767cf3d63554b7f.js" async data-cfasync="false"></script>
-
-    <!-- Monetag SDK Script -->
-    <script src='//libtl.com/sdk.js' data-zone='11786265' data-sdk='show_11786265'></script>
-
-    <!-- Telegram Web App SDK (For Share Integration) -->
-    <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
     <style>
         :root {
-            --primary: #059669;
-            --bg: #070908;
-            --card-bg: #0e1210;
-            --border-color: #1b2420;
-            --text-muted: #808a85;
-            --text-main: #d1d5db;
-            --accent: #10b981;
-            --gold: #d97706;
+            --primary: #10b981;
+            --bg: #050806;
+            --card-bg: #0b120e;
+            --border-color: #152b1e;
+            --border-glow: #10b9814d;
+            --text-muted: #6b7c72;
+            --text-main: #ecfdf5;
+            --accent: #34d399;
+            --gold: #f59e0b;
             --danger: #ef4444;
-            --telegram: #0088cc;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: monospace, sans-serif;
+            font-family: 'Courier New', monospace, sans-serif;
             user-select: none;
             -webkit-user-select: none;
         }
 
         body {
             background-color: var(--bg);
-            background-image: radial-gradient(#151d18 1px, transparent 1px);
+            background-image: radial-gradient(#0f291a 1px, transparent 1px);
             background-size: 16px 16px;
             color: var(--text-main);
             display: flex;
             flex-direction: column;
             align-items: center;
             padding: 12px;
+            min-height: 100vh;
         }
 
         .offline-lock {
             display: none;
             position: fixed;
             top: 0; left: 0; width: 100vw; height: 100vh;
-            background: rgba(0, 0, 0, 0.98);
+            background: rgba(3, 7, 5, 0.98);
             z-index: 999999;
             flex-direction: column;
             justify-content: center;
@@ -64,12 +68,11 @@
             color: var(--danger);
             text-align: center;
             padding: 20px;
-            pointer-events: all !important;
         }
 
         body.offline-active .container {
             pointer-events: none !important;
-            filter: blur(4px);
+            filter: blur(5px);
         }
 
         .container {
@@ -78,21 +81,24 @@
             display: flex;
             flex-direction: column;
             gap: 12px;
+            padding-bottom: 20px;
         }
 
         .cyber-card {
             background-color: var(--card-bg);
-            border-radius: 8px;
+            border-radius: 10px;
             padding: 14px;
             border: 1px solid var(--border-color);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+            transition: border 0.3s;
         }
 
         .node-mesh-card {
             background: var(--card-bg);
-            border: 1px solid var(--border-color);
-            border-radius: 8px;
+            border: 1px solid var(--primary);
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
+            border-radius: 10px;
             padding: 14px;
-            position: relative;
         }
 
         .node-header {
@@ -118,22 +124,22 @@
         }
 
         .dot-pulsing {
-            width: 6px;
-            height: 6px;
+            width: 7px;
+            height: 7px;
             background-color: var(--accent);
             border-radius: 50%;
             animation: pulse 1.5s infinite alternate;
         }
 
         @keyframes pulse {
-            0% { opacity: 0.3; }
-            100% { opacity: 1; }
+            0% { opacity: 0.3; transform: scale(0.8); }
+            100% { opacity: 1; transform: scale(1.2); }
         }
 
         #nodeCanvas {
             width: 100%;
-            height: 70px;
-            background: #090c0a;
+            height: 75px;
+            background: #030705;
             border-radius: 6px;
             border: 1px solid var(--border-color);
             display: block;
@@ -146,7 +152,7 @@
         }
 
         .balance-box .points {
-            font-size: 24px;
+            font-size: 26px;
             font-weight: bold;
             color: var(--accent);
         }
@@ -186,36 +192,18 @@
             width: 100%;
             height: 100%;
             object-fit: contain;
-            display: block;
         }
 
         .btn-auto-ads {
-            background: #0f2e20;
+            background: linear-gradient(180deg, #092015 0%, #05140d 100%);
             color: var(--accent);
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--primary);
             padding: 14px;
             font-size: 14px;
             font-weight: bold;
             border-radius: 6px;
             cursor: pointer;
             width: 100%;
-        }
-
-        .btn-share {
-            background: linear-gradient(135deg, #0088cc, #005580);
-            color: #ffffff;
-            border: none;
-            padding: 14px;
-            font-size: 14px;
-            font-weight: bold;
-            border-radius: 6px;
-            cursor: pointer;
-            width: 100%;
-            box-shadow: 0 0 10px rgba(0, 136, 204, 0.4);
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
         }
 
         .btn-daily-claim {
@@ -228,14 +216,12 @@
             border-radius: 6px;
             cursor: pointer;
             width: 100%;
-            box-shadow: 0 0 10px rgba(217, 119, 6, 0.3);
         }
 
         .btn-daily-claim:disabled {
-            background: #1f2937;
-            color: #6b7280;
+            background: #141f18;
+            color: #4b5563;
             cursor: not-allowed;
-            box-shadow: none;
         }
 
         .scroll-ads-list {
@@ -245,7 +231,7 @@
         }
 
         .scroll-ad-item {
-            background: #090c0a;
+            background: #040a07;
             border: 1px solid var(--border-color);
             padding: 12px 8px;
             border-radius: 6px;
@@ -257,12 +243,11 @@
         .scroll-ad-item .badge {
             position: absolute;
             top: 0; right: 0;
-            background: #374151;
+            background: #152b1e;
             color: var(--gold);
             font-size: 8px;
             font-weight: bold;
             padding: 2px 5px;
-            border-bottom-left-radius: 4px;
         }
 
         .form-group {
@@ -274,20 +259,16 @@
             padding: 10px;
             border-radius: 6px;
             border: 1px solid var(--border-color);
-            background: #090c0a;
+            background: #030705;
             color: var(--text-main);
             outline: none;
             font-size: 12px;
         }
 
-        .withdraw-input:focus {
-            border-color: var(--accent);
-        }
-
         .btn-withdraw {
-            background-color: #0f2e20;
+            background: linear-gradient(180deg, #0f3824 0%, #081f14 100%);
             color: var(--accent);
-            border: 1px solid var(--border-color);
+            border: 1px solid var(--primary);
             padding: 12px;
             border-radius: 6px;
             width: 100%;
@@ -295,23 +276,59 @@
             cursor: pointer;
         }
 
+        .ad-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; right: 0; bottom: 0;
+            background: rgba(3, 7, 5, 0.96);
+            z-index: 9999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .ad-modal-content {
+            width: 100%;
+            max-width: 340px;
+            background: var(--card-bg);
+            border-radius: 8px;
+            padding: 20px;
+            text-align: center;
+            border: 1px solid var(--primary);
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        .btn-continue {
+            background: var(--accent);
+            color: #000;
+            border: none;
+            padding: 12px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            display: none;
+            width: 100%;
+        }
+
         .toast-notification {
             position: fixed;
             top: 50%; left: 50%;
             transform: translate(-50%, -50%) scale(0.9);
-            background: #0e1210;
+            background: #0b120e;
             border: 1px solid var(--accent);
             color: var(--accent);
             padding: 14px 20px;
             border-radius: 8px;
             font-size: 13px;
             font-weight: bold;
-            text-align: center;
             z-index: 10000;
             opacity: 0;
             visibility: hidden;
             transition: all 0.25s ease-in-out;
-            max-width: 80%;
         }
 
         .toast-notification.show {
@@ -321,18 +338,18 @@
         }
     </style>
 </head>
-<body>
+<body oncontextmenu="return false;">
 
 <div class="offline-lock" id="offlineLock">
     <h2 style="font-size: 18px; margin-bottom: 8px;">🚫 NO INTERNET CONNECTION</h2>
-    <p style="font-size: 12px; color: #808a85;">Connection lost. Reconnecting...</p>
+    <p style="font-size: 12px; color: var(--text-muted);">Connection lost. Reconnecting...</p>
 </div>
 
 <div class="container" id="mainContainer">
 
     <div class="node-mesh-card">
         <div class="node-header">
-            <span class="node-title">ALPHA</span>
+            <span class="node-title">ALTA ADS MINER</span>
             <div class="sync-status">
                 <span class="dot-pulsing"></span>
                 <span>Syncing</span>
@@ -343,17 +360,22 @@
 
     <div class="cyber-card stats-card">
         <div class="balance-box">
-            <h3 style="font-size: 10px; color: var(--text-muted); letter-spacing: 1px;">ALPHA POINTS BALANCE</h3>
+            <h3 style="font-size: 10px; color: var(--text-muted);">ALTA POINTS BALANCE</h3>
             <div class="points" id="altaBalance">0.00</div>
         </div>
         <div style="text-align: right;">
-            <p style="font-size: 10px; color: var(--text-muted); letter-spacing: 1px;">WITHDRAWALS</p>
-            <p style="font-size: 14px; font-weight: bold; color: var(--text-main);" id="withdrawCountText">0 Times</p>
+            <p style="font-size: 10px; color: var(--text-muted);">WITHDRAWALS</p>
+            <p style="font-size: 14px; font-weight: bold;" id="withdrawCountText">0 Times</p>
         </div>
     </div>
 
+    <!-- Adsterra Native Container -->
+    <div id="container-567878e89e28fda7ea6b7fb45c33cdf9"></div>
+    <script async="async" data-cfasync="false" src="https://mammothsubway.com/567878e89e28fda7ea6b7fb45c33cdf9/invoke.js"></script>
+
+    <!-- Auto Sponsored Video & Photos Section -->
     <div class="auto-sponsored-section">
-        <div class="cyber-card auto-card" onclick="handleClick('high_cpm')">
+        <div class="cyber-card auto-card" onclick="handleClick('high_cpm', event)">
             <div class="auto-card-title">
                 <span>🎬 Sponsored Video (Highest CPM)</span>
                 <span style="color: var(--accent);">Tap to Claim Point</span>
@@ -365,7 +387,7 @@
             </div>
         </div>
 
-        <div class="cyber-card auto-card" onclick="handleClick('high_cpm')">
+        <div class="cyber-card auto-card" onclick="handleClick('high_cpm', event)">
             <div class="auto-card-title">
                 <span>🖼️ Sponsored Photo Banner</span>
                 <span style="color: var(--accent);">Tap to Claim Point</span>
@@ -377,45 +399,37 @@
     </div>
 
     <div class="cyber-card">
-        <button class="btn-auto-ads" id="autoAdsBtn" onclick="handleClick('auto')">
+        <button class="btn-auto-ads" id="autoAdsBtn" onclick="handleClick('auto', event)">
             <span id="autoBtnText">Auto Ads (0/30)</span>
         </button>
     </div>
 
-    <!-- Daily Reward Box -->
     <div class="cyber-card">
-        <button class="btn-daily-claim" id="dailyClaimBtn" onclick="handleClick('daily')">
-            🎁 Daily Reward (+10 Alpha)
-        </button>
-    </div>
-
-    <!-- Telegram Channel Share Box -->
-    <div class="cyber-card">
-        <button class="btn-share" onclick="shareToTelegram()">
-            🚀 Share App to Friends / Channel
+        <button class="btn-daily-claim" id="dailyClaimBtn" onclick="handleDailyClick(event)">
+            🎁 Daily Reward (+10 ALTA)
         </button>
     </div>
 
     <div class="cyber-card">
-        <div style="font-size: 11px; margin-bottom: 10px; color: var(--gold); font-weight: bold; letter-spacing: 1px;">
+        <div style="font-size: 11px; margin-bottom: 10px; color: var(--gold); font-weight: bold;">
             🔥 HIGH REWARD BONUS OFFERS
         </div>
         <div class="scroll-ads-list">
-            <div class="scroll-ad-item" onclick="handleClick('adsterra')">
+            <div class="scroll-ad-item" onclick="handleClick('adsterra', event)">
                 <span class="badge">ADSTERRA</span>
                 <p style="font-size: 11px;">🎁 Mystery Chest #1</p>
-                <span style="font-size: 10px; color: var(--text-muted);">0.1 - 2.0 Alpha</span>
+                <span style="font-size: 10px; color: var(--text-muted);">0.1 - 1.5 ALTA</span>
             </div>
-            <div class="scroll-ad-item" onclick="handleClick('high_cpm')">
+            <div class="scroll-ad-item" onclick="handleClick('high_cpm', event)">
                 <span class="badge">HIGH CPM</span>
                 <p style="font-size: 11px;">💎 Premium Sponsor #2</p>
-                <span style="font-size: 10px; color: var(--text-muted);">0.1 - 2.0 Alpha</span>
+                <span style="font-size: 10px; color: var(--text-muted);">0.1 - 1.5 ALTA</span>
             </div>
         </div>
     </div>
 
     <div class="cyber-card">
-        <h3 style="margin-bottom: 10px; font-size: 12px; color: var(--accent); letter-spacing: 1px;">WITHDRAW</h3>
+        <h3 style="margin-bottom: 10px; font-size: 12px; color: var(--accent);">WITHDRAW</h3>
         <div class="form-group">
             <label style="font-size: 9px; color: var(--text-muted);">@USERNAME</label>
             <input type="text" id="tgName" class="withdraw-input" placeholder="@yourusername">
@@ -428,19 +442,42 @@
             <label style="font-size: 9px; color: var(--text-muted);">TON WALLET ADDRESS</label>
             <input type="text" id="tonWallet" class="withdraw-input" placeholder="EQD...">
         </div>
-        <button class="btn-withdraw" onclick="submitWithdrawalRequest()">SUBMIT REQUEST</button>
+        <button class="btn-withdraw" onclick="submitWithdrawalRequest(event)">SUBMIT REQUEST</button>
+    </div>
+</div>
+
+<div class="ad-modal-overlay" id="adModal">
+    <div class="ad-modal-content">
+        <h4 style="color: var(--accent); font-size: 13px;">VERIFYING AD VIEW...</h4>
+        <div class="timer-text" id="modalTimerText" style="color: var(--gold); font-size: 14px; font-weight: bold;">Please wait 15s...</div>
+        <button class="btn-continue" id="continueBtn" onclick="completeAdWatch(event)">CONTINUE</button>
     </div>
 </div>
 
 <div id="toast" class="toast-notification"></div>
 
 <script>
+    // Security 1: Prevent Inspect Element Keyboard Shortcuts
+    document.onkeydown = function(e) {
+        if(e.keyCode == 123 || 
+          (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) ||
+          (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) {
+            return false;
+        }
+    };
+
+    const tg = window.Telegram ? window.Telegram.WebApp : null;
+    if (tg) { tg.ready(); tg.expand(); }
+
     let altaPoints = parseFloat(localStorage.getItem('altaPoints')) || 0.00;
     let withdrawCount = parseInt(localStorage.getItem('withdrawCount')) || 0;
     let autoClickCount = parseInt(localStorage.getItem('autoClickCount')) || 0;
     let lastDailyClaim = parseInt(localStorage.getItem('lastDailyClaim')) || 0;
     
     let currentAdType = '';
+    let isWaitingForReturn = false;
+    let isTaskVerified = false;
+    let timerInterval = null;
     let lastClickTime = 0;
 
     const highCpmLinks = [
@@ -454,31 +491,26 @@
     const photos = ["Photo1.webp", "Photo2.webp", "Photo3.webp", "Photo4.webp", "Photo5.webp"];
     let currentPhotoIndex = 0;
 
-    if (window.Telegram && window.Telegram.WebApp) {
-        window.Telegram.WebApp.ready();
-        window.Telegram.WebApp.expand();
-    }
-
+    // Monetag Automatic InApp Interstitial Ads Setup
     if (typeof show_11786265 === 'function') {
         try {
             show_11786265({
                 type: 'inApp',
-                inAppSettings: {
-                    frequency: 2,
-                    capping: 0.1,
-                    interval: 30,
-                    timeout: 5,
-                    everyPage: false
-                }
+                inAppSettings: { frequency: 2, capping: 0.1, interval: 30, timeout: 5, everyPage: false }
             });
         } catch(e){}
     }
 
+    // Guard Function: Strict Offline Lock
     function guardNetwork() {
         const lockScreen = document.getElementById('offlineLock');
         if (!navigator.onLine) {
             document.body.classList.add('offline-active');
             lockScreen.style.display = 'flex';
+            if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+            document.getElementById('adModal').style.display = 'none';
+            isTaskVerified = false;
+            isWaitingForReturn = false;
         } else {
             document.body.classList.remove('offline-active');
             lockScreen.style.display = 'none';
@@ -518,7 +550,24 @@
             btn.innerText = `⏳ Next Claim in ${hours}h ${minutes}m`;
         } else {
             btn.disabled = false;
-            btn.innerText = `🎁 Daily Reward (+10 Alpha)`;
+            btn.innerText = `🎁 Daily Reward (+10 ALTA)`;
+        }
+    }
+
+    function handleDailyClick(e) {
+        if (!e.isTrusted) return; // Anti Auto-clicker Check
+        guardNetwork();
+        if (!navigator.onLine) return;
+
+        const now = Date.now();
+        const twentyFourHours = 24 * 60 * 60 * 1000;
+
+        if (now - lastDailyClaim >= twentyFourHours) {
+            altaPoints += 10.00;
+            lastDailyClaim = now;
+            localStorage.setItem('lastDailyClaim', lastDailyClaim);
+            updateUI();
+            showToast("🎉 Daily Bonus Claimed! +10 Points");
         }
     }
 
@@ -532,33 +581,97 @@
         checkDailyRewardStatus();
     }
 
-    // DIRECT HIGH-REVENUE CLICK HANDLER (NO 15S DELAY)
-    function handleClick(type) {
+    // Multi-Ad Action Trigger
+    function handleClick(type, e) {
+        // Security 2: Anti-AutoClicker (Only Human Clicks Accepted)
+        if (e && !e.isTrusted) {
+            showToast("⚠️ Auto-Clicker Detected!");
+            return;
+        }
+
         guardNetwork();
-        if (!navigator.onLine) return;
+        if (!navigator.onLine) {
+            showToast("🚫 Cannot click ads while offline!");
+            return;
+        }
 
         const now = Date.now();
-        if (now - lastClickTime < 1000) {
+        if (now - lastClickTime < 1200) {
             showToast("⚠️ Speed Click Blocked!");
             return;
         }
         lastClickTime = now;
 
-        if (type === 'daily') {
-            const twentyFourHours = 24 * 60 * 60 * 1000;
-            if (now - lastDailyClaim < twentyFourHours) {
-                showToast("⏳ Daily reward already claimed!");
+        currentAdType = type;
+        isWaitingForReturn = true;
+        isTaskVerified = false;
+
+        // Step 1 Direct Link Popup
+        const targetUrl = highCpmLinks[Math.floor(Math.random() * highCpmLinks.length)];
+        if (tg && tg.openLink) {
+            tg.openLink(targetUrl);
+        } else {
+            window.open(targetUrl, '_blank');
+        }
+    }
+
+    window.addEventListener('focus', function() {
+        if (isWaitingForReturn && navigator.onLine) {
+            isWaitingForReturn = false;
+            showAdModal();
+        }
+    });
+
+    function showAdModal() {
+        const modal = document.getElementById('adModal');
+        const timerText = document.getElementById('modalTimerText');
+        const continueBtn = document.getElementById('continueBtn');
+        
+        modal.style.display = 'flex';
+        continueBtn.style.display = 'none';
+
+        let timeLeft = 15;
+        timerText.innerText = `Please wait ${timeLeft}s to claim reward...`;
+
+        if (timerInterval) clearInterval(timerInterval);
+
+        timerInterval = setInterval(() => {
+            if (!navigator.onLine) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+                isTaskVerified = false;
+                modal.style.display = 'none';
+                guardNetwork();
                 return;
             }
+
+            timeLeft--;
+            if (timeLeft > 0) {
+                timerText.innerText = `Please wait ${timeLeft}s to claim reward...`;
+            } else {
+                clearInterval(timerInterval);
+                timerInterval = null;
+                isTaskVerified = true;
+                timerText.innerText = "Task Complete! Click Continue below.";
+                continueBtn.style.display = 'block';
+            }
+        }, 1000);
+    }
+
+    function completeAdWatch(e) {
+        if (e && !e.isTrusted) return;
+        guardNetwork();
+        if (!navigator.onLine) return;
+
+        if (!isTaskVerified) {
+            showToast("❌ Verification Failed!");
+            document.getElementById('adModal').style.display = 'none';
+            return;
         }
 
-        currentAdType = type;
+        document.getElementById('adModal').style.display = 'none';
 
-        // Step 1: Open Direct Link in New Tab / Background
-        const targetUrl = highCpmLinks[Math.floor(Math.random() * highCpmLinks.length)];
-        window.open(targetUrl, '_blank');
-
-        // Step 2: Trigger Monetag Rewarded Interstitial Instantly
+        // Step 2 Action: Monetag Rewarded Interstitial/Pop Ad Trigger
         if (typeof show_11786265 === 'function') {
             show_11786265('pop').then(() => {
                 grantReward();
@@ -570,36 +683,22 @@
         }
     }
 
+    // Reward Logic: Random 0.10 to 1.50 ALTA Points
     function grantReward() {
-        if (currentAdType === 'daily') {
-            altaPoints += 10.00;
-            lastDailyClaim = Date.now();
-            localStorage.setItem('lastDailyClaim', lastDailyClaim);
-            showToast("🎉 Daily Bonus Claimed! +10 Points");
-        } else {
-            const randomReward = (Math.random() * (2.00 - 0.10) + 0.10);
-            altaPoints += parseFloat(randomReward.toFixed(2));
+        const randomReward = (Math.random() * (1.50 - 0.10) + 0.10);
+        altaPoints += parseFloat(randomReward.toFixed(2));
 
-            if (currentAdType === 'auto') {
-                autoClickCount = (autoClickCount + 1) % 31;
-            }
-            showToast(`Success! +${randomReward.toFixed(2)} Points added.`);
+        if (currentAdType === 'auto') {
+            autoClickCount = (autoClickCount + 1) % 31;
         }
+
+        isTaskVerified = false;
         updateUI();
+        showToast(`Success! +${randomReward.toFixed(2)} Points added.`);
     }
 
-    function shareToTelegram() {
-        // Replace with your Telegram Bot Username or Mini App Direct Link
-        const shareUrl = "https://t.me/share/url?url=" + encodeURIComponent("https://t.me/YourBotUsername/app") + "&text=" + encodeURIComponent("🚀 Join Alta Rewards Platform & Earn Alpha Points Daily!");
-        
-        if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openTelegramLink) {
-            window.Telegram.WebApp.openTelegramLink(shareUrl);
-        } else {
-            window.open(shareUrl, '_blank');
-        }
-    }
-
-    function submitWithdrawalRequest() {
+    function submitWithdrawalRequest(e) {
+        if (e && !e.isTrusted) return;
         guardNetwork();
         if (!navigator.onLine) return;
 
@@ -612,16 +711,9 @@
             return;
         }
 
-        if (withdrawCount === 1) {
-            if (altaPoints - amount < 150) {
-                showToast("2nd withdrawal requires leaving at least 150 Points balance.");
-                return;
-            }
-        } else {
-            if (amount > altaPoints) {
-                showToast("Insufficient balance.");
-                return;
-            }
+        if (altaPoints < amount) {
+            showToast("Insufficient balance.");
+            return;
         }
 
         altaPoints -= amount;
@@ -629,12 +721,11 @@
         updateUI();
 
         document.getElementById('withdrawAmount').value = '';
-        document.getElementById('tgName').value = '';
         document.getElementById('tonWallet').value = '';
-
         showToast("Request submitted successfully.");
     }
 
+    // Visual Node Mesh
     function initNodeMesh() {
         const canvas = document.getElementById('nodeCanvas');
         const ctx = canvas.getContext('2d');
@@ -642,32 +733,47 @@
         canvas.height = canvas.offsetHeight;
 
         const nodes = [];
-        for (let i = 0; i < 5; i++) {
+        for (let i = 0; i < 18; i++) {
             nodes.push({
                 x: Math.random() * canvas.width,
                 y: Math.random() * canvas.height,
-                vx: (Math.random() - 0.5) * 0.2,
-                vy: (Math.random() - 0.5) * 0.2
+                vx: (Math.random() - 0.5) * 0.4,
+                vy: (Math.random() - 0.5) * 0.4,
+                radius: Math.random() * 1.5 + 2
             });
         }
 
         function draw() {
-            if (!navigator.onLine) {
-                requestAnimationFrame(draw);
-                return;
-            }
+            if (!navigator.onLine) { requestAnimationFrame(draw); return; }
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            ctx.fillStyle = '#10b981';
+
+            for (let i = 0; i < nodes.length; i++) {
+                for (let j = i + 1; j < nodes.length; j++) {
+                    const dx = nodes[i].x - nodes[j].x;
+                    const dy = nodes[i].y - nodes[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+
+                    if (dist < 75) {
+                        ctx.beginPath();
+                        ctx.moveTo(nodes[i].x, nodes[i].y);
+                        ctx.lineTo(nodes[j].x, nodes[j].y);
+                        ctx.strokeStyle = `rgba(16, 185, 129, ${1 - (dist / 75)})`;
+                        ctx.lineWidth = 1;
+                        ctx.stroke();
+                    }
+                }
+            }
 
             nodes.forEach(node => {
                 ctx.beginPath();
-                ctx.arc(node.x, node.y, 1.5, 0, Math.PI * 2);
+                ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
+                ctx.fillStyle = '#10b981';
                 ctx.fill();
-                node.x += node.vx;
-                node.y += node.vy;
+                node.x += node.vx; node.y += node.vy;
                 if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
                 if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
             });
+
             requestAnimationFrame(draw);
         }
         draw();
@@ -678,9 +784,7 @@
         updateUI();
         initNodeMesh();
         startPhotoRotation();
-        setInterval(checkDailyRewardStatus, 60000);
     };
 </script>
-
 </body>
-</html>
+    </html>
