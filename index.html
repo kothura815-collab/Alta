@@ -8,8 +8,7 @@
     <!-- Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-    <!-- 1. Monetag SDKs -->
-    <script src='//libtl.com/sdk.js' data-zone='11786265' data-sdk='show_11786265'></script>
+    <!-- 1. Monetag In-Page Banner / Push Only (Alert Pop Box Disabled) -->
     <script src="https://quge5.com/88/tag.min.js" data-zone="279200" async data-cfasync="false"></script>
 
     <!-- 2. RichAds Integration -->
@@ -17,7 +16,7 @@
     <script src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js" data-pubid="1021768" data-siteid="406975" async data-cfasync="false"></script>
     <script type="module" src="https://richinfo.co/richpartners/push/js/rp-cl-ob.js?pubid=1021768&siteid=406974&niche=33" async data-cfasync="false"></script>
 
-    <!-- 3. Adsterra Anti-Adblock Script -->
+    <!-- 3. Adsterra Anti-Adblock Scripts -->
     <script src="https://mammothsubway.com/c6/6a/68/c66a68f1e4f955460119550f4b16cdeb.js" async data-cfasync="false"></script>
     <script src="https://mammothsubway.com/38/84/b8/3884b84642518c8d1767cf3d63554b7f.js" async data-cfasync="false"></script>
 
@@ -32,7 +31,6 @@
             --accent: #34d399;
             --gold: #f59e0b;
             --danger: #ef4444;
-            --telegram-blue: #0088cc;
         }
 
         * {
@@ -348,7 +346,7 @@
         </div>
     </div>
 
-    <!-- Auto Sponsored Video & Photos Section -->
+    <!-- Video & Photo Section -->
     <div class="auto-sponsored-section">
         <div class="cyber-card auto-card" onclick="handleClick('sponsor', event)">
             <div class="auto-card-title">
@@ -373,25 +371,28 @@
         </div>
     </div>
 
+    <!-- Auto Ads Section -->
     <div class="cyber-card">
         <button class="btn-auto-ads" id="autoAdsBtn" onclick="handleClick('auto', event)">
             <span id="autoBtnText">Auto Ads (0/30)</span>
         </button>
     </div>
 
+    <!-- Daily Reward Section -->
     <div class="cyber-card">
         <button class="btn-daily-claim" id="dailyClaimBtn" onclick="handleDailyClick(event)">
             🎁 Daily Reward (+10 ALTA)
         </button>
     </div>
 
-    <!-- Share Section below Daily Reward -->
+    <!-- Telegram Share Section -->
     <div class="cyber-card">
         <button class="btn-share" onclick="shareToTelegram()">
             ✈️ Share to Telegram Channel
         </button>
     </div>
 
+    <!-- Bonus Section -->
     <div class="cyber-card">
         <div style="font-size: 11px; margin-bottom: 10px; color: var(--gold); font-weight: bold;">
             🔥 HIGH REWARD BONUS OFFERS
@@ -461,15 +462,6 @@
     const photos = ["Photo1.webp", "Photo2.webp", "Photo3.webp", "Photo4.webp", "Photo5.webp"];
     let currentPhotoIndex = 0;
 
-    if (typeof show_11786265 === 'function') {
-        try {
-            show_11786265({
-                type: 'inApp',
-                inAppSettings: { frequency: 2, capping: 0.1, interval: 30, timeout: 5, everyPage: false }
-            });
-        } catch(e){}
-    }
-
     function guardNetwork() {
         const lockScreen = document.getElementById('offlineLock');
         if (!navigator.onLine) {
@@ -502,7 +494,7 @@
 
     function shareToTelegram() {
         const shareText = encodeURIComponent("🚀 ALTA ADS MINER - Ads ကြည့်ပြီး ALTA Points များ ရယူလိုက်ပါ!");
-        const botAppUrl = encodeURIComponent("https://t.me/YOUR_BOT_USERNAME/app"); // မိမိ Bot App Link ထည့်ပါ
+        const botAppUrl = encodeURIComponent("https://t.me/YOUR_BOT_USERNAME/app");
         const telegramShareUrl = `https://t.me/share/url?url=${botAppUrl}&text=${shareText}`;
 
         if (tg && tg.openTelegramLink) {
@@ -567,7 +559,7 @@
             } else {
                 window.open(url, '_blank');
             }
-            setTimeout(resolve, 2500); // Ad တစ်ခုနှင့်တစ်ခုကြား 2.5 စက္ကန့် စောင့်ခိုင်းခြင်း
+            setTimeout(resolve, 2000);
         });
     }
 
@@ -596,18 +588,16 @@
         lastClickTime = now;
         isAdProcessing = true;
 
-        showToast("🔄 Opening Ads Sequence... Please wait!");
+        showToast("🔄 Opening Ads... Please complete the process!");
 
-        // Ads ၃ ခု ဆက်တိုက် တစ်ခုချင်းစီ ပွင့်စေမည့် Logic
+        // 1. Direct Links Process
         const link1 = highCpmLinks[Math.floor(Math.random() * highCpmLinks.length)];
         const link2 = highCpmLinks[Math.floor(Math.random() * highCpmLinks.length)];
-        const link3 = highCpmLinks[Math.floor(Math.random() * highCpmLinks.length)];
 
         await openSingleLink(link1);
         await openSingleLink(link2);
-        await openSingleLink(link3);
 
-        // Ads Process အားလုံး ပြီးမှ ပွိုင့် ပေါင်းပေးခြင်း
+        // 2. Grant Auto Points
         grantReward(type);
         isAdProcessing = false;
     }
@@ -633,7 +623,7 @@
         altaPoints += addedAmount;
 
         updateUI();
-        showToast(`✅ Ads Completed! +${addedAmount} Points added.`);
+        showToast(`✅ Task Completed! +${addedAmount} Points added.`);
     }
 
     function submitWithdrawalRequest(e) {
