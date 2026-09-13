@@ -8,18 +8,8 @@
     <!-- Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-    <!-- 1. Monetag SDKs -->
-    <script src='//libtl.com/sdk.js' data-zone='11786265' data-sdk='show_11786265'></script>
-    <script src="https://quge5.com/88/tag.min.js" data-zone="279200" async data-cfasync="false"></script>
-
-    <!-- 2. RichAds Integration -->
-    <script src="https://richinfo.co/richpartners/in-page/js/richads-ob.js?pubid=1021768&siteid=406976" async></script>
-    <script src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js" data-pubid="1021768" data-siteid="406975" async data-cfasync="false"></script>
-    <script type="module" src="https://richinfo.co/richpartners/push/js/rp-cl-ob.js?pubid=1021768&siteid=406974&niche=33" async data-cfasync="false"></script>
-
-    <!-- 3. Adsterra Anti-Adblock Script -->
-    <script src="https://mammothsubway.com/c6/6a/68/c66a68f1e4f955460119550f4b16cdeb.js" async data-cfasync="false"></script>
-    <script src="https://mammothsubway.com/38/84/b8/3884b84642518c8d1767cf3d63554b7f.js" async data-cfasync="false"></script>
+    <!-- Essential Monetag SDK Only -->
+    <script src='//libtl.com/sdk.js' data-zone='11786265' data-sdk='show_11786265' async></script>
 
     <style>
         :root {
@@ -32,22 +22,19 @@
             --accent: #34d399;
             --gold: #f59e0b;
             --danger: #ef4444;
-            --telegram-blue: #0088cc;
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Courier New', monospace, sans-serif;
+            font-family: system-ui, -apple-system, sans-serif;
             user-select: none;
             -webkit-user-select: none;
         }
 
         body {
             background-color: var(--bg);
-            background-image: radial-gradient(#0f291a 1px, transparent 1px);
-            background-size: 16px 16px;
             color: var(--text-main);
             display: flex;
             flex-direction: column;
@@ -89,59 +76,19 @@
             border-radius: 10px;
             padding: 14px;
             border: 1px solid var(--border-color);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-        }
-
-        .node-mesh-card {
-            background: var(--card-bg);
-            border: 1px solid var(--primary);
-            box-shadow: 0 0 10px rgba(16, 185, 129, 0.2);
-            border-radius: 10px;
-            padding: 14px;
         }
 
         .node-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            margin-bottom: 10px;
         }
 
         .node-title {
-            font-size: 13px;
-            letter-spacing: 1.5px;
+            font-size: 14px;
+            letter-spacing: 1px;
             color: var(--accent);
             font-weight: bold;
-        }
-
-        .sync-status {
-            display: flex;
-            align-items: center;
-            gap: 6px;
-            color: var(--accent);
-            font-size: 11px;
-        }
-
-        .dot-pulsing {
-            width: 7px;
-            height: 7px;
-            background-color: var(--accent);
-            border-radius: 50%;
-            animation: pulse 1.5s infinite alternate;
-        }
-
-        @keyframes pulse {
-            0% { opacity: 0.3; transform: scale(0.8); }
-            100% { opacity: 1; transform: scale(1.2); }
-        }
-
-        #nodeCanvas {
-            width: 100%;
-            height: 75px;
-            background: #030705;
-            border-radius: 6px;
-            border: 1px solid var(--border-color);
-            display: block;
         }
 
         .stats-card {
@@ -162,9 +109,7 @@
             gap: 12px;
         }
 
-        .auto-card {
-            cursor: pointer;
-        }
+        .auto-card { cursor: pointer; }
 
         .auto-card-title {
             font-size: 11px;
@@ -177,23 +122,21 @@
 
         .auto-media-box {
             width: 100%;
-            height: 200px;
+            height: 160px;
             border-radius: 6px;
             overflow: hidden;
-            background: #000;
+            background: #030705;
             border: 1px solid var(--border-color);
             display: flex;
             justify-content: center;
             align-items: center;
         }
 
-        .auto-media-box video, .auto-media-box img {
-            width: 100%;
-            height: 100%;
-            object-fit: contain;
+        .auto-media-box img {
+            width: 100%; height: 100%; object-fit: cover;
         }
 
-        .btn-auto-ads {
+        .btn-action {
             background: linear-gradient(180deg, #092015 0%, #05140d 100%);
             color: var(--accent);
             border: 1px solid var(--primary);
@@ -233,10 +176,6 @@
             border-radius: 6px;
             cursor: pointer;
             width: 100%;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            gap: 8px;
         }
 
         .scroll-ads-list {
@@ -252,21 +191,6 @@
             border-radius: 6px;
             text-align: center;
             cursor: pointer;
-            position: relative;
-        }
-
-        .scroll-ad-item .badge {
-            position: absolute;
-            top: 0; right: 0;
-            background: #152b1e;
-            color: var(--gold);
-            font-size: 8px;
-            font-weight: bold;
-            padding: 2px 5px;
-        }
-
-        .form-group {
-            margin-bottom: 10px;
         }
 
         .withdraw-input {
@@ -278,6 +202,7 @@
             color: var(--text-main);
             outline: none;
             font-size: 12px;
+            margin-top: 4px;
         }
 
         .btn-withdraw {
@@ -289,12 +214,13 @@
             width: 100%;
             font-weight: bold;
             cursor: pointer;
+            margin-top: 8px;
         }
 
         .toast-notification {
             position: fixed;
             top: 50%; left: 50%;
-            transform: translate(-50%, -50%) scale(0.9);
+            transform: translate(-50%, -50%);
             background: #0b120e;
             border: 1px solid var(--accent);
             color: var(--accent);
@@ -303,20 +229,10 @@
             font-size: 14px;
             font-weight: bold;
             z-index: 10000;
-            opacity: 0;
-            visibility: hidden;
-            transition: all 0.25s ease-in-out;
-            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+            display: none;
             text-align: center;
         }
 
-        .toast-notification.show {
-            opacity: 1;
-            visibility: visible;
-            transform: translate(-50%, -50%) scale(1);
-        }
-
-        /* Countdown Overlay Modal */
         .ad-modal-overlay {
             display: none;
             position: fixed;
@@ -327,60 +243,28 @@
             justify-content: center;
             align-items: center;
             padding: 20px;
-            text-align: center;
         }
 
-        .ad-modal-overlay.active {
-            display: flex;
-        }
-
-        .countdown-timer {
-            font-size: 36px;
-            font-weight: bold;
-            color: var(--gold);
-            margin: 15px 0;
-        }
-
-        .btn-continue {
-            background: linear-gradient(135deg, #10b981, #059669);
-            color: #fff;
-            border: none;
-            padding: 14px 28px;
-            font-size: 16px;
-            font-weight: bold;
-            border-radius: 6px;
-            cursor: pointer;
-            display: none;
-            box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
-        }
+        .ad-modal-overlay.active { display: flex; }
     </style>
 </head>
 <body oncontextmenu="return false;">
 
 <div class="offline-lock" id="offlineLock">
-    <h2 style="font-size: 18px; margin-bottom: 8px;">🚫 NO INTERNET CONNECTION</h2>
-    <p style="font-size: 12px; color: var(--text-muted);">Connection lost. Reconnecting...</p>
+    <h2>🚫 NO INTERNET CONNECTION</h2>
 </div>
 
-<!-- Countdown / Ad Processing Overlay Modal -->
 <div class="ad-modal-overlay" id="adModal">
-    <h2 style="font-size: 18px; color: var(--accent);">⏳ Processing Monetag Ad</h2>
-    <p style="font-size: 12px; color: var(--text-muted); margin-top: 5px;">Please wait for the process to complete...</p>
-    <div class="countdown-timer" id="modalCountdown">15</div>
-    <button class="btn-continue" id="btnContinue" onclick="completeAdProcess()">Continue</button>
+    <h2 style="color: var(--accent);">⏳ Loading Sponsor Ad...</h2>
+    <div style="font-size: 36px; color: var(--gold); margin: 15px 0;" id="modalCountdown">15</div>
+    <button class="btn-daily-claim" id="btnContinue" style="display:none; width:auto; padding: 10px 24px;" onclick="completeAdProcess()">Continue</button>
 </div>
 
-<div class="container" id="mainContainer">
+<div class="container">
 
-    <div class="node-mesh-card">
-        <div class="node-header">
-            <span class="node-title">ALPHA ADS MINER</span>
-            <div class="sync-status">
-                <span class="dot-pulsing"></span>
-                <span>Syncing</span>
-            </div>
-        </div>
-        <canvas id="nodeCanvas"></canvas>
+    <div class="cyber-card node-header">
+        <span class="node-title">⚡ ALPHA ADS MINER</span>
+        <span style="color: var(--accent); font-size: 11px;">● Active</span>
     </div>
 
     <div class="cyber-card stats-card">
@@ -394,33 +278,20 @@
         </div>
     </div>
 
-    <!-- Auto Sponsored Video & Photos Section (Photo 1 to 11) -->
     <div class="auto-sponsored-section">
         <div class="cyber-card auto-card" onclick="handleClick('sponsor', event)">
             <div class="auto-card-title">
-                <span>🎬 Sponsored Video (Highest CPM)</span>
-                <span style="color: var(--accent);">Tap to Claim Point</span>
+                <span>🎬 Sponsored Ad (High CPM)</span>
+                <span style="color: var(--accent);">Tap to Claim</span>
             </div>
             <div class="auto-media-box">
-                <video autoplay muted loop playsinline id="autoMainVideo">
-                    <source src="Video 1.mp4" type="video/mp4">
-                </video>
-            </div>
-        </div>
-
-        <div class="cyber-card auto-card" onclick="handleClick('sponsor', event)">
-            <div class="auto-card-title">
-                <span>🖼️ Sponsored Photo Banner</span>
-                <span style="color: var(--accent);">Tap to Claim Point</span>
-            </div>
-            <div class="auto-media-box">
-                <img id="rotatingPhoto" src="Photo1.webp" alt="Sponsored Photo Banner">
+                <img id="rotatingPhoto" src="Photo1.webp" alt="Sponsor Banner">
             </div>
         </div>
     </div>
 
     <div class="cyber-card">
-        <button class="btn-auto-ads" id="autoAdsBtn" onclick="handleClick('auto', event)">
+        <button class="btn-action" id="autoAdsBtn" onclick="handleClick('auto', event)">
             <span id="autoBtnText">Auto Ads (0/30)</span>
         </button>
     </div>
@@ -431,26 +302,19 @@
         </button>
     </div>
 
-    <!-- Share Section -->
     <div class="cyber-card">
-        <button class="btn-share" onclick="shareToTelegram()">
-            ✈️ Share to Telegram Channel
-        </button>
+        <button class="btn-share" onclick="shareToTelegram()">✈️ Share Bot</button>
     </div>
 
     <div class="cyber-card">
-        <div style="font-size: 11px; margin-bottom: 10px; color: var(--gold); font-weight: bold;">
-            🔥 HIGH REWARD BONUS OFFERS
-        </div>
+        <div style="font-size: 11px; margin-bottom: 10px; color: var(--gold); font-weight: bold;">🔥 HIGH REWARD OFFERS</div>
         <div class="scroll-ads-list">
             <div class="scroll-ad-item" onclick="handleClick('bonus', event)">
-                <span class="badge">ADSTERRA</span>
-                <p style="font-size: 11px;">🎁 Mystery Chest #1</p>
+                <p style="font-size: 11px;">🎁 Bonus Offers #1</p>
                 <span style="font-size: 10px; color: var(--text-muted);">0.1 - 2.0 ALPHA</span>
             </div>
             <div class="scroll-ad-item" onclick="handleClick('bonus', event)">
-                <span class="badge">HIGH CPM</span>
-                <p style="font-size: 11px;">💎 Premium Sponsor #2</p>
+                <p style="font-size: 11px;">💎 Premium Offer #2</p>
                 <span style="font-size: 10px; color: var(--text-muted);">0.1 - 2.0 ALPHA</span>
             </div>
         </div>
@@ -458,15 +322,15 @@
 
     <div class="cyber-card">
         <h3 style="margin-bottom: 10px; font-size: 12px; color: var(--accent);">WITHDRAW</h3>
-        <div class="form-group">
+        <div style="margin-bottom: 8px;">
             <label style="font-size: 9px; color: var(--text-muted);">@USERNAME</label>
             <input type="text" id="tgName" class="withdraw-input" placeholder="@yourusername">
         </div>
-        <div class="form-group">
-            <label style="font-size: 9px; color: var(--text-muted);">WITHDRAWAL POINT AMOUNT</label>
-            <input type="number" id="withdrawAmount" class="withdraw-input" placeholder="Min: 50 Points">
+        <div style="margin-bottom: 8px;">
+            <label style="font-size: 9px; color: var(--text-muted);">AMOUNT (MIN 50)</label>
+            <input type="number" id="withdrawAmount" class="withdraw-input" placeholder="50">
         </div>
-        <div class="form-group">
+        <div style="margin-bottom: 8px;">
             <label style="font-size: 9px; color: var(--text-muted);">TON WALLET ADDRESS</label>
             <input type="text" id="tonWallet" class="withdraw-input" placeholder="EQD...">
         </div>
@@ -477,55 +341,30 @@
 <div id="toast" class="toast-notification"></div>
 
 <script>
-    // Anti-Hack Key Listener Protection
-    document.onkeydown = function(e) {
-        if(e.keyCode == 123 || 
-          (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) ||
-          (e.ctrlKey && e.keyCode == 'U'.charCodeAt(0))) {
-            return false;
-        }
-    };
-
     const tg = window.Telegram ? window.Telegram.WebApp : null;
     if (tg) { tg.ready(); tg.expand(); }
 
-    // State Variables (Point Retention & Withdrawal Logic)
     let alphaPoints = parseFloat(localStorage.getItem('alphaPoints')) || 0.00;
     let withdrawCount = parseInt(localStorage.getItem('withdrawCount')) || 0;
     let autoClickCount = parseInt(localStorage.getItem('autoClickCount')) || 0;
     let lastDailyClaim = parseInt(localStorage.getItem('lastDailyClaim')) || 0;
     
     let isAdProcessing = false;
-    let lastClickTime = 0;
     let pendingAdType = null;
     let countdownInterval = null;
 
     const highCpmLinks = [
         "https://omg10.com/4/11776333",
         "https://omg10.com/4/11783730",
-        "https://omg10.com/4/11786275",
-        "https://mammothsubway.com/vqvp77uv?key=e16f5adcebeee070d751d4132045f66e",
-        "https://mammothsubway.com/sraj8zz1d?key=80fe52ed90673410b3bd8a6ef1e23f0b"
+        "https://omg10.com/4/11786275"
     ];
 
-    // Photos array (Photo 1 to 11)
-    const photos = [
-        "Photo1.webp", "Photo2.webp", "Photo3.webp", "Photo4.webp", "Photo5.webp",
-        "Photo6.webp", "Photo7.webp", "Photo8.webp", "Photo9.webp", "Photo10.webp", "Photo11.webp"
-    ];
+    const photos = ["Photo1.webp", "Photo2.webp", "Photo3.webp", "Photo4.webp", "Photo5.webp"];
     let currentPhotoIndex = 0;
 
     function guardNetwork() {
-        const lockScreen = document.getElementById('offlineLock');
-        if (!navigator.onLine) {
-            document.body.classList.add('offline-active');
-            lockScreen.style.display = 'flex';
-        } else {
-            document.body.classList.remove('offline-active');
-            lockScreen.style.display = 'none';
-        }
+        document.getElementById('offlineLock').style.display = navigator.onLine ? 'none' : 'flex';
     }
-
     window.addEventListener('online', guardNetwork);
     window.addEventListener('offline', guardNetwork);
 
@@ -535,44 +374,20 @@
                 currentPhotoIndex = (currentPhotoIndex + 1) % photos.length;
                 document.getElementById('rotatingPhoto').src = photos[currentPhotoIndex];
             }
-        }, 4000);
+        }, 5000);
     }
 
     function showToast(msg) {
         const toast = document.getElementById('toast');
         toast.innerText = msg;
-        toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 3000);
+        toast.style.display = 'block';
+        setTimeout(() => toast.style.display = 'none', 3000);
     }
 
     function shareToTelegram() {
-        const shareText = encodeURIComponent("🚀 ALPHA ADS MINER - Ads ကြည့်ပြီး ALPHA Points များ ရယူလိုက်ပါ!");
-        const botAppUrl = encodeURIComponent("https://t.me/AlphaAdsReward_bot/app");
-        const telegramShareUrl = `https://t.me/share/url?url=${botAppUrl}&text=${shareText}`;
-
-        if (tg && tg.openTelegramLink) {
-            tg.openTelegramLink(telegramShareUrl);
-        } else {
-            window.open(telegramShareUrl, '_blank');
-        }
-    }
-
-    function checkDailyRewardStatus() {
-        const btn = document.getElementById('dailyClaimBtn');
-        const now = Date.now();
-        const twentyFourHours = 24 * 60 * 60 * 1000;
-        const timePassed = now - lastDailyClaim;
-
-        if (timePassed < twentyFourHours) {
-            btn.disabled = true;
-            const remaining = twentyFourHours - timePassed;
-            const hours = Math.floor(remaining / (1000 * 60 * 60));
-            const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
-            btn.innerText = `⏳ Next Claim in ${hours}h ${minutes}m`;
-        } else {
-            btn.disabled = false;
-            btn.innerText = `🎁 Daily Reward (+10 ALPHA)`;
-        }
+        const url = `https://t.me/share/url?url=${encodeURIComponent("https://t.me/AlphaAdsReward_bot/app")}&text=${encodeURIComponent("🚀 Join ALPHA ADS MINER!")}`;
+        if (tg && tg.openTelegramLink) tg.openTelegramLink(url);
+        else window.open(url, '_blank');
     }
 
     function updateUI() {
@@ -582,82 +397,39 @@
         localStorage.setItem('alphaPoints', alphaPoints);
         localStorage.setItem('withdrawCount', withdrawCount);
         localStorage.setItem('autoClickCount', autoClickCount);
-        checkDailyRewardStatus();
-    }
-
-    function openSingleLink(url) {
-        return new Promise((resolve) => {
-            if (tg && tg.openLink) {
-                tg.openLink(url);
-            } else {
-                window.open(url, '_blank');
-            }
-            setTimeout(resolve, 2000);
-        });
+        
+        const now = Date.now();
+        const btn = document.getElementById('dailyClaimBtn');
+        if (now - lastDailyClaim < 86400000) {
+            btn.disabled = true;
+            btn.innerText = `⏳ Claimed Today`;
+        } else {
+            btn.disabled = false;
+            btn.innerText = `🎁 Daily Reward (+10 ALPHA)`;
+        }
     }
 
     async function handleClick(type, e) {
-        if (e && !e.isTrusted) return;
-        guardNetwork();
-        if (!navigator.onLine) {
-            showToast("🚫 Cannot click ads while offline!");
-            return;
-        }
-
-        if (isAdProcessing) {
-            showToast("⏳ Ads Process Running... Please wait!");
-            return;
-        }
-
-        const now = Date.now();
-        if (now - lastClickTime < 1200) {
-            showToast("⚠️ Speed Click Blocked!");
-            return;
-        }
-        lastClickTime = now;
+        if (!navigator.onLine || isAdProcessing) return;
         isAdProcessing = true;
         pendingAdType = type;
 
-        showToast("🔄 Opening Ads Links...");
+        const targetLink = highCpmLinks[Math.floor(Math.random() * highCpmLinks.length)];
+        if (tg && tg.openLink) tg.openLink(targetLink);
+        else window.open(targetLink, '_blank');
 
-        const link1 = highCpmLinks[Math.floor(Math.random() * highCpmLinks.length)];
-        const link2 = highCpmLinks[Math.floor(Math.random() * highCpmLinks.length)];
-        await openSingleLink(link1);
-        await openSingleLink(link2);
-
-        // Monetag SDK Call
         if (typeof show_11786265 === 'function') {
-            try {
-                show_11786265({
-                    type: 'inApp',
-                    inAppSettings: { frequency: 2, capping: 0.1, interval: 30, timeout: 5, everyPage: false }
-                });
-            } catch(err){}
+            try { show_11786265(); } catch(err){}
         }
 
-        startAd15sModal();
+        start15sModal();
     }
 
     function handleDailyClick(e) {
-        if (e && !e.isTrusted) return;
-        guardNetwork();
-        if (!navigator.onLine) {
-            showToast("🚫 Cannot claim while offline!");
-            return;
-        }
-
-        const now = Date.now();
-        const twentyFourHours = 24 * 60 * 60 * 1000;
-
-        if (now - lastDailyClaim < twentyFourHours) {
-            showToast("⚠️ Already claimed today!");
-            return;
-        }
-
-        handleClick('daily', e);
+        if (Date.now() - lastDailyClaim >= 86400000) handleClick('daily', e);
     }
 
-    function startAd15sModal() {
+    function start15sModal() {
         const modal = document.getElementById('adModal');
         const timerText = document.getElementById('modalCountdown');
         const btnContinue = document.getElementById('btnContinue');
@@ -674,149 +446,55 @@
             timerText.innerText = timeLeft;
             if (timeLeft <= 0) {
                 clearInterval(countdownInterval);
-                timerText.innerText = "Done!";
-                btnContinue.style.display = 'inline-block';
+                timerText.innerText = "Complete!";
+                btnContinue.style.display = 'block';
             }
         }, 1000);
     }
 
     function completeAdProcess() {
-        const modal = document.getElementById('adModal');
-        modal.classList.remove('active');
-
+        document.getElementById('adModal').classList.remove('active');
         if (pendingAdType === 'daily') {
             alphaPoints += 10.00;
             lastDailyClaim = Date.now();
             localStorage.setItem('lastDailyClaim', lastDailyClaim);
-            showToast("🎉 Daily Bonus Claimed! +10 ALPHA Points!");
         } else {
-            grantReward(pendingAdType);
+            const added = parseFloat((Math.random() * 1.4 + 0.1).toFixed(2));
+            alphaPoints += added;
+            if (pendingAdType === 'auto') autoClickCount = (autoClickCount + 1) % 31;
         }
-
         isAdProcessing = false;
         pendingAdType = null;
         updateUI();
-    }
-
-    function grantReward(type) {
-        let minReward = 0.10;
-        let maxReward = 1.50;
-
-        if (type === 'bonus') {
-            minReward = 0.10; maxReward = 2.00;
-        } else if (type === 'sponsor') {
-            minReward = 0.10; maxReward = 1.50;
-        } else if (type === 'auto') {
-            minReward = 0.10; maxReward = 1.50;
-            autoClickCount = (autoClickCount + 1) % 31;
-        }
-
-        const randomReward = (Math.random() * (maxReward - minReward) + minReward);
-        const addedAmount = parseFloat(randomReward.toFixed(2));
-        alphaPoints += addedAmount;
-
-        showToast(`✅ Ads Process Completed! +${addedAmount} ALPHA Points added.`);
+        showToast("✅ Points Awarded!");
     }
 
     function submitWithdrawalRequest(e) {
-        if (e && !e.isTrusted) return;
-        guardNetwork();
-        if (!navigator.onLine) return;
-
         const tgName = document.getElementById('tgName').value.trim();
         const amount = parseFloat(document.getElementById('withdrawAmount').value);
         const tonWallet = document.getElementById('tonWallet').value.trim();
 
-        if (!tgName || !tonWallet || isNaN(amount) || amount < 50) {
-            showToast("Min withdrawal amount is 50 Points.");
+        if (!tgName || !tonWallet || isNaN(amount) || amount < 50 || alphaPoints < amount) {
+            showToast("Invalid Amount or Insufficient Balance!");
             return;
         }
 
-        if (alphaPoints < amount) {
-            showToast("Insufficient balance.");
-            return;
-        }
-
-        // Actual Deduction & Increment Count ONLY on successful withdrawal
         alphaPoints -= amount;
         withdrawCount++;
-        const withdrawTime = new Date().toLocaleString();
-        
         updateUI();
 
-        // Withdraw history channel display formatting
-        const historyText = `🚨 NEW WITHDRAWAL REQUEST 🚨\n\n👤 User: ${tgName}\n💰 Amount: ${amount} ALPHA Points\n💎 Wallet: ${tonWallet}\n⏰ Time: ${withdrawTime}\n📊 Total Withdrawals: ${withdrawCount} Times`;
-        
-        // Open/Send to History Channel
-        const channelShareUrl = `https://t.me/share/url?url=${encodeURIComponent('https://t.me/Allwithdrawhistory')}&text=${encodeURIComponent(historyText)}`;
-        if (tg && tg.openTelegramLink) {
-            tg.openTelegramLink(channelShareUrl);
-        } else {
-            window.open(channelShareUrl, '_blank');
-        }
+        const historyText = `🚨 WITHDRAWAL REQUEST 🚨\nUser: ${tgName}\nAmount: ${amount} ALPHA\nWallet: ${tonWallet}`;
+        const channelUrl = `https://t.me/share/url?url=${encodeURIComponent('https://t.me/Allwithdrawhistory')}&text=${encodeURIComponent(historyText)}`;
+        if (tg && tg.openTelegramLink) tg.openTelegramLink(channelUrl);
+        else window.open(channelUrl, '_blank');
 
         document.getElementById('withdrawAmount').value = '';
         document.getElementById('tonWallet').value = '';
-        showToast("Request submitted successfully!");
-    }
-
-    function initNodeMesh() {
-        const canvas = document.getElementById('nodeCanvas');
-        const ctx = canvas.getContext('2d');
-        canvas.width = canvas.offsetWidth;
-        canvas.height = canvas.offsetHeight;
-
-        const nodes = [];
-        for (let i = 0; i < 18; i++) {
-            nodes.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
-                vx: (Math.random() - 0.5) * 0.4,
-                vy: (Math.random() - 0.5) * 0.4,
-                radius: Math.random() * 1.5 + 2
-            });
-        }
-
-        function draw() {
-            if (!navigator.onLine) { requestAnimationFrame(draw); return; }
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-            for (let i = 0; i < nodes.length; i++) {
-                for (let j = i + 1; j < nodes.length; j++) {
-                    const dx = nodes[i].x - nodes[j].x;
-                    const dy = nodes[i].y - nodes[j].y;
-                    const dist = Math.sqrt(dx * dx + dy * dy);
-
-                    if (dist < 75) {
-                        ctx.beginPath();
-                        ctx.moveTo(nodes[i].x, nodes[i].y);
-                        ctx.lineTo(nodes[j].x, nodes[j].y);
-                        ctx.strokeStyle = `rgba(16, 185, 129, ${1 - (dist / 75)})`;
-                        ctx.lineWidth = 1;
-                        ctx.stroke();
-                    }
-                }
-            }
-
-            nodes.forEach(node => {
-                ctx.beginPath();
-                ctx.arc(node.x, node.y, node.radius, 0, Math.PI * 2);
-                ctx.fillStyle = '#10b981';
-                ctx.fill();
-                node.x += node.vx; node.y += node.vy;
-                if (node.x < 0 || node.x > canvas.width) node.vx *= -1;
-                if (node.y < 0 || node.y > canvas.height) node.vy *= -1;
-            });
-
-            requestAnimationFrame(draw);
-        }
-        draw();
     }
 
     window.onload = function() {
         guardNetwork();
         updateUI();
-        initNodeMesh();
         startPhotoRotation();
     };
 </script>
