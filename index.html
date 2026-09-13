@@ -3,12 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ALTA ADS MINER</title>
+    <title>ALPHA ADS MINER</title>
 
     <!-- Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-    <!-- 1. Monetag In-Page Banner / Push Only (Alert Pop Box Disabled) -->
+    <!-- 1. Monetag SDKs -->
+    <script src='//libtl.com/sdk.js' data-zone='11786265' data-sdk='show_11786265'></script>
     <script src="https://quge5.com/88/tag.min.js" data-zone="279200" async data-cfasync="false"></script>
 
     <!-- 2. RichAds Integration -->
@@ -16,7 +17,7 @@
     <script src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js" data-pubid="1021768" data-siteid="406975" async data-cfasync="false"></script>
     <script type="module" src="https://richinfo.co/richpartners/push/js/rp-cl-ob.js?pubid=1021768&siteid=406974&niche=33" async data-cfasync="false"></script>
 
-    <!-- 3. Adsterra Anti-Adblock Scripts -->
+    <!-- 3. Adsterra Anti-Adblock Script -->
     <script src="https://mammothsubway.com/c6/6a/68/c66a68f1e4f955460119550f4b16cdeb.js" async data-cfasync="false"></script>
     <script src="https://mammothsubway.com/38/84/b8/3884b84642518c8d1767cf3d63554b7f.js" async data-cfasync="false"></script>
 
@@ -31,6 +32,7 @@
             --accent: #34d399;
             --gold: #f59e0b;
             --danger: #ef4444;
+            --telegram-blue: #0088cc;
         }
 
         * {
@@ -313,6 +315,44 @@
             visibility: visible;
             transform: translate(-50%, -50%) scale(1);
         }
+
+        /* Countdown Overlay Modal */
+        .ad-modal-overlay {
+            display: none;
+            position: fixed;
+            top: 0; left: 0; width: 100vw; height: 100vh;
+            background: rgba(3, 7, 5, 0.95);
+            z-index: 99999;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+            text-align: center;
+        }
+
+        .ad-modal-overlay.active {
+            display: flex;
+        }
+
+        .countdown-timer {
+            font-size: 36px;
+            font-weight: bold;
+            color: var(--gold);
+            margin: 15px 0;
+        }
+
+        .btn-continue {
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: #fff;
+            border: none;
+            padding: 14px 28px;
+            font-size: 16px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            display: none;
+            box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+        }
     </style>
 </head>
 <body oncontextmenu="return false;">
@@ -322,11 +362,19 @@
     <p style="font-size: 12px; color: var(--text-muted);">Connection lost. Reconnecting...</p>
 </div>
 
+<!-- Countdown / Ad Processing Overlay Modal -->
+<div class="ad-modal-overlay" id="adModal">
+    <h2 style="font-size: 18px; color: var(--accent);">⏳ Processing Monetag Ad</h2>
+    <p style="font-size: 12px; color: var(--text-muted); margin-top: 5px;">Please wait for the process to complete...</p>
+    <div class="countdown-timer" id="modalCountdown">15</div>
+    <button class="btn-continue" id="btnContinue" onclick="completeAdProcess()">Continue</button>
+</div>
+
 <div class="container" id="mainContainer">
 
     <div class="node-mesh-card">
         <div class="node-header">
-            <span class="node-title">ALTA ADS MINER</span>
+            <span class="node-title">ALPHA ADS MINER</span>
             <div class="sync-status">
                 <span class="dot-pulsing"></span>
                 <span>Syncing</span>
@@ -337,8 +385,8 @@
 
     <div class="cyber-card stats-card">
         <div class="balance-box">
-            <h3 style="font-size: 10px; color: var(--text-muted);">ALTA POINTS BALANCE</h3>
-            <div class="points" id="altaBalance">0.00</div>
+            <h3 style="font-size: 10px; color: var(--text-muted);">ALPHA POINTS BALANCE</h3>
+            <div class="points" id="alphaBalance">0.00</div>
         </div>
         <div style="text-align: right;">
             <p style="font-size: 10px; color: var(--text-muted);">WITHDRAWALS</p>
@@ -346,7 +394,7 @@
         </div>
     </div>
 
-    <!-- Video & Photo Section -->
+    <!-- Auto Sponsored Video & Photos Section (Photo 1 to 11) -->
     <div class="auto-sponsored-section">
         <div class="cyber-card auto-card" onclick="handleClick('sponsor', event)">
             <div class="auto-card-title">
@@ -371,28 +419,25 @@
         </div>
     </div>
 
-    <!-- Auto Ads Section -->
     <div class="cyber-card">
         <button class="btn-auto-ads" id="autoAdsBtn" onclick="handleClick('auto', event)">
             <span id="autoBtnText">Auto Ads (0/30)</span>
         </button>
     </div>
 
-    <!-- Daily Reward Section -->
     <div class="cyber-card">
         <button class="btn-daily-claim" id="dailyClaimBtn" onclick="handleDailyClick(event)">
-            🎁 Daily Reward (+10 ALTA)
+            🎁 Daily Reward (+10 ALPHA)
         </button>
     </div>
 
-    <!-- Telegram Share Section -->
+    <!-- Share Section -->
     <div class="cyber-card">
         <button class="btn-share" onclick="shareToTelegram()">
             ✈️ Share to Telegram Channel
         </button>
     </div>
 
-    <!-- Bonus Section -->
     <div class="cyber-card">
         <div style="font-size: 11px; margin-bottom: 10px; color: var(--gold); font-weight: bold;">
             🔥 HIGH REWARD BONUS OFFERS
@@ -401,12 +446,12 @@
             <div class="scroll-ad-item" onclick="handleClick('bonus', event)">
                 <span class="badge">ADSTERRA</span>
                 <p style="font-size: 11px;">🎁 Mystery Chest #1</p>
-                <span style="font-size: 10px; color: var(--text-muted);">0.1 - 2.0 ALTA</span>
+                <span style="font-size: 10px; color: var(--text-muted);">0.1 - 2.0 ALPHA</span>
             </div>
             <div class="scroll-ad-item" onclick="handleClick('bonus', event)">
                 <span class="badge">HIGH CPM</span>
                 <p style="font-size: 11px;">💎 Premium Sponsor #2</p>
-                <span style="font-size: 10px; color: var(--text-muted);">0.1 - 2.0 ALTA</span>
+                <span style="font-size: 10px; color: var(--text-muted);">0.1 - 2.0 ALPHA</span>
             </div>
         </div>
     </div>
@@ -432,6 +477,7 @@
 <div id="toast" class="toast-notification"></div>
 
 <script>
+    // Anti-Hack Key Listener Protection
     document.onkeydown = function(e) {
         if(e.keyCode == 123 || 
           (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) ||
@@ -443,13 +489,16 @@
     const tg = window.Telegram ? window.Telegram.WebApp : null;
     if (tg) { tg.ready(); tg.expand(); }
 
-    let altaPoints = parseFloat(localStorage.getItem('altaPoints')) || 0.00;
+    // State Variables (Point Retention & Withdrawal Logic)
+    let alphaPoints = parseFloat(localStorage.getItem('alphaPoints')) || 0.00;
     let withdrawCount = parseInt(localStorage.getItem('withdrawCount')) || 0;
     let autoClickCount = parseInt(localStorage.getItem('autoClickCount')) || 0;
     let lastDailyClaim = parseInt(localStorage.getItem('lastDailyClaim')) || 0;
     
     let isAdProcessing = false;
     let lastClickTime = 0;
+    let pendingAdType = null;
+    let countdownInterval = null;
 
     const highCpmLinks = [
         "https://omg10.com/4/11776333",
@@ -459,7 +508,11 @@
         "https://mammothsubway.com/sraj8zz1d?key=80fe52ed90673410b3bd8a6ef1e23f0b"
     ];
 
-    const photos = ["Photo1.webp", "Photo2.webp", "Photo3.webp", "Photo4.webp", "Photo5.webp"];
+    // Photos array (Photo 1 to 11)
+    const photos = [
+        "Photo1.webp", "Photo2.webp", "Photo3.webp", "Photo4.webp", "Photo5.webp",
+        "Photo6.webp", "Photo7.webp", "Photo8.webp", "Photo9.webp", "Photo10.webp", "Photo11.webp"
+    ];
     let currentPhotoIndex = 0;
 
     function guardNetwork() {
@@ -482,7 +535,7 @@
                 currentPhotoIndex = (currentPhotoIndex + 1) % photos.length;
                 document.getElementById('rotatingPhoto').src = photos[currentPhotoIndex];
             }
-        }, 5000);
+        }, 4000);
     }
 
     function showToast(msg) {
@@ -493,8 +546,8 @@
     }
 
     function shareToTelegram() {
-        const shareText = encodeURIComponent("🚀 ALTA ADS MINER - Ads ကြည့်ပြီး ALTA Points များ ရယူလိုက်ပါ!");
-        const botAppUrl = encodeURIComponent("https://t.me/YOUR_BOT_USERNAME/app");
+        const shareText = encodeURIComponent("🚀 ALPHA ADS MINER - Ads ကြည့်ပြီး ALPHA Points များ ရယူလိုက်ပါ!");
+        const botAppUrl = encodeURIComponent("https://t.me/AlphaAdsReward_bot/app");
         const telegramShareUrl = `https://t.me/share/url?url=${botAppUrl}&text=${shareText}`;
 
         if (tg && tg.openTelegramLink) {
@@ -518,35 +571,15 @@
             btn.innerText = `⏳ Next Claim in ${hours}h ${minutes}m`;
         } else {
             btn.disabled = false;
-            btn.innerText = `🎁 Daily Reward (+10 ALTA)`;
-        }
-    }
-
-    function handleDailyClick(e) {
-        if (!e.isTrusted) return;
-        guardNetwork();
-        if (!navigator.onLine) {
-            showToast("🚫 Cannot claim daily reward while offline!");
-            return;
-        }
-
-        const now = Date.now();
-        const twentyFourHours = 24 * 60 * 60 * 1000;
-
-        if (now - lastDailyClaim >= twentyFourHours) {
-            altaPoints += 10.00;
-            lastDailyClaim = now;
-            localStorage.setItem('lastDailyClaim', lastDailyClaim);
-            updateUI();
-            showToast("🎉 Daily Bonus Claimed! +10 Points added.");
+            btn.innerText = `🎁 Daily Reward (+10 ALPHA)`;
         }
     }
 
     function updateUI() {
-        document.getElementById('altaBalance').innerText = altaPoints.toFixed(2);
+        document.getElementById('alphaBalance').innerText = alphaPoints.toFixed(2);
         document.getElementById('withdrawCountText').innerText = withdrawCount + " Times";
         document.getElementById('autoBtnText').innerText = `Auto Ads (${autoClickCount}/30)`;
-        localStorage.setItem('altaPoints', altaPoints);
+        localStorage.setItem('alphaPoints', alphaPoints);
         localStorage.setItem('withdrawCount', withdrawCount);
         localStorage.setItem('autoClickCount', autoClickCount);
         checkDailyRewardStatus();
@@ -564,11 +597,7 @@
     }
 
     async function handleClick(type, e) {
-        if (e && !e.isTrusted) {
-            showToast("⚠️ Auto-Clicker Blocked!");
-            return;
-        }
-
+        if (e && !e.isTrusted) return;
         guardNetwork();
         if (!navigator.onLine) {
             showToast("🚫 Cannot click ads while offline!");
@@ -587,19 +616,86 @@
         }
         lastClickTime = now;
         isAdProcessing = true;
+        pendingAdType = type;
 
-        showToast("🔄 Opening Ads... Please complete the process!");
+        showToast("🔄 Opening Ads Links...");
 
-        // 1. Direct Links Process
         const link1 = highCpmLinks[Math.floor(Math.random() * highCpmLinks.length)];
         const link2 = highCpmLinks[Math.floor(Math.random() * highCpmLinks.length)];
-
         await openSingleLink(link1);
         await openSingleLink(link2);
 
-        // 2. Grant Auto Points
-        grantReward(type);
+        // Monetag SDK Call
+        if (typeof show_11786265 === 'function') {
+            try {
+                show_11786265({
+                    type: 'inApp',
+                    inAppSettings: { frequency: 2, capping: 0.1, interval: 30, timeout: 5, everyPage: false }
+                });
+            } catch(err){}
+        }
+
+        startAd15sModal();
+    }
+
+    function handleDailyClick(e) {
+        if (e && !e.isTrusted) return;
+        guardNetwork();
+        if (!navigator.onLine) {
+            showToast("🚫 Cannot claim while offline!");
+            return;
+        }
+
+        const now = Date.now();
+        const twentyFourHours = 24 * 60 * 60 * 1000;
+
+        if (now - lastDailyClaim < twentyFourHours) {
+            showToast("⚠️ Already claimed today!");
+            return;
+        }
+
+        handleClick('daily', e);
+    }
+
+    function startAd15sModal() {
+        const modal = document.getElementById('adModal');
+        const timerText = document.getElementById('modalCountdown');
+        const btnContinue = document.getElementById('btnContinue');
+
+        modal.classList.add('active');
+        btnContinue.style.display = 'none';
+
+        let timeLeft = 15;
+        timerText.innerText = timeLeft;
+
+        if (countdownInterval) clearInterval(countdownInterval);
+        countdownInterval = setInterval(() => {
+            timeLeft--;
+            timerText.innerText = timeLeft;
+            if (timeLeft <= 0) {
+                clearInterval(countdownInterval);
+                timerText.innerText = "Done!";
+                btnContinue.style.display = 'inline-block';
+            }
+        }, 1000);
+    }
+
+    function completeAdProcess() {
+        const modal = document.getElementById('adModal');
+        modal.classList.remove('active');
+
+        if (pendingAdType === 'daily') {
+            alphaPoints += 10.00;
+            lastDailyClaim = Date.now();
+            localStorage.setItem('lastDailyClaim', lastDailyClaim);
+            showToast("🎉 Daily Bonus Claimed! +10 ALPHA Points!");
+        } else {
+            grantReward(pendingAdType);
+        }
+
         isAdProcessing = false;
+        pendingAdType = null;
+        updateUI();
     }
 
     function grantReward(type) {
@@ -607,23 +703,19 @@
         let maxReward = 1.50;
 
         if (type === 'bonus') {
-            minReward = 0.10;
-            maxReward = 2.00;
+            minReward = 0.10; maxReward = 2.00;
         } else if (type === 'sponsor') {
-            minReward = 0.10;
-            maxReward = 1.50;
+            minReward = 0.10; maxReward = 1.50;
         } else if (type === 'auto') {
-            minReward = 0.10;
-            maxReward = 1.50;
+            minReward = 0.10; maxReward = 1.50;
             autoClickCount = (autoClickCount + 1) % 31;
         }
 
         const randomReward = (Math.random() * (maxReward - minReward) + minReward);
         const addedAmount = parseFloat(randomReward.toFixed(2));
-        altaPoints += addedAmount;
+        alphaPoints += addedAmount;
 
-        updateUI();
-        showToast(`✅ Task Completed! +${addedAmount} Points added.`);
+        showToast(`✅ Ads Process Completed! +${addedAmount} ALPHA Points added.`);
     }
 
     function submitWithdrawalRequest(e) {
@@ -640,18 +732,32 @@
             return;
         }
 
-        if (altaPoints < amount) {
+        if (alphaPoints < amount) {
             showToast("Insufficient balance.");
             return;
         }
 
-        altaPoints -= amount;
+        // Actual Deduction & Increment Count ONLY on successful withdrawal
+        alphaPoints -= amount;
         withdrawCount++;
+        const withdrawTime = new Date().toLocaleString();
+        
         updateUI();
+
+        // Withdraw history channel display formatting
+        const historyText = `🚨 NEW WITHDRAWAL REQUEST 🚨\n\n👤 User: ${tgName}\n💰 Amount: ${amount} ALPHA Points\n💎 Wallet: ${tonWallet}\n⏰ Time: ${withdrawTime}\n📊 Total Withdrawals: ${withdrawCount} Times`;
+        
+        // Open/Send to History Channel
+        const channelShareUrl = `https://t.me/share/url?url=${encodeURIComponent('https://t.me/Allwithdrawhistory')}&text=${encodeURIComponent(historyText)}`;
+        if (tg && tg.openTelegramLink) {
+            tg.openTelegramLink(channelShareUrl);
+        } else {
+            window.open(channelShareUrl, '_blank');
+        }
 
         document.getElementById('withdrawAmount').value = '';
         document.getElementById('tonWallet').value = '';
-        showToast("Request submitted successfully.");
+        showToast("Request submitted successfully!");
     }
 
     function initNodeMesh() {
