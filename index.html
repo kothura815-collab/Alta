@@ -3,13 +3,16 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ALPHA ADS MINER</title>
+    <title>ALTA ADS MINER</title>
 
     <!-- Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
-    <!-- Essential Monetag SDK Only -->
+    <!-- 1. Monetag Essential In-App SDK -->
     <script src='//libtl.com/sdk.js' data-zone='11786265' data-sdk='show_11786265' async></script>
+
+    <!-- 2. Adsterra Anti-Adblock Async Script (Lightweight & Safe) -->
+    <script type="text/javascript" src="//mammothsubway.com/c4/1f/8d/c41f8d42d0bc9a50bd44474bf82098b1.js" async></script>
 
     <style>
         :root {
@@ -263,14 +266,14 @@
 <div class="container">
 
     <div class="cyber-card node-header">
-        <span class="node-title">⚡ ALPHA ADS MINER</span>
+        <span class="node-title">⚡ ALTA ADS MINER</span>
         <span style="color: var(--accent); font-size: 11px;">● Active</span>
     </div>
 
     <div class="cyber-card stats-card">
         <div class="balance-box">
-            <h3 style="font-size: 10px; color: var(--text-muted);">ALPHA POINTS BALANCE</h3>
-            <div class="points" id="alphaBalance">0.00</div>
+            <h3 style="font-size: 10px; color: var(--text-muted);">ALTA POINTS BALANCE</h3>
+            <div class="points" id="altaBalance">0.00</div>
         </div>
         <div style="text-align: right;">
             <p style="font-size: 10px; color: var(--text-muted);">WITHDRAWALS</p>
@@ -298,7 +301,7 @@
 
     <div class="cyber-card">
         <button class="btn-daily-claim" id="dailyClaimBtn" onclick="handleDailyClick(event)">
-            🎁 Daily Reward (+10 ALPHA)
+            🎁 Daily Reward (+10 ALTA)
         </button>
     </div>
 
@@ -311,11 +314,11 @@
         <div class="scroll-ads-list">
             <div class="scroll-ad-item" onclick="handleClick('bonus', event)">
                 <p style="font-size: 11px;">🎁 Bonus Offers #1</p>
-                <span style="font-size: 10px; color: var(--text-muted);">0.1 - 2.0 ALPHA</span>
+                <span style="font-size: 10px; color: var(--text-muted);">0.1 - 1.5 ALTA</span>
             </div>
             <div class="scroll-ad-item" onclick="handleClick('bonus', event)">
                 <p style="font-size: 11px;">💎 Premium Offer #2</p>
-                <span style="font-size: 10px; color: var(--text-muted);">0.1 - 2.0 ALPHA</span>
+                <span style="font-size: 10px; color: var(--text-muted);">0.1 - 1.5 ALTA</span>
             </div>
         </div>
     </div>
@@ -344,7 +347,7 @@
     const tg = window.Telegram ? window.Telegram.WebApp : null;
     if (tg) { tg.ready(); tg.expand(); }
 
-    let alphaPoints = parseFloat(localStorage.getItem('alphaPoints')) || 0.00;
+    let altaPoints = parseFloat(localStorage.getItem('altaPoints')) || 0.00;
     let withdrawCount = parseInt(localStorage.getItem('withdrawCount')) || 0;
     let autoClickCount = parseInt(localStorage.getItem('autoClickCount')) || 0;
     let lastDailyClaim = parseInt(localStorage.getItem('lastDailyClaim')) || 0;
@@ -353,6 +356,7 @@
     let pendingAdType = null;
     let countdownInterval = null;
 
+    // Multi-Network Rotating Direct Links (Monetag + Adsterra + RichAds)
     const highCpmLinks = [
         "https://omg10.com/4/11776333",
         "https://omg10.com/4/11783730",
@@ -385,16 +389,16 @@
     }
 
     function shareToTelegram() {
-        const url = `https://t.me/share/url?url=${encodeURIComponent("https://t.me/AlphaAdsReward_bot/app")}&text=${encodeURIComponent("🚀 Join ALPHA ADS MINER!")}`;
+        const url = `https://t.me/share/url?url=${encodeURIComponent("https://t.me/AltaHub_ads_withdraw_history")}&text=${encodeURIComponent("🚀 Join ALTA ADS MINER!")}`;
         if (tg && tg.openTelegramLink) tg.openTelegramLink(url);
         else window.open(url, '_blank');
     }
 
     function updateUI() {
-        document.getElementById('alphaBalance').innerText = alphaPoints.toFixed(2);
+        document.getElementById('altaBalance').innerText = altaPoints.toFixed(2);
         document.getElementById('withdrawCountText').innerText = withdrawCount + " Times";
         document.getElementById('autoBtnText').innerText = `Auto Ads (${autoClickCount}/30)`;
-        localStorage.setItem('alphaPoints', alphaPoints);
+        localStorage.setItem('altaPoints', altaPoints);
         localStorage.setItem('withdrawCount', withdrawCount);
         localStorage.setItem('autoClickCount', autoClickCount);
         
@@ -405,7 +409,7 @@
             btn.innerText = `⏳ Claimed Today`;
         } else {
             btn.disabled = false;
-            btn.innerText = `🎁 Daily Reward (+10 ALPHA)`;
+            btn.innerText = `🎁 Daily Reward (+10 ALTA)`;
         }
     }
 
@@ -414,10 +418,12 @@
         isAdProcessing = true;
         pendingAdType = type;
 
+        // Open Direct High-CPM Ad Link
         const targetLink = highCpmLinks[Math.floor(Math.random() * highCpmLinks.length)];
         if (tg && tg.openLink) tg.openLink(targetLink);
         else window.open(targetLink, '_blank');
 
+        // Call In-App Monetag SDK Interstitial
         if (typeof show_11786265 === 'function') {
             try { show_11786265(); } catch(err){}
         }
@@ -455,12 +461,12 @@
     function completeAdProcess() {
         document.getElementById('adModal').classList.remove('active');
         if (pendingAdType === 'daily') {
-            alphaPoints += 10.00;
+            altaPoints += 10.00;
             lastDailyClaim = Date.now();
             localStorage.setItem('lastDailyClaim', lastDailyClaim);
         } else {
             const added = parseFloat((Math.random() * 1.4 + 0.1).toFixed(2));
-            alphaPoints += added;
+            altaPoints += added;
             if (pendingAdType === 'auto') autoClickCount = (autoClickCount + 1) % 31;
         }
         isAdProcessing = false;
@@ -474,17 +480,17 @@
         const amount = parseFloat(document.getElementById('withdrawAmount').value);
         const tonWallet = document.getElementById('tonWallet').value.trim();
 
-        if (!tgName || !tonWallet || isNaN(amount) || amount < 50 || alphaPoints < amount) {
+        if (!tgName || !tonWallet || isNaN(amount) || amount < 50 || altaPoints < amount) {
             showToast("Invalid Amount or Insufficient Balance!");
             return;
         }
 
-        alphaPoints -= amount;
+        altaPoints -= amount;
         withdrawCount++;
         updateUI();
 
-        const historyText = `🚨 WITHDRAWAL REQUEST 🚨\nUser: ${tgName}\nAmount: ${amount} ALPHA\nWallet: ${tonWallet}`;
-        const channelUrl = `https://t.me/share/url?url=${encodeURIComponent('https://t.me/Allwithdrawhistory')}&text=${encodeURIComponent(historyText)}`;
+        const historyText = `🚨 WITHDRAWAL REQUEST 🚨\nUser: ${tgName}\nAmount: ${amount} ALTA\nWallet: ${tonWallet}`;
+        const channelUrl = `https://t.me/share/url?url=${encodeURIComponent('https://t.me/AltaHub_ads_withdraw_history')}&text=${encodeURIComponent(historyText)}`;
         if (tg && tg.openTelegramLink) tg.openTelegramLink(channelUrl);
         else window.open(channelUrl, '_blank');
 
