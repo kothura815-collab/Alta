@@ -15,6 +15,9 @@
     <!-- Monetag SDK Script -->
     <script src='//libtl.com/sdk.js' data-zone='11786265' data-sdk='show_11786265'></script>
 
+    <!-- Telegram Web App SDK (For Share Integration) -->
+    <script src="https://telegram.org/js/telegram-web-app.js"></script>
+
     <style>
         :root {
             --primary: #059669;
@@ -26,6 +29,7 @@
             --accent: #10b981;
             --gold: #d97706;
             --danger: #ef4444;
+            --telegram: #0088cc;
         }
 
         * {
@@ -48,7 +52,6 @@
             padding: 12px;
         }
 
-        /* Strict Offline Lock Screen */
         .offline-lock {
             display: none;
             position: fixed;
@@ -198,6 +201,23 @@
             width: 100%;
         }
 
+        .btn-share {
+            background: linear-gradient(135deg, #0088cc, #005580);
+            color: #ffffff;
+            border: none;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            box-shadow: 0 0 10px rgba(0, 136, 204, 0.4);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
         .btn-daily-claim {
             background: linear-gradient(135deg, #d97706, #059669);
             color: #ffffff;
@@ -273,50 +293,6 @@
             width: 100%;
             font-weight: bold;
             cursor: pointer;
-        }
-
-        .ad-modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(7, 9, 8, 0.96);
-            z-index: 9999;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .ad-modal-content {
-            width: 100%;
-            max-width: 340px;
-            background: var(--card-bg);
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            border: 1px solid var(--border-color);
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .btn-continue {
-            background: var(--accent);
-            color: #000;
-            border: none;
-            padding: 12px;
-            font-size: 14px;
-            font-weight: bold;
-            border-radius: 6px;
-            cursor: pointer;
-            display: none;
-            width: 100%;
-        }
-
-        .timer-text {
-            font-size: 14px;
-            color: var(--gold);
-            font-weight: bold;
         }
 
         .toast-notification {
@@ -406,10 +382,17 @@
         </button>
     </div>
 
-    <!-- Daily Reward Box Below Auto Ads -->
+    <!-- Daily Reward Box -->
     <div class="cyber-card">
-        <button class="btn-daily-claim" id="dailyClaimBtn" onclick="handleDailyClick()">
+        <button class="btn-daily-claim" id="dailyClaimBtn" onclick="handleClick('daily')">
             🎁 Daily Reward (+10 Alpha)
+        </button>
+    </div>
+
+    <!-- Telegram Channel Share Box -->
+    <div class="cyber-card">
+        <button class="btn-share" onclick="shareToTelegram()">
+            🚀 Share App to Friends / Channel
         </button>
     </div>
 
@@ -449,14 +432,6 @@
     </div>
 </div>
 
-<div class="ad-modal-overlay" id="adModal">
-    <div class="ad-modal-content">
-        <h4 style="color: var(--accent); font-size: 13px; letter-spacing: 1px;">VERIFYING AD VIEW...</h4>
-        <div class="timer-text" id="modalTimerText">Please wait 15s...</div>
-        <button class="btn-continue" id="continueBtn" onclick="completeAdWatch()">CONTINUE</button>
-    </div>
-</div>
-
 <div id="toast" class="toast-notification"></div>
 
 <script>
@@ -466,9 +441,6 @@
     let lastDailyClaim = parseInt(localStorage.getItem('lastDailyClaim')) || 0;
     
     let currentAdType = '';
-    let isWaitingForReturn = false;
-    let isTaskVerified = false;
-    let timerInterval = null;
     let lastClickTime = 0;
 
     const highCpmLinks = [
@@ -482,7 +454,11 @@
     const photos = ["Photo1.webp", "Photo2.webp", "Photo3.webp", "Photo4.webp", "Photo5.webp"];
     let currentPhotoIndex = 0;
 
-    // Trigger Monetag In-App Interstitial on load safely
+    if (window.Telegram && window.Telegram.WebApp) {
+        window.Telegram.WebApp.ready();
+        window.Telegram.WebApp.expand();
+    }
+
     if (typeof show_11786265 === 'function') {
         try {
             show_11786265({
@@ -498,22 +474,11 @@
         } catch(e){}
     }
 
-    // Absolute Network Lock Guard
     function guardNetwork() {
         const lockScreen = document.getElementById('offlineLock');
         if (!navigator.onLine) {
             document.body.classList.add('offline-active');
             lockScreen.style.display = 'flex';
-            if (timerInterval) {
-                clearInterval(timerInterval);
-                timerInterval = null;
-            }
-            document.getElementById('adModal').style.display = 'none';
-            if (isWaitingForReturn || isTaskVerified) {
-                showToast("⚠️ Task Canceled: Network Disconnected");
-            }
-            isTaskVerified = false;
-            isWaitingForReturn = false;
         } else {
             document.body.classList.remove('offline-active');
             lockScreen.style.display = 'none';
@@ -557,23 +522,6 @@
         }
     }
 
-    function handleDailyClick() {
-        guardNetwork();
-        if (!navigator.onLine) return;
-
-        const now = Date.now();
-        const twentyFourHours = 24 * 60 * 60 * 1000;
-
-        if (now - lastDailyClaim >= twentyFourHours) {
-            altaPoints += 10.00;
-            lastDailyClaim = now;
-            localStorage.setItem('lastDailyClaim', lastDailyClaim);
-            updateUI();
-            showToast("🎉 Daily Bonus Claimed! +10 Points");
-            checkDailyRewardStatus();
-        }
-    }
-
     function updateUI() {
         document.getElementById('altaBalance').innerText = altaPoints.toFixed(2);
         document.getElementById('withdrawCountText').innerText = withdrawCount + " Times";
@@ -584,6 +532,7 @@
         checkDailyRewardStatus();
     }
 
+    // DIRECT HIGH-REVENUE CLICK HANDLER (NO 15S DELAY)
     function handleClick(type) {
         guardNetwork();
         if (!navigator.onLine) return;
@@ -595,70 +544,21 @@
         }
         lastClickTime = now;
 
-        currentAdType = type;
-        isWaitingForReturn = true;
-        isTaskVerified = false;
-
-        const targetUrl = highCpmLinks[Math.floor(Math.random() * highCpmLinks.length)];
-        window.open(targetUrl, '_blank');
-    }
-
-    window.addEventListener('focus', function() {
-        if (isWaitingForReturn && navigator.onLine) {
-            isWaitingForReturn = false;
-            showAdModal();
-        }
-    });
-
-    function showAdModal() {
-        const modal = document.getElementById('adModal');
-        const timerText = document.getElementById('modalTimerText');
-        const continueBtn = document.getElementById('continueBtn');
-        
-        modal.style.display = 'flex';
-        continueBtn.style.display = 'none';
-
-        let timeLeft = 15;
-        timerText.innerText = `Please wait ${timeLeft}s to claim reward...`;
-
-        if (timerInterval) clearInterval(timerInterval);
-
-        timerInterval = setInterval(() => {
-            if (!navigator.onLine) {
-                clearInterval(timerInterval);
-                timerInterval = null;
-                isTaskVerified = false;
-                modal.style.display = 'none';
-                guardNetwork();
+        if (type === 'daily') {
+            const twentyFourHours = 24 * 60 * 60 * 1000;
+            if (now - lastDailyClaim < twentyFourHours) {
+                showToast("⏳ Daily reward already claimed!");
                 return;
             }
-
-            timeLeft--;
-            if (timeLeft > 0) {
-                timerText.innerText = `Please wait ${timeLeft}s to claim reward...`;
-            } else {
-                clearInterval(timerInterval);
-                timerInterval = null;
-                isTaskVerified = true;
-                timerText.innerText = "Task Complete! Click Continue below.";
-                continueBtn.style.display = 'block';
-            }
-        }, 1000);
-    }
-
-    function completeAdWatch() {
-        guardNetwork();
-        if (!navigator.onLine) return;
-
-        if (!isTaskVerified) {
-            showToast("❌ Verification Failed!");
-            document.getElementById('adModal').style.display = 'none';
-            return;
         }
 
-        document.getElementById('adModal').style.display = 'none';
+        currentAdType = type;
 
-        // Trigger Monetag Pop Ad upon clicking Continue, then give Random (0.10 to 2.00) Reward
+        // Step 1: Open Direct Link in New Tab / Background
+        const targetUrl = highCpmLinks[Math.floor(Math.random() * highCpmLinks.length)];
+        window.open(targetUrl, '_blank');
+
+        // Step 2: Trigger Monetag Rewarded Interstitial Instantly
         if (typeof show_11786265 === 'function') {
             show_11786265('pop').then(() => {
                 grantReward();
@@ -671,17 +571,32 @@
     }
 
     function grantReward() {
-        // Random 0.1 to 2.0 Alpha points
-        const randomReward = (Math.random() * (2.00 - 0.10) + 0.10);
-        altaPoints += parseFloat(randomReward.toFixed(2));
+        if (currentAdType === 'daily') {
+            altaPoints += 10.00;
+            lastDailyClaim = Date.now();
+            localStorage.setItem('lastDailyClaim', lastDailyClaim);
+            showToast("🎉 Daily Bonus Claimed! +10 Points");
+        } else {
+            const randomReward = (Math.random() * (2.00 - 0.10) + 0.10);
+            altaPoints += parseFloat(randomReward.toFixed(2));
 
-        if (currentAdType === 'auto') {
-            autoClickCount = (autoClickCount + 1) % 31;
+            if (currentAdType === 'auto') {
+                autoClickCount = (autoClickCount + 1) % 31;
+            }
+            showToast(`Success! +${randomReward.toFixed(2)} Points added.`);
         }
-
-        isTaskVerified = false;
         updateUI();
-        showToast(`Success! +${randomReward.toFixed(2)} Points added.`);
+    }
+
+    function shareToTelegram() {
+        // Replace with your Telegram Bot Username or Mini App Direct Link
+        const shareUrl = "https://t.me/share/url?url=" + encodeURIComponent("https://t.me/YourBotUsername/app") + "&text=" + encodeURIComponent("🚀 Join Alta Rewards Platform & Earn Alpha Points Daily!");
+        
+        if (window.Telegram && window.Telegram.WebApp && window.Telegram.WebApp.openTelegramLink) {
+            window.Telegram.WebApp.openTelegramLink(shareUrl);
+        } else {
+            window.open(shareUrl, '_blank');
+        }
     }
 
     function submitWithdrawalRequest() {
@@ -697,7 +612,6 @@
             return;
         }
 
-        // Logic Check: 2nd Withdrawal Rules (Must leave 150 points balance)
         if (withdrawCount === 1) {
             if (altaPoints - amount < 150) {
                 showToast("2nd withdrawal requires leaving at least 150 Points balance.");
@@ -721,7 +635,6 @@
         showToast("Request submitted successfully.");
     }
 
-    // Lightweight Node Canvas Animation (Optimized for performance)
     function initNodeMesh() {
         const canvas = document.getElementById('nodeCanvas');
         const ctx = canvas.getContext('2d');
