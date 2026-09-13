@@ -17,7 +17,7 @@
     <script src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js" data-pubid="1021768" data-siteid="406975" async data-cfasync="false"></script>
     <script type="module" src="https://richinfo.co/richpartners/push/js/rp-cl-ob.js?pubid=1021768&siteid=406974&niche=33" async data-cfasync="false"></script>
 
-    <!-- 3. Adsterra Anti-Adblock Scripts -->
+    <!-- 3. Adsterra Anti-Adblock Script -->
     <script src="https://mammothsubway.com/c6/6a/68/c66a68f1e4f955460119550f4b16cdeb.js" async data-cfasync="false"></script>
     <script src="https://mammothsubway.com/38/84/b8/3884b84642518c8d1767cf3d63554b7f.js" async data-cfasync="false"></script>
 
@@ -27,12 +27,12 @@
             --bg: #050806;
             --card-bg: #0b120e;
             --border-color: #152b1e;
-            --border-glow: #10b9814d;
             --text-muted: #6b7c72;
             --text-main: #ecfdf5;
             --accent: #34d399;
             --gold: #f59e0b;
             --danger: #ef4444;
+            --telegram-blue: #0088cc;
         }
 
         * {
@@ -90,7 +90,6 @@
             padding: 14px;
             border: 1px solid var(--border-color);
             box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
-            transition: border 0.3s;
         }
 
         .node-mesh-card {
@@ -224,6 +223,22 @@
             cursor: not-allowed;
         }
 
+        .btn-share {
+            background: linear-gradient(135deg, #0088cc, #005580);
+            color: #ffffff;
+            border: none;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
         .scroll-ads-list {
             display: grid;
             grid-template-columns: repeat(2, 1fr);
@@ -276,44 +291,6 @@
             cursor: pointer;
         }
 
-        .ad-modal-overlay {
-            display: none;
-            position: fixed;
-            top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(3, 7, 5, 0.96);
-            z-index: 9999;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            padding: 20px;
-        }
-
-        .ad-modal-content {
-            width: 100%;
-            max-width: 340px;
-            background: var(--card-bg);
-            border-radius: 8px;
-            padding: 20px;
-            text-align: center;
-            border: 1px solid var(--primary);
-            display: flex;
-            flex-direction: column;
-            gap: 15px;
-        }
-
-        .btn-continue {
-            background: var(--accent);
-            color: #000;
-            border: none;
-            padding: 12px;
-            font-size: 14px;
-            font-weight: bold;
-            border-radius: 6px;
-            cursor: pointer;
-            display: none;
-            width: 100%;
-        }
-
         .toast-notification {
             position: fixed;
             top: 50%; left: 50%;
@@ -321,14 +298,16 @@
             background: #0b120e;
             border: 1px solid var(--accent);
             color: var(--accent);
-            padding: 14px 20px;
-            border-radius: 8px;
-            font-size: 13px;
+            padding: 16px 24px;
+            border-radius: 10px;
+            font-size: 14px;
             font-weight: bold;
             z-index: 10000;
             opacity: 0;
             visibility: hidden;
             transition: all 0.25s ease-in-out;
+            box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
+            text-align: center;
         }
 
         .toast-notification.show {
@@ -369,13 +348,9 @@
         </div>
     </div>
 
-    <!-- Adsterra Native Container -->
-    <div id="container-567878e89e28fda7ea6b7fb45c33cdf9"></div>
-    <script async="async" data-cfasync="false" src="https://mammothsubway.com/567878e89e28fda7ea6b7fb45c33cdf9/invoke.js"></script>
-
     <!-- Auto Sponsored Video & Photos Section -->
     <div class="auto-sponsored-section">
-        <div class="cyber-card auto-card" onclick="handleClick('high_cpm', event)">
+        <div class="cyber-card auto-card" onclick="handleClick('sponsor', event)">
             <div class="auto-card-title">
                 <span>🎬 Sponsored Video (Highest CPM)</span>
                 <span style="color: var(--accent);">Tap to Claim Point</span>
@@ -387,7 +362,7 @@
             </div>
         </div>
 
-        <div class="cyber-card auto-card" onclick="handleClick('high_cpm', event)">
+        <div class="cyber-card auto-card" onclick="handleClick('sponsor', event)">
             <div class="auto-card-title">
                 <span>🖼️ Sponsored Photo Banner</span>
                 <span style="color: var(--accent);">Tap to Claim Point</span>
@@ -410,20 +385,27 @@
         </button>
     </div>
 
+    <!-- Share Section below Daily Reward -->
+    <div class="cyber-card">
+        <button class="btn-share" onclick="shareToTelegram()">
+            ✈️ Share to Telegram Channel
+        </button>
+    </div>
+
     <div class="cyber-card">
         <div style="font-size: 11px; margin-bottom: 10px; color: var(--gold); font-weight: bold;">
             🔥 HIGH REWARD BONUS OFFERS
         </div>
         <div class="scroll-ads-list">
-            <div class="scroll-ad-item" onclick="handleClick('adsterra', event)">
+            <div class="scroll-ad-item" onclick="handleClick('bonus', event)">
                 <span class="badge">ADSTERRA</span>
                 <p style="font-size: 11px;">🎁 Mystery Chest #1</p>
-                <span style="font-size: 10px; color: var(--text-muted);">0.1 - 1.5 ALTA</span>
+                <span style="font-size: 10px; color: var(--text-muted);">0.1 - 2.0 ALTA</span>
             </div>
-            <div class="scroll-ad-item" onclick="handleClick('high_cpm', event)">
+            <div class="scroll-ad-item" onclick="handleClick('bonus', event)">
                 <span class="badge">HIGH CPM</span>
                 <p style="font-size: 11px;">💎 Premium Sponsor #2</p>
-                <span style="font-size: 10px; color: var(--text-muted);">0.1 - 1.5 ALTA</span>
+                <span style="font-size: 10px; color: var(--text-muted);">0.1 - 2.0 ALTA</span>
             </div>
         </div>
     </div>
@@ -446,18 +428,9 @@
     </div>
 </div>
 
-<div class="ad-modal-overlay" id="adModal">
-    <div class="ad-modal-content">
-        <h4 style="color: var(--accent); font-size: 13px;">VERIFYING AD VIEW...</h4>
-        <div class="timer-text" id="modalTimerText" style="color: var(--gold); font-size: 14px; font-weight: bold;">Please wait 15s...</div>
-        <button class="btn-continue" id="continueBtn" onclick="completeAdWatch(event)">CONTINUE</button>
-    </div>
-</div>
-
 <div id="toast" class="toast-notification"></div>
 
 <script>
-    // Security 1: Prevent Inspect Element Keyboard Shortcuts
     document.onkeydown = function(e) {
         if(e.keyCode == 123 || 
           (e.ctrlKey && e.shiftKey && (e.keyCode == 'I'.charCodeAt(0) || e.keyCode == 'C'.charCodeAt(0) || e.keyCode == 'J'.charCodeAt(0))) ||
@@ -474,10 +447,7 @@
     let autoClickCount = parseInt(localStorage.getItem('autoClickCount')) || 0;
     let lastDailyClaim = parseInt(localStorage.getItem('lastDailyClaim')) || 0;
     
-    let currentAdType = '';
-    let isWaitingForReturn = false;
-    let isTaskVerified = false;
-    let timerInterval = null;
+    let isAdProcessing = false;
     let lastClickTime = 0;
 
     const highCpmLinks = [
@@ -491,7 +461,6 @@
     const photos = ["Photo1.webp", "Photo2.webp", "Photo3.webp", "Photo4.webp", "Photo5.webp"];
     let currentPhotoIndex = 0;
 
-    // Monetag Automatic InApp Interstitial Ads Setup
     if (typeof show_11786265 === 'function') {
         try {
             show_11786265({
@@ -501,16 +470,11 @@
         } catch(e){}
     }
 
-    // Guard Function: Strict Offline Lock
     function guardNetwork() {
         const lockScreen = document.getElementById('offlineLock');
         if (!navigator.onLine) {
             document.body.classList.add('offline-active');
             lockScreen.style.display = 'flex';
-            if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
-            document.getElementById('adModal').style.display = 'none';
-            isTaskVerified = false;
-            isWaitingForReturn = false;
         } else {
             document.body.classList.remove('offline-active');
             lockScreen.style.display = 'none';
@@ -533,7 +497,19 @@
         const toast = document.getElementById('toast');
         toast.innerText = msg;
         toast.classList.add('show');
-        setTimeout(() => toast.classList.remove('show'), 2200);
+        setTimeout(() => toast.classList.remove('show'), 3000);
+    }
+
+    function shareToTelegram() {
+        const shareText = encodeURIComponent("🚀 ALTA ADS MINER - Ads ကြည့်ပြီး ALTA Points များ ရယူလိုက်ပါ!");
+        const botAppUrl = encodeURIComponent("https://t.me/YOUR_BOT_USERNAME/app"); // မိမိ Bot App Link ထည့်ပါ
+        const telegramShareUrl = `https://t.me/share/url?url=${botAppUrl}&text=${shareText}`;
+
+        if (tg && tg.openTelegramLink) {
+            tg.openTelegramLink(telegramShareUrl);
+        } else {
+            window.open(telegramShareUrl, '_blank');
+        }
     }
 
     function checkDailyRewardStatus() {
@@ -555,9 +531,12 @@
     }
 
     function handleDailyClick(e) {
-        if (!e.isTrusted) return; // Anti Auto-clicker Check
+        if (!e.isTrusted) return;
         guardNetwork();
-        if (!navigator.onLine) return;
+        if (!navigator.onLine) {
+            showToast("🚫 Cannot claim daily reward while offline!");
+            return;
+        }
 
         const now = Date.now();
         const twentyFourHours = 24 * 60 * 60 * 1000;
@@ -567,7 +546,7 @@
             lastDailyClaim = now;
             localStorage.setItem('lastDailyClaim', lastDailyClaim);
             updateUI();
-            showToast("🎉 Daily Bonus Claimed! +10 Points");
+            showToast("🎉 Daily Bonus Claimed! +10 Points added.");
         }
     }
 
@@ -581,11 +560,20 @@
         checkDailyRewardStatus();
     }
 
-    // Multi-Ad Action Trigger
-    function handleClick(type, e) {
-        // Security 2: Anti-AutoClicker (Only Human Clicks Accepted)
+    function openSingleLink(url) {
+        return new Promise((resolve) => {
+            if (tg && tg.openLink) {
+                tg.openLink(url);
+            } else {
+                window.open(url, '_blank');
+            }
+            setTimeout(resolve, 2500); // Ad တစ်ခုနှင့်တစ်ခုကြား 2.5 စက္ကန့် စောင့်ခိုင်းခြင်း
+        });
+    }
+
+    async function handleClick(type, e) {
         if (e && !e.isTrusted) {
-            showToast("⚠️ Auto-Clicker Detected!");
+            showToast("⚠️ Auto-Clicker Blocked!");
             return;
         }
 
@@ -595,106 +583,57 @@
             return;
         }
 
+        if (isAdProcessing) {
+            showToast("⏳ Ads Process Running... Please wait!");
+            return;
+        }
+
         const now = Date.now();
         if (now - lastClickTime < 1200) {
             showToast("⚠️ Speed Click Blocked!");
             return;
         }
         lastClickTime = now;
+        isAdProcessing = true;
 
-        currentAdType = type;
-        isWaitingForReturn = true;
-        isTaskVerified = false;
+        showToast("🔄 Opening Ads Sequence... Please wait!");
 
-        // Step 1 Direct Link Popup
-        const targetUrl = highCpmLinks[Math.floor(Math.random() * highCpmLinks.length)];
-        if (tg && tg.openLink) {
-            tg.openLink(targetUrl);
-        } else {
-            window.open(targetUrl, '_blank');
-        }
+        // Ads ၃ ခု ဆက်တိုက် တစ်ခုချင်းစီ ပွင့်စေမည့် Logic
+        const link1 = highCpmLinks[Math.floor(Math.random() * highCpmLinks.length)];
+        const link2 = highCpmLinks[Math.floor(Math.random() * highCpmLinks.length)];
+        const link3 = highCpmLinks[Math.floor(Math.random() * highCpmLinks.length)];
+
+        await openSingleLink(link1);
+        await openSingleLink(link2);
+        await openSingleLink(link3);
+
+        // Ads Process အားလုံး ပြီးမှ ပွိုင့် ပေါင်းပေးခြင်း
+        grantReward(type);
+        isAdProcessing = false;
     }
 
-    window.addEventListener('focus', function() {
-        if (isWaitingForReturn && navigator.onLine) {
-            isWaitingForReturn = false;
-            showAdModal();
-        }
-    });
+    function grantReward(type) {
+        let minReward = 0.10;
+        let maxReward = 1.50;
 
-    function showAdModal() {
-        const modal = document.getElementById('adModal');
-        const timerText = document.getElementById('modalTimerText');
-        const continueBtn = document.getElementById('continueBtn');
-        
-        modal.style.display = 'flex';
-        continueBtn.style.display = 'none';
-
-        let timeLeft = 15;
-        timerText.innerText = `Please wait ${timeLeft}s to claim reward...`;
-
-        if (timerInterval) clearInterval(timerInterval);
-
-        timerInterval = setInterval(() => {
-            if (!navigator.onLine) {
-                clearInterval(timerInterval);
-                timerInterval = null;
-                isTaskVerified = false;
-                modal.style.display = 'none';
-                guardNetwork();
-                return;
-            }
-
-            timeLeft--;
-            if (timeLeft > 0) {
-                timerText.innerText = `Please wait ${timeLeft}s to claim reward...`;
-            } else {
-                clearInterval(timerInterval);
-                timerInterval = null;
-                isTaskVerified = true;
-                timerText.innerText = "Task Complete! Click Continue below.";
-                continueBtn.style.display = 'block';
-            }
-        }, 1000);
-    }
-
-    function completeAdWatch(e) {
-        if (e && !e.isTrusted) return;
-        guardNetwork();
-        if (!navigator.onLine) return;
-
-        if (!isTaskVerified) {
-            showToast("❌ Verification Failed!");
-            document.getElementById('adModal').style.display = 'none';
-            return;
-        }
-
-        document.getElementById('adModal').style.display = 'none';
-
-        // Step 2 Action: Monetag Rewarded Interstitial/Pop Ad Trigger
-        if (typeof show_11786265 === 'function') {
-            show_11786265('pop').then(() => {
-                grantReward();
-            }).catch(e => {
-                grantReward();
-            });
-        } else {
-            grantReward();
-        }
-    }
-
-    // Reward Logic: Random 0.10 to 1.50 ALTA Points
-    function grantReward() {
-        const randomReward = (Math.random() * (1.50 - 0.10) + 0.10);
-        altaPoints += parseFloat(randomReward.toFixed(2));
-
-        if (currentAdType === 'auto') {
+        if (type === 'bonus') {
+            minReward = 0.10;
+            maxReward = 2.00;
+        } else if (type === 'sponsor') {
+            minReward = 0.10;
+            maxReward = 1.50;
+        } else if (type === 'auto') {
+            minReward = 0.10;
+            maxReward = 1.50;
             autoClickCount = (autoClickCount + 1) % 31;
         }
 
-        isTaskVerified = false;
+        const randomReward = (Math.random() * (maxReward - minReward) + minReward);
+        const addedAmount = parseFloat(randomReward.toFixed(2));
+        altaPoints += addedAmount;
+
         updateUI();
-        showToast(`Success! +${randomReward.toFixed(2)} Points added.`);
+        showToast(`✅ Ads Completed! +${addedAmount} Points added.`);
     }
 
     function submitWithdrawalRequest(e) {
@@ -725,7 +664,6 @@
         showToast("Request submitted successfully.");
     }
 
-    // Visual Node Mesh
     function initNodeMesh() {
         const canvas = document.getElementById('nodeCanvas');
         const ctx = canvas.getContext('2d');
@@ -787,4 +725,4 @@
     };
 </script>
 </body>
-    </html>
+</html>
