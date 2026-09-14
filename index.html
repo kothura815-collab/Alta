@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>ALTA ADS MINER</title>
+    <title>ALPHA ADS MINER</title>
 
     <!-- Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
@@ -269,14 +269,14 @@
 <div class="container">
 
     <div class="cyber-card node-header">
-        <span class="node-title">⚡ ALTA ADS MINER</span>
+        <span class="node-title">⚡ ALPHA ADS MINER</span>
         <span style="color: var(--accent); font-size: 11px;">● Active</span>
     </div>
 
     <div class="cyber-card stats-card">
         <div class="balance-box">
-            <h3 style="font-size: 10px; color: var(--text-muted);">ALTA POINTS BALANCE</h3>
-            <div class="points" id="altaBalance">0.00</div>
+            <h3 style="font-size: 10px; color: var(--text-muted);">ALPHA POINTS BALANCE</h3>
+            <div class="points" id="alphaBalance">0.00</div>
         </div>
         <div style="text-align: right;">
             <p style="font-size: 10px; color: var(--text-muted);">WITHDRAWALS</p>
@@ -304,7 +304,7 @@
 
     <div class="cyber-card">
         <button class="btn-daily-claim" id="dailyClaimBtn" onclick="handleDailyClick(event)">
-            🎁 Daily Reward (+10 ALTA)
+            🎁 Daily Reward (+10 ALPHA)
         </button>
     </div>
 
@@ -317,11 +317,11 @@
         <div class="scroll-ads-list">
             <div class="scroll-ad-item" onclick="handleClick('bonus', event)">
                 <p style="font-size: 11px;">🎁 Bonus Offers #1</p>
-                <span style="font-size: 10px; color: var(--text-muted);">0.1 - 1.5 ALTA</span>
+                <span style="font-size: 10px; color: var(--text-muted);">0.1 - 1.5 ALPHA</span>
             </div>
             <div class="scroll-ad-item" onclick="handleClick('bonus', event)">
                 <p style="font-size: 11px;">💎 Premium Offer #2</p>
-                <span style="font-size: 10px; color: var(--text-muted);">0.1 - 1.5 ALTA</span>
+                <span style="font-size: 10px; color: var(--text-muted);">0.1 - 1.5 ALPHA</span>
             </div>
         </div>
     </div>
@@ -350,7 +350,7 @@
     const tg = window.Telegram ? window.Telegram.WebApp : null;
     if (tg) { tg.ready(); tg.expand(); }
 
-    let altaPoints = parseFloat(localStorage.getItem('altaPoints')) || 0.00;
+    let alphaPoints = parseFloat(localStorage.getItem('alphaPoints')) || 0.00;
     let withdrawCount = parseInt(localStorage.getItem('withdrawCount')) || 0;
     let autoClickCount = parseInt(localStorage.getItem('autoClickCount')) || 0;
     let lastDailyClaim = parseInt(localStorage.getItem('lastDailyClaim')) || 0;
@@ -397,16 +397,16 @@
     }
 
     function shareToTelegram() {
-        const url = `https://t.me/share/url?url=${encodeURIComponent("https://t.me/AlphaAdsReward_bot")}&text=${encodeURIComponent("🚀 Join ALTA ADS MINER!")}`;
+        const url = `https://t.me/share/url?url=${encodeURIComponent("https://t.me/AlphaAdsReward_bot")}&text=${encodeURIComponent("🚀 Join ALPHA ADS MINER!")}`;
         if (tg && tg.openTelegramLink) tg.openTelegramLink(url);
         else window.open(url, '_blank');
     }
 
     function updateUI() {
-        document.getElementById('altaBalance').innerText = altaPoints.toFixed(2);
+        document.getElementById('alphaBalance').innerText = alphaPoints.toFixed(2);
         document.getElementById('withdrawCountText').innerText = withdrawCount + " Times";
         document.getElementById('autoBtnText').innerText = `Auto Ads (${autoClickCount}/30)`;
-        localStorage.setItem('altaPoints', altaPoints);
+        localStorage.setItem('alphaPoints', alphaPoints);
         localStorage.setItem('withdrawCount', withdrawCount);
         localStorage.setItem('autoClickCount', autoClickCount);
         
@@ -417,7 +417,7 @@
             btn.innerText = `⏳ Claimed Today`;
         } else {
             btn.disabled = false;
-            btn.innerText = `🎁 Daily Reward (+10 ALTA)`;
+            btn.innerText = `🎁 Daily Reward (+10 ALPHA)`;
         }
     }
 
@@ -509,12 +509,12 @@
 
         // Step 4: Points Award
         if (pendingAdType === 'daily') {
-            altaPoints += 10.00;
+            alphaPoints += 10.00;
             lastDailyClaim = Date.now();
             localStorage.setItem('lastDailyClaim', lastDailyClaim);
         } else {
             const added = parseFloat((Math.random() * 1.4 + 0.1).toFixed(2));
-            altaPoints += added;
+            alphaPoints += added;
             if (pendingAdType === 'auto') autoClickCount = (autoClickCount + 1) % 31;
         }
 
@@ -529,17 +529,17 @@
         const amount = parseFloat(document.getElementById('withdrawAmount').value);
         const tonWallet = document.getElementById('tonWallet').value.trim();
 
-        if (!tgName || !tonWallet || isNaN(amount) || amount < 50 || altaPoints < amount) {
+        if (!tgName || !tonWallet || isNaN(amount) || amount < 50 || alphaPoints < amount) {
             showToast("Invalid Amount or Insufficient Balance!");
             return;
         }
 
-        altaPoints -= amount;
+        alphaPoints -= amount;
         withdrawCount++;
         updateUI();
 
-        const historyText = `🚨 WITHDRAWAL REQUEST 🚨\nUser: ${tgName}\nAmount: ${amount} ALTA\nWallet: ${tonWallet}`;
-        const channelUrl = `https://t.me/share/url?url=${encodeURIComponent('https://t.me/AltaHub_ads_withdraw_history')}&text=${encodeURIComponent(historyText)}`;
+        const historyText = `🚨 WITHDRAWAL REQUEST 🚨\nUser: ${tgName}\nAmount: ${amount} ALPHA\nWallet: ${tonWallet}`;
+        const channelUrl = `https://t.me/share/url?url=${encodeURIComponent('https://t.me/AlphaHub_ads_withdraw_history')}&text=${encodeURIComponent(historyText)}`;
         if (tg && tg.openTelegramLink) tg.openTelegramLink(channelUrl);
         else window.open(channelUrl, '_blank');
 
@@ -555,4 +555,4 @@
     };
 </script>
 </body>
-    </html>
+</html>
