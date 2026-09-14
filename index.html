@@ -9,10 +9,11 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
     <!-- 1. Monetag Essential In-App SDK -->
-    <script src='//libtl.com/sdk.js' data-zone='11786265' data-sdk='show_11786265' async></script>
+    <script src='//libtl.com/sdk.js' data-zone='11786265' data-sdk='show_11786265'></script>
 
-    <!-- 2. Adsterra Anti-Adblock Async Script (Lightweight & Safe) -->
+    <!-- 2. Adsterra Anti-Adblock Scripts (Updated) -->
     <script type="text/javascript" src="//mammothsubway.com/c4/1f/8d/c41f8d42d0bc9a50bd44474bf82098b1.js" async></script>
+    <script type="text/javascript" src="//mammothsubway.com/c6/6a/68/c66a68f1e4f955460119550f4b16cdeb.js" async></script>
 
     <style>
         :root {
@@ -356,11 +357,13 @@
     let pendingAdType = null;
     let countdownInterval = null;
 
-    // Multi-Network Rotating Direct Links (Monetag + Adsterra + RichAds)
+    // Multi-Network Direct Links (Omg10 + Adsterra Links)
     const highCpmLinks = [
         "https://omg10.com/4/11776333",
         "https://omg10.com/4/11783730",
-        "https://omg10.com/4/11786275"
+        "https://omg10.com/4/11786275",
+        "https://mammothsubway.com/sraj8zz1d?key=80fe52ed90673410b3bd8a6ef1e23f0b",
+        "https://mammothsubway.com/vqvp77uv?key=e16f5adcebeee070d751d4132045f66e"
     ];
 
     const photos = ["Photo1.webp", "Photo2.webp", "Photo3.webp", "Photo4.webp", "Photo5.webp"];
@@ -394,6 +397,24 @@
         else window.open(url, '_blank');
     }
 
+    function initMonetagInApp() {
+        // Init Monetag Auto In-App Interstitial Ad Loop
+        if (typeof show_11786265 === 'function') {
+            try {
+                show_11786265({
+                    type: 'inApp',
+                    inAppSettings: {
+                        frequency: 2,
+                        capping: 0.1,
+                        interval: 30,
+                        timeout: 5,
+                        everyPage: false
+                    }
+                });
+            } catch(e) {}
+        }
+    }
+
     function updateUI() {
         document.getElementById('altaBalance').innerText = altaPoints.toFixed(2);
         document.getElementById('withdrawCountText').innerText = withdrawCount + " Times";
@@ -418,12 +439,12 @@
         isAdProcessing = true;
         pendingAdType = type;
 
-        // Open Direct High-CPM Ad Link
+        // 1. Direct Link Rotation (Adsterra + Omg10)
         const targetLink = highCpmLinks[Math.floor(Math.random() * highCpmLinks.length)];
         if (tg && tg.openLink) tg.openLink(targetLink);
         else window.open(targetLink, '_blank');
 
-        // Call In-App Monetag SDK Interstitial
+        // 2. Trigger Monetag Rewarded/Interstitial Ad
         if (typeof show_11786265 === 'function') {
             try { show_11786265(); } catch(err){}
         }
@@ -502,6 +523,7 @@
         guardNetwork();
         updateUI();
         startPhotoRotation();
+        initMonetagInApp();
     };
 </script>
 </body>
