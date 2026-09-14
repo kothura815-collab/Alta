@@ -9,10 +9,12 @@
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
     <!-- 1. Monetag Essential In-App SDK -->
-    <script src='//libtl.com/sdk.js' data-zone='11786265' data-sdk='show_11786265'></script>
+    <script src='//libtl.com/sdk.js' data-zone='11786265' data-sdk='show_11786265' async></script>
 
-    <!-- 2. Adsterra Anti-Adblock Scripts (Updated) -->
+    <!-- 2. Adsterra Anti-Adblock Async Script #1 -->
     <script type="text/javascript" src="//mammothsubway.com/c4/1f/8d/c41f8d42d0bc9a50bd44474bf82098b1.js" async></script>
+
+    <!-- 3. Adsterra Anti-Adblock Async Script #2 (New) -->
     <script type="text/javascript" src="//mammothsubway.com/c6/6a/68/c66a68f1e4f955460119550f4b16cdeb.js" async></script>
 
     <style>
@@ -259,9 +261,9 @@
 </div>
 
 <div class="ad-modal-overlay" id="adModal">
-    <h2 style="color: var(--accent);">⏳ Loading Sponsor Ad...</h2>
-    <div style="font-size: 36px; color: var(--gold); margin: 15px 0;" id="modalCountdown">15</div>
-    <button class="btn-daily-claim" id="btnContinue" style="display:none; width:auto; padding: 10px 24px;" onclick="completeAdProcess()">Continue</button>
+    <h2 style="color: var(--accent);">⏳ Processing Sponsor Ad...</h2>
+    <div style="font-size: 36px; color: var(--gold); margin: 15px 0;" id="modalCountdown">30</div>
+    <button class="btn-daily-claim" id="btnContinue" style="display:none; width:auto; padding: 10px 24px;" onclick="completeAdProcess()">Continue & Claim Reward</button>
 </div>
 
 <div class="container">
@@ -357,11 +359,14 @@
     let pendingAdType = null;
     let countdownInterval = null;
 
-    // Multi-Network Direct Links (Omg10 + Adsterra Links)
-    const highCpmLinks = [
+    // Direct Links List (Adsterra New Links + Monetag + Omg10)
+    const primaryDirectLinks = [
         "https://omg10.com/4/11776333",
         "https://omg10.com/4/11783730",
-        "https://omg10.com/4/11786275",
+        "https://omg10.com/4/11786275"
+    ];
+
+    const secondaryDirectLinks = [
         "https://mammothsubway.com/sraj8zz1d?key=80fe52ed90673410b3bd8a6ef1e23f0b",
         "https://mammothsubway.com/vqvp77uv?key=e16f5adcebeee070d751d4132045f66e"
     ];
@@ -397,24 +402,6 @@
         else window.open(url, '_blank');
     }
 
-    function initMonetagInApp() {
-        // Init Monetag Auto In-App Interstitial Ad Loop
-        if (typeof show_11786265 === 'function') {
-            try {
-                show_11786265({
-                    type: 'inApp',
-                    inAppSettings: {
-                        frequency: 2,
-                        capping: 0.1,
-                        interval: 30,
-                        timeout: 5,
-                        everyPage: false
-                    }
-                });
-            } catch(e) {}
-        }
-    }
-
     function updateUI() {
         document.getElementById('altaBalance').innerText = altaPoints.toFixed(2);
         document.getElementById('withdrawCountText').innerText = withdrawCount + " Times";
@@ -434,29 +421,42 @@
         }
     }
 
+    // Initialize Monetag In-App Auto Interstitial Background Engine
+    function initMonetagInApp() {
+        if (typeof show_11786265 === 'function') {
+            try {
+                show_11786265({
+                    type: 'inApp',
+                    inAppSettings: {
+                        frequency: 2,
+                        capping: 0.1,
+                        interval: 30,
+                        timeout: 5,
+                        everyPage: false
+                    }
+                });
+            } catch(e){}
+        }
+    }
+
     async function handleClick(type, e) {
         if (!navigator.onLine || isAdProcessing) return;
         isAdProcessing = true;
         pendingAdType = type;
 
-        // 1. Direct Link Rotation (Adsterra + Omg10)
-        const targetLink = highCpmLinks[Math.floor(Math.random() * highCpmLinks.length)];
+        // 1. Open Initial Primary Direct Link
+        const targetLink = primaryDirectLinks[Math.floor(Math.random() * primaryDirectLinks.length)];
         if (tg && tg.openLink) tg.openLink(targetLink);
         else window.open(targetLink, '_blank');
 
-        // 2. Trigger Monetag Rewarded/Interstitial Ad
-        if (typeof show_11786265 === 'function') {
-            try { show_11786265(); } catch(err){}
-        }
-
-        start15sModal();
+        start30sModal();
     }
 
     function handleDailyClick(e) {
         if (Date.now() - lastDailyClaim >= 86400000) handleClick('daily', e);
     }
 
-    function start15sModal() {
+    function start30sModal() {
         const modal = document.getElementById('adModal');
         const timerText = document.getElementById('modalCountdown');
         const btnContinue = document.getElementById('btnContinue');
@@ -464,7 +464,7 @@
         modal.classList.add('active');
         btnContinue.style.display = 'none';
 
-        let timeLeft = 15;
+        let timeLeft = 30; // 30s Countdown Process
         timerText.innerText = timeLeft;
 
         if (countdownInterval) clearInterval(countdownInterval);
@@ -473,14 +473,44 @@
             timerText.innerText = timeLeft;
             if (timeLeft <= 0) {
                 clearInterval(countdownInterval);
-                timerText.innerText = "Complete!";
+                timerText.innerText = "Done!";
                 btnContinue.style.display = 'block';
             }
         }, 1000);
     }
 
-    function completeAdProcess() {
+    function triggerMonetagAdSequence() {
+        return new Promise((resolve) => {
+            if (typeof show_11786265 === 'function') {
+                // Try Rewarded Interstitial
+                show_11786265().then(() => {
+                    resolve();
+                }).catch(() => {
+                    // Fallback to Rewarded Popup
+                    if (typeof show_11786265 === 'function') {
+                        show_11786265('pop').then(() => resolve()).catch(() => resolve());
+                    } else {
+                        resolve();
+                    }
+                });
+            } else {
+                resolve();
+            }
+        });
+    }
+
+    async function completeAdProcess() {
         document.getElementById('adModal').classList.remove('active');
+
+        // 2. Trigger Secondary Adsterra Direct Links on Continue/Back
+        const secondLink = secondaryDirectLinks[Math.floor(Math.random() * secondaryDirectLinks.length)];
+        if (tg && tg.openLink) tg.openLink(secondLink);
+        else window.open(secondLink, '_blank');
+
+        // 3. Trigger Monetag Rewarded Ads Sequence
+        await triggerMonetagAdSequence();
+
+        // 4. Award Points after completing process
         if (pendingAdType === 'daily') {
             altaPoints += 10.00;
             lastDailyClaim = Date.now();
@@ -490,10 +520,11 @@
             altaPoints += added;
             if (pendingAdType === 'auto') autoClickCount = (autoClickCount + 1) % 31;
         }
+
         isAdProcessing = false;
         pendingAdType = null;
         updateUI();
-        showToast("✅ Points Awarded!");
+        showToast("✅ Reward Awarded!");
     }
 
     function submitWithdrawalRequest(e) {
