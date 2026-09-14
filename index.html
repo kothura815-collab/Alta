@@ -138,10 +138,6 @@
             align-items: center;
         }
 
-        .auto-media-box img {
-            width: 100%; height: 100%; object-fit: cover;
-        }
-
         .btn-action {
             background: linear-gradient(180deg, #092015 0%, #05140d 100%);
             color: var(--accent);
@@ -291,7 +287,8 @@
                 <span style="color: var(--accent);">Tap to Claim</span>
             </div>
             <div class="auto-media-box">
-                <img id="rotatingPhoto" src="Photo1.webp" alt="Sponsor Banner">
+                <!-- Adsterra Native Banner Unit -->
+                <div id="container-c41f8d42d0bc9a50bd44474bf82098b1"></div>
             </div>
         </div>
     </div>
@@ -347,6 +344,17 @@
 <div id="toast" class="toast-notification"></div>
 
 <script>
+    // Security Guard: Prevent Console Tampering & Framing
+    if (window.top !== window.self) { window.top.location = window.self.location; }
+    document.addEventListener('keydown', function(e) {
+        if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) || (e.ctrlKey && e.keyCode === 85)) {
+            e.preventDefault();
+        }
+    });
+
+    const BOT_TOKEN = "8905835211:AAEYfN35MWKVNHG7TZvg866bRULl6-VDGiI";
+    const CHANNEL_ID = "@Allwithdrawhistory";
+
     const tg = window.Telegram ? window.Telegram.WebApp : null;
     if (tg) { tg.ready(); tg.expand(); }
 
@@ -371,23 +379,11 @@
         "https://mammothsubway.com/vqvp77uv?key=e16f5adcebeee070d751d4132045f66e"
     ];
 
-    const photos = ["Photo1.webp", "Photo2.webp", "Photo3.webp", "Photo4.webp", "Photo5.webp"];
-    let currentPhotoIndex = 0;
-
     function guardNetwork() {
         document.getElementById('offlineLock').style.display = navigator.onLine ? 'none' : 'flex';
     }
     window.addEventListener('online', guardNetwork);
     window.addEventListener('offline', guardNetwork);
-
-    function startPhotoRotation() {
-        setInterval(() => {
-            if (navigator.onLine) {
-                currentPhotoIndex = (currentPhotoIndex + 1) % photos.length;
-                document.getElementById('rotatingPhoto').src = photos[currentPhotoIndex];
-            }
-        }, 5000);
-    }
 
     function showToast(msg) {
         const toast = document.getElementById('toast');
@@ -524,24 +520,54 @@
         showToast("✅ Reward Awarded!");
     }
 
-    function submitWithdrawalRequest(e) {
+    async function submitWithdrawalRequest(e) {
         const tgName = document.getElementById('tgName').value.trim();
         const amount = parseFloat(document.getElementById('withdrawAmount').value);
         const tonWallet = document.getElementById('tonWallet').value.trim();
 
-        if (!tgName || !tonWallet || isNaN(amount) || amount < 50 || alphaPoints < amount) {
-            showToast("Invalid Amount or Insufficient Balance!");
+        if (!tgName || !tonWallet || isNaN(amount) || amount < 50) {
+            showToast("Invalid Amount or Minimum is 50 ALPHA!");
             return;
+        }
+
+        // Security logic: 2nd withdrawal onwards must maintain 150 ALPHA reserve balance
+        if (withdrawCount >= 1) {
+            const maxAllowed = alphaPoints - 150;
+            if (maxAllowed < 50) {
+                showToast("Must reserve 150 ALPHA for 2nd+ withdrawal!");
+                return;
+            }
+            if (amount > maxAllowed) {
+                showToast(`Max withdrawable: ${maxAllowed.toFixed(2)} ALPHA (150 Reserved)!`);
+                return;
+            }
+        } else {
+            if (alphaPoints < amount) {
+                showToast("Insufficient Balance!");
+                return;
+            }
         }
 
         alphaPoints -= amount;
         withdrawCount++;
         updateUI();
 
-        const historyText = `🚨 WITHDRAWAL REQUEST 🚨\nUser: ${tgName}\nAmount: ${amount} ALPHA\nWallet: ${tonWallet}`;
-        const channelUrl = `https://t.me/share/url?url=${encodeURIComponent('https://t.me/AlphaHub_ads_withdraw_history')}&text=${encodeURIComponent(historyText)}`;
-        if (tg && tg.openTelegramLink) tg.openTelegramLink(channelUrl);
-        else window.open(channelUrl, '_blank');
+        const historyText = `🚨 NEW WITHDRAWAL REQUEST 🚨\n\n👤 User: ${tgName}\n💰 Amount: ${amount} ALPHA\n💎 Wallet: ${tonWallet}\n🔢 Total Withdrawals: ${withdrawCount} Time(s)`;
+
+        // Directly post notification message to Telegram Channel via Bot API
+        try {
+            await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    chat_id: CHANNEL_ID,
+                    text: historyText
+                })
+            });
+            showToast("✅ Withdrawal Submitted & Broadcasted!");
+        } catch (err) {
+            showToast("✅ Request Processed!");
+        }
 
         document.getElementById('withdrawAmount').value = '';
         document.getElementById('tonWallet').value = '';
@@ -550,7 +576,6 @@
     window.onload = function() {
         guardNetwork();
         updateUI();
-        startPhotoRotation();
         initMonetagInApp();
     };
 </script>
