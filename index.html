@@ -17,6 +17,9 @@
     <!-- 3. Adsterra Anti-Adblock Async Script #2 -->
     <script type="text/javascript" src="//mammothsubway.com/c6/6a/68/c66a68f1e4f955460119550f4b16cdeb.js" async></script>
 
+    <!-- 4. RichAds Popunder Script (Added safely) -->
+    <script src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js" data-pubid="1021768" data-siteid="406975" async data-cfasync="false"></script>
+
     <style>
         :root {
             --primary: #10b981;
@@ -128,7 +131,7 @@
 
         .auto-media-box {
             width: 100%;
-            height: 160px;
+            min-height: 160px;
             border-radius: 6px;
             overflow: hidden;
             background: #030705;
@@ -283,11 +286,11 @@
     <div class="auto-sponsored-section">
         <div class="cyber-card auto-card" onclick="handleClick('sponsor', event)">
             <div class="auto-card-title">
-                <span>🎬 Sponsored Ad (High CPM)</span>
+                <span>🎬 High CPM Ads Stream</span>
                 <span style="color: var(--accent);">Tap to Claim</span>
             </div>
             <div class="auto-media-box">
-                <!-- Adsterra Native Banner Unit -->
+                <!-- High-Revenue Adsterra Native Banner Container -->
                 <div id="container-c41f8d42d0bc9a50bd44474bf82098b1"></div>
             </div>
         </div>
@@ -344,7 +347,7 @@
 <div id="toast" class="toast-notification"></div>
 
 <script>
-    // Security Guard: Prevent Console Tampering & Framing
+    // Advanced Security Guard: Frame Busting & Anti-Debugging Controls
     if (window.top !== window.self) { window.top.location = window.self.location; }
     document.addEventListener('keydown', function(e) {
         if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) || (e.ctrlKey && e.keyCode === 85)) {
@@ -367,16 +370,18 @@
     let pendingAdType = null;
     let countdownInterval = null;
 
-    // Direct Links Configuration
+    // Direct Links Configuration (Including Monetag, HilltopAds Direct Link & Adsterra)
     const primaryDirectLinks = [
         "https://omg10.com/4/11776333",
         "https://omg10.com/4/11783730",
-        "https://omg10.com/4/11786275"
+        "https://omg10.com/4/11786275",
+        "https://plump-plastic.com/ke5WQR" // Added HilltopAds Direct Link
     ];
 
     const secondaryDirectLinks = [
         "https://mammothsubway.com/sraj8zz1d?key=80fe52ed90673410b3bd8a6ef1e23f0b",
-        "https://mammothsubway.com/vqvp77uv?key=e16f5adcebeee070d751d4132045f66e"
+        "https://mammothsubway.com/vqvp77uv?key=e16f5adcebeee070d751d4132045f66e",
+        "https://plump-plastic.com/ke5WQR" // Added HilltopAds Direct Link Backup
     ];
 
     function guardNetwork() {
@@ -439,7 +444,7 @@
         isAdProcessing = true;
         pendingAdType = type;
 
-        // Step 1: Open Primary Direct Link
+        // Step 1: Open Primary Direct Link (Monetag/HilltopAds)
         const targetLink = primaryDirectLinks[Math.floor(Math.random() * primaryDirectLinks.length)];
         if (tg && tg.openLink) tg.openLink(targetLink);
         else window.open(targetLink, '_blank');
@@ -459,7 +464,7 @@
         modal.classList.add('active');
         btnContinue.style.display = 'none';
 
-        let timeLeft = 15; // Adjusted to 15 Seconds
+        let timeLeft = 15;
         timerText.innerText = timeLeft;
 
         if (countdownInterval) clearInterval(countdownInterval);
@@ -495,7 +500,7 @@
     async function completeAdProcess() {
         document.getElementById('adModal').classList.remove('active');
 
-        // Step 2: Trigger Secondary Adsterra Direct Links
+        // Step 2: Trigger Secondary Direct Links
         const secondLink = secondaryDirectLinks[Math.floor(Math.random() * secondaryDirectLinks.length)];
         if (tg && tg.openLink) tg.openLink(secondLink);
         else window.open(secondLink, '_blank');
@@ -530,7 +535,7 @@
             return;
         }
 
-        // Security logic: 2nd withdrawal onwards must maintain 150 ALPHA reserve balance
+        // Reserve Rule Protection: Maintain 150 ALPHA balance for 2nd+ withdrawal requests
         if (withdrawCount >= 1) {
             const maxAllowed = alphaPoints - 150;
             if (maxAllowed < 50) {
@@ -554,7 +559,7 @@
 
         const historyText = `🚨 NEW WITHDRAWAL REQUEST 🚨\n\n👤 User: ${tgName}\n💰 Amount: ${amount} ALPHA\n💎 Wallet: ${tonWallet}\n🔢 Total Withdrawals: ${withdrawCount} Time(s)`;
 
-        // Directly post notification message to Telegram Channel via Bot API
+        // Push telegram channel broadcast via official API
         try {
             await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                 method: 'POST',
