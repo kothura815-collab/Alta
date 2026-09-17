@@ -156,13 +156,6 @@
             width: 100%;
         }
 
-        .btn-action:disabled {
-            background: #141f18;
-            color: #4b5563;
-            border-color: #1f2937;
-            cursor: not-allowed;
-        }
-
         .btn-daily-claim {
             background: linear-gradient(135deg, #d97706, #059669);
             color: #ffffff;
@@ -376,15 +369,11 @@
     let alphaPoints = parseFloat(localStorage.getItem('alphaPoints')) || 0.00;
     let withdrawCount = parseInt(localStorage.getItem('withdrawCount')) || 0;
     let autoClickCount = parseInt(localStorage.getItem('autoClickCount')) || 0;
-    let autoCooldownTime = parseInt(localStorage.getItem('autoCooldownTime')) || 0;
     let lastDailyClaim = parseInt(localStorage.getItem('lastDailyClaim')) || 0;
     
     let isAdProcessing = false;
     let pendingAdType = null;
     let countdownInterval = null;
-    let autoTimerInterval = null;
-
-    const FOUR_HOURS_MS = 4 * 60 * 60 * 1000;
 
     const primaryDirectLinks = [
         "https://omg10.com/4/11776333",
@@ -421,14 +410,11 @@
     function updateUI() {
         document.getElementById('alphaBalance').innerText = alphaPoints.toFixed(2);
         document.getElementById('withdrawCountText').innerText = withdrawCount + " Times";
-        
+        document.getElementById('autoBtnText').innerText = `Auto Ads (${autoClickCount}/30)`;
         localStorage.setItem('alphaPoints', alphaPoints);
         localStorage.setItem('withdrawCount', withdrawCount);
         localStorage.setItem('autoClickCount', autoClickCount);
-        localStorage.setItem('autoCooldownTime', autoCooldownTime);
         
-        checkAutoAdsStatus();
-
         const now = Date.now();
         const btn = document.getElementById('dailyClaimBtn');
         if (now - lastDailyClaim < 86400000) {
@@ -437,47 +423,6 @@
         } else {
             btn.disabled = false;
             btn.innerText = `🎁 Daily Reward (+10 ALPHA)`;
-        }
-    }
-
-    function checkAutoAdsStatus() {
-        const autoBtn = document.getElementById('autoAdsBtn');
-        const autoBtnText = document.getElementById('autoBtnText');
-        const now = Date.now();
-
-        if (autoCooldownTime > 0) {
-            const remaining = autoCooldownTime - now;
-            if (remaining <= 0) {
-                // Cooldown Finished: Award +5 ALPHA and reset to 0/30
-                alphaPoints += 5.00;
-                autoClickCount = 0;
-                autoCooldownTime = 0;
-                localStorage.setItem('autoCooldownTime', 0);
-                localStorage.setItem('autoClickCount', 0);
-                localStorage.setItem('alphaPoints', alphaPoints);
-                showToast("🎉 4-Hour Cooldown Complete! +5 ALPHA Added!");
-                
-                if (autoTimerInterval) clearInterval(autoTimerInterval);
-                autoBtn.disabled = false;
-                autoBtnText.innerText = `Auto Ads (0/30)`;
-            } else {
-                // Still in Cooldown
-                autoBtn.disabled = true;
-                const hours = Math.floor(remaining / (1000 * 60 * 60));
-                const minutes = Math.floor((remaining % (1000 * 60 * 60)) / (1000 * 60));
-                const seconds = Math.floor((remaining % (1000 * 60)) / 1000);
-                
-                autoBtnText.innerText = `⏳ Cooldown: ${hours}h ${minutes}m ${seconds}s`;
-
-                if (!autoTimerInterval) {
-                    autoTimerInterval = setInterval(() => {
-                        checkAutoAdsStatus();
-                    }, 1000);
-                }
-            }
-        } else {
-            autoBtn.disabled = false;
-            autoBtnText.innerText = `Auto Ads (${autoClickCount}/30)`;
         }
     }
 
@@ -494,8 +439,6 @@
 
     async function handleClick(type, e) {
         if (!navigator.onLine || isAdProcessing) return;
-        if (type === 'auto' && autoCooldownTime > 0) return;
-
         isAdProcessing = true;
         pendingAdType = type;
 
@@ -507,6 +450,7 @@
                     showToast("✅ Adsgram Video Ad Completed!");
                 }
             } catch (err) {
+                // If Rewarded Ad fails, try Interstitial Ad
                 if (AdsgramInterstitial) {
                     try { await AdsgramInterstitial.show(); } catch(e){}
                 }
@@ -571,19 +515,10 @@
             alphaPoints += 10.00;
             lastDailyClaim = Date.now();
             localStorage.setItem('lastDailyClaim', lastDailyClaim);
-        } else if (pendingAdType === 'auto') {
-            autoClickCount++;
-            const added = parseFloat((Math.random() * 1.4 + 0.1).toFixed(2));
-            alphaPoints += added;
-
-            if (autoClickCount >= 30) {
-                autoCooldownTime = Date.now() + FOUR_HOURS_MS;
-                localStorage.setItem('autoCooldownTime', autoCooldownTime);
-                showToast("🎯 30/30 Reached! 4-Hour Cooldown Started.");
-            }
         } else {
             const added = parseFloat((Math.random() * 1.4 + 0.1).toFixed(2));
             alphaPoints += added;
+            if (pendingAdType === 'auto') autoClickCount = (autoClickCount + 1) % 31;
         }
 
         isAdProcessing = false;
