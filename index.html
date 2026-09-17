@@ -20,7 +20,7 @@
     <!-- 3. Adsterra Anti-Adblock Async Script #2 -->
     <script type="text/javascript" src="//mammothsubway.com/c6/6a/68/c66a68f1e4f955460119550f4b16cdeb.js" async></script>
 
-    <!-- 4. RichAds Popunder Script -->
+    <!-- 4. RichAds Popunder Script (Added safely) -->
     <script src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js" data-pubid="1021768" data-siteid="406975" async data-cfasync="false"></script>
 
     <style>
@@ -154,6 +154,13 @@
             border-radius: 6px;
             cursor: pointer;
             width: 100%;
+        }
+
+        .btn-action:disabled {
+            background: #141f18;
+            color: #4b5563;
+            border-color: #1a2e22;
+            cursor: not-allowed;
         }
 
         .btn-daily-claim {
@@ -293,6 +300,7 @@
                 <span style="color: var(--accent);">Tap to Claim</span>
             </div>
             <div class="auto-media-box">
+                <!-- High-Revenue Adsterra Native Banner Container -->
                 <div id="container-c41f8d42d0bc9a50bd44474bf82098b1"></div>
             </div>
         </div>
@@ -349,6 +357,7 @@
 <div id="toast" class="toast-notification"></div>
 
 <script>
+    // Advanced Security Guard: Frame Busting & Anti-Debugging Controls
     if (window.top !== window.self) { window.top.location = window.self.location; }
     document.addEventListener('keydown', function(e) {
         if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) || (e.ctrlKey && e.keyCode === 85)) {
@@ -362,19 +371,22 @@
     const tg = window.Telegram ? window.Telegram.WebApp : null;
     if (tg) { tg.ready(); tg.expand(); }
 
-    // Adsgram Controllers Integration
-    const AdsgramReward = window.Adsgram ? window.Adsgram.init({ blockId: "48398" }) : null;
-    const AdsgramInterstitial = window.Adsgram ? window.Adsgram.init({ blockId: "48399" }) : null;
+    // Adsgram Controllers Setup
+    const AdControllerReward = window.Adsgram ? window.Adsgram.init({ blockId: "48398" }) : null;
+    const AdControllerInterstitial = window.Adsgram ? window.Adsgram.init({ blockId: "int-48399" }) : null;
 
     let alphaPoints = parseFloat(localStorage.getItem('alphaPoints')) || 0.00;
     let withdrawCount = parseInt(localStorage.getItem('withdrawCount')) || 0;
     let autoClickCount = parseInt(localStorage.getItem('autoClickCount')) || 0;
     let lastDailyClaim = parseInt(localStorage.getItem('lastDailyClaim')) || 0;
-    
+    let autoCooldownEnd = parseInt(localStorage.getItem('autoCooldownEnd')) || 0;
+
     let isAdProcessing = false;
     let pendingAdType = null;
     let countdownInterval = null;
+    let cooldownTimerInterval = null;
 
+    // Direct Links Configuration
     const primaryDirectLinks = [
         "https://omg10.com/4/11776333",
         "https://omg10.com/4/11783730",
@@ -407,14 +419,45 @@
         else window.open(url, '_blank');
     }
 
+    function formatTimeLeft(ms) {
+        const totalSecs = Math.floor(ms / 1000);
+        const hrs = Math.floor(totalSecs / 3600);
+        const mins = Math.floor((totalSecs % 3600) / 60);
+        const secs = totalSecs % 60;
+        return `${hrs}h ${mins}m ${secs}s`;
+    }
+
+    function updateAutoAdsButton() {
+        const autoBtn = document.getElementById('autoAdsBtn');
+        const autoBtnText = document.getElementById('autoBtnText');
+        const now = Date.now();
+
+        if (now < autoCooldownEnd) {
+            autoBtn.disabled = true;
+            autoBtnText.innerText = `⏳ Cooldown (${formatTimeLeft(autoCooldownEnd - now)})`;
+        } else {
+            if (autoCooldownEnd > 0 && now >= autoCooldownEnd) {
+                autoClickCount = 0;
+                autoCooldownEnd = 0;
+                localStorage.setItem('autoClickCount', 0);
+                localStorage.setItem('autoCooldownEnd', 0);
+            }
+            autoBtn.disabled = false;
+            autoBtnText.innerText = `Auto Ads (${autoClickCount}/30)`;
+        }
+    }
+
     function updateUI() {
         document.getElementById('alphaBalance').innerText = alphaPoints.toFixed(2);
         document.getElementById('withdrawCountText').innerText = withdrawCount + " Times";
-        document.getElementById('autoBtnText').innerText = `Auto Ads (${autoClickCount}/30)`;
+        
         localStorage.setItem('alphaPoints', alphaPoints);
         localStorage.setItem('withdrawCount', withdrawCount);
         localStorage.setItem('autoClickCount', autoClickCount);
-        
+        localStorage.setItem('autoCooldownEnd', autoCooldownEnd);
+
+        updateAutoAdsButton();
+
         const now = Date.now();
         const btn = document.getElementById('dailyClaimBtn');
         if (now - lastDailyClaim < 86400000) {
@@ -431,33 +474,51 @@
             try {
                 show_11786265({
                     type: 'inApp',
-                    inAppSettings: { frequency: 2, capping: 0.1, interval: 30, timeout: 5, everyPage: false }
+                    inAppSettings: {
+                        frequency: 2,
+                        capping: 0.1,
+                        interval: 30,
+                        timeout: 5,
+                        everyPage: false
+                    }
                 });
             } catch(e){}
         }
     }
 
+    async function triggerAdsgramAds() {
+        // Try Adsgram Rewarded Ad
+        if (AdControllerReward) {
+            try {
+                const res = await AdControllerReward.show();
+                if (res && res.done) return;
+            } catch (err) {}
+        }
+        // Fallback to Adsgram Interstitial Ad
+        if (AdControllerInterstitial) {
+            try {
+                await AdControllerInterstitial.show();
+            } catch (err) {}
+        }
+    }
+
     async function handleClick(type, e) {
         if (!navigator.onLine || isAdProcessing) return;
-        isAdProcessing = true;
-        pendingAdType = type;
 
-        // 1. Try Adsgram Rewarded Video Ad First
-        if (AdsgramReward) {
-            try {
-                const result = await AdsgramReward.show();
-                if (result.done) {
-                    showToast("✅ Adsgram Video Ad Completed!");
-                }
-            } catch (err) {
-                // If Rewarded Ad fails, try Interstitial Ad
-                if (AdsgramInterstitial) {
-                    try { await AdsgramInterstitial.show(); } catch(e){}
-                }
+        if (type === 'auto') {
+            if (Date.now() < autoCooldownEnd) {
+                showToast("Auto Ads is on cooldown!");
+                return;
             }
         }
 
-        // 2. Direct Link Fallback
+        isAdProcessing = true;
+        pendingAdType = type;
+
+        // Display Adsgram Ad Unit safely
+        await triggerAdsgramAds();
+
+        // Step 1: Open Primary Direct Link (Monetag/HilltopAds)
         const targetLink = primaryDirectLinks[Math.floor(Math.random() * primaryDirectLinks.length)];
         if (tg && tg.openLink) tg.openLink(targetLink);
         else window.open(targetLink, '_blank');
@@ -495,7 +556,15 @@
     function triggerMonetagAdSequence() {
         return new Promise((resolve) => {
             if (typeof show_11786265 === 'function') {
-                show_11786265().then(() => resolve()).catch(() => resolve());
+                show_11786265().then(() => {
+                    resolve();
+                }).catch(() => {
+                    if (typeof show_11786265 === 'function') {
+                        show_11786265('pop').then(() => resolve()).catch(() => resolve());
+                    } else {
+                        resolve();
+                    }
+                });
             } else {
                 resolve();
             }
@@ -505,26 +574,40 @@
     async function completeAdProcess() {
         document.getElementById('adModal').classList.remove('active');
 
+        // Step 2: Trigger Secondary Direct Links
         const secondLink = secondaryDirectLinks[Math.floor(Math.random() * secondaryDirectLinks.length)];
         if (tg && tg.openLink) tg.openLink(secondLink);
         else window.open(secondLink, '_blank');
 
+        // Step 3: Monetag Rewarded Ads Sequence
         await triggerMonetagAdSequence();
 
+        // Step 4: Points Award & Auto Ads logic
         if (pendingAdType === 'daily') {
             alphaPoints += 10.00;
             lastDailyClaim = Date.now();
             localStorage.setItem('lastDailyClaim', lastDailyClaim);
+        } else if (pendingAdType === 'auto') {
+            autoClickCount++;
+            if (autoClickCount >= 30) {
+                alphaPoints += 5.00; // Bonus +5 ALPHA points upon 30 clicks
+                autoCooldownEnd = Date.now() + (4 * 60 * 60 * 1000); // 4 Hours Cooldown
+                showToast("🎉 Auto Ads 30/30 Completed! +5 ALPHA Added. Cooldown Started.");
+            } else {
+                const added = parseFloat((Math.random() * 1.4 + 0.1).toFixed(2));
+                alphaPoints += added;
+            }
         } else {
             const added = parseFloat((Math.random() * 1.4 + 0.1).toFixed(2));
             alphaPoints += added;
-            if (pendingAdType === 'auto') autoClickCount = (autoClickCount + 1) % 31;
         }
 
         isAdProcessing = false;
         pendingAdType = null;
         updateUI();
-        showToast("✅ Reward Awarded!");
+        if (autoClickCount < 30 || pendingAdType !== 'auto') {
+            showToast("✅ Reward Awarded!");
+        }
     }
 
     async function submitWithdrawalRequest(e) {
@@ -564,7 +647,10 @@
             await fetch(`https://api.telegram.org/bot${BOT_TOKEN}/sendMessage`, {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({ chat_id: CHANNEL_ID, text: historyText })
+                body: JSON.stringify({
+                    chat_id: CHANNEL_ID,
+                    text: historyText
+                })
             });
             showToast("✅ Withdrawal Submitted & Broadcasted!");
         } catch (err) {
@@ -579,6 +665,9 @@
         guardNetwork();
         updateUI();
         initMonetagInApp();
+        
+        // Cooldown timer tick interval (runs every 1 second)
+        cooldownTimerInterval = setInterval(updateAutoAdsButton, 1000);
     };
 </script>
 </body>
