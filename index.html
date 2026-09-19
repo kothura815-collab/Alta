@@ -1,7 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta name="referrer" content="no-referrer-when-downgrade" />
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>ALPHA ADS MINER</title>
@@ -15,17 +14,11 @@
     <!-- Adsgram Official SDK -->
     <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
 
-    <!-- 1. Monetag Essential In-App SDK -->
-    <script src='//libtl.com/sdk.js' data-zone='11786265' data-sdk='show_11786265' async></script>
+    <!-- Adsterra Anti-Adblock Async Script #1 -->
+    <script type="text/javascript" src="https://mammothsubway.com/c6/6a/68/c66a68f1e4f955460119550f4b16cdeb.js" async></script>
 
-    <!-- 2. Adsterra Anti-Adblock Async Script #1 -->
-    <script type="text/javascript" src="//mammothsubway.com/c4/1f/8d/c41f8d42d0bc9a50bd44474bf82098b1.js" async></script>
-
-    <!-- 3. Adsterra Anti-Adblock Async Script #2 -->
-    <script type="text/javascript" src="//mammothsubway.com/c6/6a/68/c66a68f1e4f955460119550f4b16cdeb.js" async></script>
-
-    <!-- 4. RichAds Popunder Script (Added safely) -->
-    <script src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js" data-pubid="1021768" data-siteid="406975" async data-cfasync="false"></script>
+    <!-- Adsterra Anti-Adblock Async Script #2 -->
+    <script type="text/javascript" src="https://mammothsubway.com/38/84/b8/3884b84642518c8d1767cf3d63554b7f.js" async></script>
 
     <style>
         :root {
@@ -138,7 +131,7 @@
 
         .auto-media-box {
             width: 100%;
-            min-height: 160px;
+            min-height: 140px;
             border-radius: 6px;
             overflow: hidden;
             background: #030705;
@@ -179,10 +172,16 @@
             width: 100%;
         }
 
-        .btn-daily-claim:disabled {
-            background: #141f18;
-            color: #4b5563;
-            cursor: not-allowed;
+        .btn-task {
+            background: linear-gradient(135deg, #8b5cf6, #6d28d9);
+            color: #ffffff;
+            border: none;
+            padding: 14px;
+            font-size: 14px;
+            font-weight: bold;
+            border-radius: 6px;
+            cursor: pointer;
+            width: 100%;
         }
 
         .btn-share {
@@ -273,6 +272,7 @@
     <h2>🚫 NO INTERNET CONNECTION</h2>
 </div>
 
+<!-- Modal Countdown for Ads Verification -->
 <div class="ad-modal-overlay" id="adModal">
     <h2 style="color: var(--accent);">⏳ Processing Sponsor Ad...</h2>
     <div style="font-size: 36px; color: var(--gold); margin: 15px 0;" id="modalCountdown">15</div>
@@ -304,8 +304,7 @@
                 <span style="color: var(--accent);">Tap to Claim</span>
             </div>
             <div class="auto-media-box">
-                <!-- High-Revenue Adsterra Native Banner Container -->
-                <div id="container-c41f8d42d0bc9a50bd44474bf82098b1"></div>
+                <p style="color: var(--accent); font-size: 12px; text-align: center;">▶ Click Here to Watch & Earn Alpha Points</p>
             </div>
         </div>
     </div>
@@ -313,6 +312,13 @@
     <div class="cyber-card">
         <button class="btn-action" id="autoAdsBtn" onclick="handleClick('auto', event)">
             <span id="autoBtnText">Auto Ads (0/30)</span>
+        </button>
+    </div>
+
+    <!-- Adsgram Task Ad Section -->
+    <div class="cyber-card">
+        <button class="btn-task" onclick="handleAdsgramTask()">
+            📋 Adsgram Special Task (+2.00 ALPHA)
         </button>
     </div>
 
@@ -361,7 +367,6 @@
 <div id="toast" class="toast-notification"></div>
 
 <script>
-    // Advanced Security Guard: Frame Busting & Anti-Debugging Controls
     if (window.top !== window.self) { window.top.location = window.self.location; }
     document.addEventListener('keydown', function(e) {
         if (e.keyCode === 123 || (e.ctrlKey && e.shiftKey && (e.keyCode === 73 || e.keyCode === 74)) || (e.ctrlKey && e.keyCode === 85)) {
@@ -372,9 +377,10 @@
     const tg = window.Telegram ? window.Telegram.WebApp : null;
     if (tg) { tg.ready(); tg.expand(); }
 
-    // Adsgram Controllers Setup
+    // 📌 Adsgram Init (Reward, Interstitial, Task)
     const AdControllerReward = window.Adsgram ? window.Adsgram.init({ blockId: "48398" }) : null;
     const AdControllerInterstitial = window.Adsgram ? window.Adsgram.init({ blockId: "int-48399" }) : null;
+    const AdControllerTask = window.Adsgram ? window.Adsgram.init({ blockId: "task-48720" }) : null;
 
     let alphaPoints = parseFloat(localStorage.getItem('alphaPoints')) || 0.00;
     let withdrawCount = parseInt(localStorage.getItem('withdrawCount')) || 0;
@@ -385,20 +391,16 @@
     let isAdProcessing = false;
     let pendingAdType = null;
     let countdownInterval = null;
-    let cooldownTimerInterval = null;
 
-    // Direct Links Configuration
+    // 📌 Adsterra & Hilltop Direct Links
     const primaryDirectLinks = [
-        "https://omg10.com/4/11776333",
-        "https://omg10.com/4/11783730",
-        "https://omg10.com/4/11786275",
-        "https://plump-plastic.com/ke5WQR"
+        "https://mammothsubway.com/sraj8zz1d?key=80fe52ed90673410b3bd8a6ef1e23f0b", // Adsterra
+        "https://plump-plastic.com/ke5WQR" // Hilltop
     ];
 
     const secondaryDirectLinks = [
-        "https://mammothsubway.com/sraj8zz1d?key=80fe52ed90673410b3bd8a6ef1e23f0b",
-        "https://mammothsubway.com/vqvp77uv?key=e16f5adcebeee070d751d4132045f66e",
-        "https://plump-plastic.com/ke5WQR"
+        "https://mammothsubway.com/vqvp77uv?key=e16f5adcebeee070d751d4132045f66e", // Adsterra
+        "https://plump-plastic.com/ke5WQR" // Hilltop
     ];
 
     function guardNetwork() {
@@ -470,20 +472,22 @@
         }
     }
 
-    function initMonetagInApp() {
-        if (typeof show_11786265 === 'function') {
+    // Adsgram Task Handler
+    async function handleAdsgramTask() {
+        if (!navigator.onLine) return;
+        if (AdControllerTask) {
             try {
-                show_11786265({
-                    type: 'inApp',
-                    inAppSettings: {
-                        frequency: 2,
-                        capping: 0.1,
-                        interval: 30,
-                        timeout: 5,
-                        everyPage: false
-                    }
-                });
-            } catch(e){}
+                const res = await AdControllerTask.show();
+                if (res && res.done) {
+                    alphaPoints += 2.00;
+                    updateUI();
+                    showToast("🎉 Task Completed! +2.00 ALPHA Added!");
+                }
+            } catch (err) {
+                showToast("No Task Available Right Now!");
+            }
+        } else {
+            showToast("Adsgram Task SDK Not Loaded!");
         }
     }
 
@@ -504,11 +508,9 @@
     async function handleClick(type, e) {
         if (!navigator.onLine || isAdProcessing) return;
 
-        if (type === 'auto') {
-            if (Date.now() < autoCooldownEnd) {
-                showToast("Auto Ads is on cooldown!");
-                return;
-            }
+        if (type === 'auto' && Date.now() < autoCooldownEnd) {
+            showToast("Auto Ads is on cooldown!");
+            return;
         }
 
         isAdProcessing = true;
@@ -550,32 +552,12 @@
         }, 1000);
     }
 
-    function triggerMonetagAdSequence() {
-        return new Promise((resolve) => {
-            if (typeof show_11786265 === 'function') {
-                show_11786265().then(() => {
-                    resolve();
-                }).catch(() => {
-                    if (typeof show_11786265 === 'function') {
-                        show_11786265('pop').then(() => resolve()).catch(() => resolve());
-                    } else {
-                        resolve();
-                    }
-                });
-            } else {
-                resolve();
-            }
-        });
-    }
-
     async function completeAdProcess() {
         document.getElementById('adModal').classList.remove('active');
 
         const secondLink = secondaryDirectLinks[Math.floor(Math.random() * secondaryDirectLinks.length)];
         if (tg && tg.openLink) tg.openLink(secondLink);
         else window.open(secondLink, '_blank');
-
-        await triggerMonetagAdSequence();
 
         if (pendingAdType === 'daily') {
             alphaPoints += 10.00;
@@ -586,7 +568,7 @@
             if (autoClickCount >= 30) {
                 alphaPoints += 5.00;
                 autoCooldownEnd = Date.now() + (4 * 60 * 60 * 1000);
-                showToast("🎉 Auto Ads 30/30 Completed! +5 ALPHA Added. Cooldown Started.");
+                showToast("🎉 Auto Ads 30/30 Completed! +5 ALPHA Added.");
             } else {
                 const added = parseFloat((Math.random() * 1.4 + 0.1).toFixed(2));
                 alphaPoints += added;
@@ -599,9 +581,7 @@
         isAdProcessing = false;
         pendingAdType = null;
         updateUI();
-        if (autoClickCount < 30 || pendingAdType !== 'auto') {
-            showToast("✅ Reward Awarded!");
-        }
+        showToast("✅ Reward Awarded!");
     }
 
     async function submitWithdrawalRequest(e) {
@@ -646,7 +626,7 @@
                     text: historyText
                 })
             });
-            showToast("✅ Withdrawal Submitted & Broadcasted!");
+            showToast("✅ Withdrawal Submitted!");
         } catch (err) {
             showToast("✅ Request Processed!");
         }
@@ -658,9 +638,7 @@
     window.onload = function() {
         guardNetwork();
         updateUI();
-        initMonetagInApp();
-        
-        cooldownTimerInterval = setInterval(updateAutoAdsButton, 1000);
+        setInterval(updateAutoAdsButton, 1000);
     };
 </script>
 </body>
