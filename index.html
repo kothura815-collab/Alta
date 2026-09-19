@@ -8,6 +8,9 @@
     <!-- Telegram Web App SDK -->
     <script src="https://telegram.org/js/telegram-web-app.js"></script>
 
+    <!-- External Bot API Config (GitHub) -->
+    <script src="api.js"></script>
+
     <!-- Adsgram Official SDK -->
     <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
 
@@ -365,9 +368,6 @@
         }
     });
 
-    const BOT_TOKEN = "8905835211:AAEYfN35MWKVNHG7TZvg866bRULl6-VDGiI";
-    const CHANNEL_ID = "@Allwithdrawhistory";
-
     const tg = window.Telegram ? window.Telegram.WebApp : null;
     if (tg) { tg.ready(); tg.expand(); }
 
@@ -487,14 +487,12 @@
     }
 
     async function triggerAdsgramAds() {
-        // Try Adsgram Rewarded Ad
         if (AdControllerReward) {
             try {
                 const res = await AdControllerReward.show();
                 if (res && res.done) return;
             } catch (err) {}
         }
-        // Fallback to Adsgram Interstitial Ad
         if (AdControllerInterstitial) {
             try {
                 await AdControllerInterstitial.show();
@@ -515,10 +513,8 @@
         isAdProcessing = true;
         pendingAdType = type;
 
-        // Display Adsgram Ad Unit safely
         await triggerAdsgramAds();
 
-        // Step 1: Open Primary Direct Link (Monetag/HilltopAds)
         const targetLink = primaryDirectLinks[Math.floor(Math.random() * primaryDirectLinks.length)];
         if (tg && tg.openLink) tg.openLink(targetLink);
         else window.open(targetLink, '_blank');
@@ -574,15 +570,12 @@
     async function completeAdProcess() {
         document.getElementById('adModal').classList.remove('active');
 
-        // Step 2: Trigger Secondary Direct Links
         const secondLink = secondaryDirectLinks[Math.floor(Math.random() * secondaryDirectLinks.length)];
         if (tg && tg.openLink) tg.openLink(secondLink);
         else window.open(secondLink, '_blank');
 
-        // Step 3: Monetag Rewarded Ads Sequence
         await triggerMonetagAdSequence();
 
-        // Step 4: Points Award & Auto Ads logic
         if (pendingAdType === 'daily') {
             alphaPoints += 10.00;
             lastDailyClaim = Date.now();
@@ -590,8 +583,8 @@
         } else if (pendingAdType === 'auto') {
             autoClickCount++;
             if (autoClickCount >= 30) {
-                alphaPoints += 5.00; // Bonus +5 ALPHA points upon 30 clicks
-                autoCooldownEnd = Date.now() + (4 * 60 * 60 * 1000); // 4 Hours Cooldown
+                alphaPoints += 5.00;
+                autoCooldownEnd = Date.now() + (4 * 60 * 60 * 1000);
                 showToast("🎉 Auto Ads 30/30 Completed! +5 ALPHA Added. Cooldown Started.");
             } else {
                 const added = parseFloat((Math.random() * 1.4 + 0.1).toFixed(2));
@@ -666,7 +659,6 @@
         updateUI();
         initMonetagInApp();
         
-        // Cooldown timer tick interval (runs every 1 second)
         cooldownTimerInterval = setInterval(updateAutoAdsButton, 1000);
     };
 </script>
