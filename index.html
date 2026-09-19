@@ -15,14 +15,18 @@
     <!-- Adsgram Official SDK -->
     <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
 
-    <!-- Adsterra Anti-Adblock Async Script #1 -->
+    <!-- Adsterra Anti-Adblock Async Scripts -->
     <script type="text/javascript" src="https://mammothsubway.com/c6/6a/68/c66a68f1e4f955460119550f4b16cdeb.js" async></script>
-
-    <!-- Adsterra Anti-Adblock Async Script #2 -->
     <script type="text/javascript" src="https://mammothsubway.com/38/84/b8/3884b84642518c8d1767cf3d63554b7f.js" async></script>
+
+    <!-- RichAds Push Notification Script -->
+    <script type="module" src="https://richinfo.co/richpartners/push/js/rp-cl-ob.js?pubid=1021768&siteid=406974&niche=33" async data-cfasync="false"></script>
 
     <!-- RichAds Popunder Script -->
     <script src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js" data-pubid="1021768" data-siteid="406975" async data-cfasync="false"></script>
+
+    <!-- RichAds In-Page Push Banner Script -->
+    <script src="https://richinfo.co/richpartners/in-page/js/richads-ob.js?pubid=1021768&siteid=406976" async></script>
 
     <style>
         :root {
@@ -307,7 +311,7 @@
     </div>
 
     <div class="auto-sponsored-section">
-        <div class="cyber-card auto-card" onclick="handleClick('sponsor')">
+        <div class="cyber-card auto-card" onclick="handleClick('sponsor', event)">
             <div class="auto-card-title">
                 <span>🎬 High CPM Ads Stream</span>
                 <span style="color: var(--accent);">Tap to Claim</span>
@@ -319,12 +323,12 @@
     </div>
 
     <div class="cyber-card">
-        <button class="btn-action" id="autoAdsBtn" onclick="handleClick('auto')">
+        <button class="btn-action" id="autoAdsBtn" onclick="handleClick('auto', event)">
             <span id="autoBtnText">Auto Ads (0/30)</span>
         </button>
     </div>
 
-    <!-- Adsgram Task Block -->
+    <!-- Adsgram Task Offer Section -->
     <div class="cyber-card">
         <button class="btn-task" onclick="handleAdsgramTask()">
             📋 Adsgram Special Task (+2.00 ALPHA)
@@ -332,7 +336,7 @@
     </div>
 
     <div class="cyber-card">
-        <button class="btn-daily-claim" id="dailyClaimBtn" onclick="handleDailyClick()">
+        <button class="btn-daily-claim" id="dailyClaimBtn" onclick="handleDailyClick(event)">
             🎁 Daily Reward (+10 ALPHA)
         </button>
     </div>
@@ -344,11 +348,11 @@
     <div class="cyber-card">
         <div style="font-size: 11px; margin-bottom: 10px; color: var(--gold); font-weight: bold;">🔥 HIGH REWARD OFFERS</div>
         <div class="scroll-ads-list">
-            <div class="scroll-ad-item" onclick="handleClick('bonus')">
+            <div class="scroll-ad-item" onclick="handleClick('bonus', event)">
                 <p style="font-size: 11px;">🎁 Bonus Offers #1</p>
                 <span style="font-size: 10px; color: var(--text-muted);">0.1 - 1.5 ALPHA</span>
             </div>
-            <div class="scroll-ad-item" onclick="handleClick('bonus')">
+            <div class="scroll-ad-item" onclick="handleClick('bonus', event)">
                 <p style="font-size: 11px;">💎 Premium Offer #2</p>
                 <span style="font-size: 10px; color: var(--text-muted);">0.1 - 1.5 ALPHA</span>
             </div>
@@ -369,7 +373,7 @@
             <label style="font-size: 9px; color: var(--text-muted);">TON WALLET ADDRESS</label>
             <input type="text" id="tonWallet" class="withdraw-input" placeholder="EQD...">
         </div>
-        <button class="btn-withdraw" onclick="submitWithdrawalRequest()">SUBMIT REQUEST</button>
+        <button class="btn-withdraw" onclick="submitWithdrawalRequest(event)">SUBMIT REQUEST</button>
     </div>
 </div>
 
@@ -383,12 +387,10 @@
         }
     });
 
-    const tg = window.Telegram && window.Telegram.WebApp ? window.Telegram.WebApp : null;
-    if (tg) {
-        try { tg.ready(); tg.expand(); } catch(e){}
-    }
+    const tg = window.Telegram ? window.Telegram.WebApp : null;
+    if (tg) { tg.ready(); tg.expand(); }
 
-    // Adsgram Controllers Initialization
+    // Adsgram Controllers Configuration
     const AdControllerReward = window.Adsgram ? window.Adsgram.init({ blockId: "48398" }) : null;
     const AdControllerInterstitial = window.Adsgram ? window.Adsgram.init({ blockId: "int-48399" }) : null;
     const AdControllerTask = window.Adsgram ? window.Adsgram.init({ blockId: "task-48720" }) : null;
@@ -402,8 +404,9 @@
     let isAdProcessing = false;
     let pendingAdType = null;
     let countdownInterval = null;
+    let cooldownTimerInterval = null;
 
-    // Direct Links Configuration (Adsterra + Hilltop)
+    // Adsterra and Hilltop Direct Links Configuration
     const primaryDirectLinks = [
         "https://mammothsubway.com/sraj8zz1d?key=80fe52ed90673410b3bd8a6ef1e23f0b",
         "https://plump-plastic.com/ke5WQR"
@@ -425,14 +428,6 @@
         toast.innerText = msg;
         toast.style.display = 'block';
         setTimeout(() => toast.style.display = 'none', 3000);
-    }
-
-    function openExternalLink(url) {
-        if (tg && tg.openLink) {
-            tg.openLink(url);
-        } else {
-            window.open(url, '_blank');
-        }
     }
 
     function shareToTelegram() {
@@ -491,8 +486,9 @@
         }
     }
 
-    // Adsgram Task Direct Execution
+    // Adsgram Task Direct Handler
     async function handleAdsgramTask() {
+        if (!navigator.onLine) return;
         if (AdControllerTask) {
             try {
                 const res = await AdControllerTask.show();
@@ -523,7 +519,7 @@
         }
     }
 
-    async function handleClick(type) {
+    async function handleClick(type, e) {
         if (!navigator.onLine || isAdProcessing) return;
 
         if (type === 'auto' && Date.now() < autoCooldownEnd) {
@@ -534,19 +530,17 @@
         isAdProcessing = true;
         pendingAdType = type;
 
-        // 1. Adsgram Interstitial/Reward တောင်းဆိုခြင်း
         await triggerAdsgramAds();
 
-        // 2. Adsterra သို့မဟုတ် HilltopAds Direct Link သို့ ခေါ်ဆောင်ခြင်း
         const targetLink = primaryDirectLinks[Math.floor(Math.random() * primaryDirectLinks.length)];
-        openExternalLink(targetLink);
+        if (tg && tg.openLink) tg.openLink(targetLink);
+        else window.open(targetLink, '_blank');
 
-        // 3. 15-second Countdown မော်ဒယ် စတင်ခြင်း
         start15sModal();
     }
 
-    function handleDailyClick() {
-        if (Date.now() - lastDailyClaim >= 86400000) handleClick('daily');
+    function handleDailyClick(e) {
+        if (Date.now() - lastDailyClaim >= 86400000) handleClick('daily', e);
     }
 
     function start15sModal() {
@@ -575,9 +569,9 @@
     async function completeAdProcess() {
         document.getElementById('adModal').classList.remove('active');
 
-        // Countdown ပြီးပါက ဒုတိယ အကြိမ် Direct Link (Adsterra/Hilltop) ကို ပွင့်စေခြင်း
         const secondLink = secondaryDirectLinks[Math.floor(Math.random() * secondaryDirectLinks.length)];
-        openExternalLink(secondLink);
+        if (tg && tg.openLink) tg.openLink(secondLink);
+        else window.open(secondLink, '_blank');
 
         if (pendingAdType === 'daily') {
             alphaPoints += 10.00;
@@ -601,10 +595,12 @@
         isAdProcessing = false;
         pendingAdType = null;
         updateUI();
-        showToast("✅ Reward Awarded!");
+        if (autoClickCount < 30 || pendingAdType !== 'auto') {
+            showToast("✅ Reward Awarded!");
+        }
     }
 
-    async function submitWithdrawalRequest() {
+    async function submitWithdrawalRequest(e) {
         const tgName = document.getElementById('tgName').value.trim();
         const amount = parseFloat(document.getElementById('withdrawAmount').value);
         const tonWallet = document.getElementById('tonWallet').value.trim();
@@ -658,8 +654,8 @@
     window.onload = function() {
         guardNetwork();
         updateUI();
-        setInterval(updateAutoAdsButton, 1000);
+        cooldownTimerInterval = setInterval(updateAutoAdsButton, 1000);
     };
 </script>
 </body>
-</html>
+    </html>
