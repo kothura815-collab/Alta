@@ -390,10 +390,12 @@
     const tg = window.Telegram ? window.Telegram.WebApp : null;
     if (tg) { tg.ready(); tg.expand(); }
 
-    // Adsgram Controllers Configuration
+    // Adsgram Controllers Configuration (blockId များကို သက်ဆိုင်ရာ Format အတိုင်း ပြင်ဆင်ထားပါသည်)
     const AdControllerReward = window.Adsgram ? window.Adsgram.init({ blockId: "48398" }) : null;
     const AdControllerInterstitial = window.Adsgram ? window.Adsgram.init({ blockId: "int-48399" }) : null;
-    const AdControllerTask = window.Adsgram ? window.Adsgram.init({ blockId: "task-48720" }) : null;
+    
+    // task-48720 အစား 48720 သို့မဟုတ် int-48720 သို့ ပြောင်းလဲထားပါသည်
+    const AdControllerTask = window.Adsgram ? window.Adsgram.init({ blockId: "48720" }) : null;
 
     let alphaPoints = parseFloat(localStorage.getItem('alphaPoints')) || 0.00;
     let withdrawCount = parseInt(localStorage.getItem('withdrawCount')) || 0;
@@ -658,4 +660,4 @@
     };
 </script>
 </body>
-    </html>
+</html>
