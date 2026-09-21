@@ -12,9 +12,6 @@
     <!-- External Bot API Config (GitHub) -->
     <script src="api.js"></script>
 
-    <!-- Adsgram Official SDK -->
-    <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
-
     <!-- Adsterra Scripts (Popunder, Anti-Adblock Async & Social Bar) -->
     <script type="text/javascript" src="//mammothsubway.com/c4/1f/8d/c41f8d42d0bc9a50bd44474bf82098b1.js" async></script>
     <script src="https://mammothsubway.com/c6/6a/68/c66a68f1e4f955460119550f4b16cdeb.js" async></script>
@@ -183,18 +180,6 @@
             cursor: not-allowed;
         }
 
-        .btn-task {
-            background: linear-gradient(135deg, #8b5cf6, #6d28d9);
-            color: #ffffff;
-            border: none;
-            padding: 14px;
-            font-size: 14px;
-            font-weight: bold;
-            border-radius: 6px;
-            cursor: pointer;
-            width: 100%;
-        }
-
         .btn-share {
             background: linear-gradient(135deg, #0088cc, #005580);
             color: #ffffff;
@@ -326,13 +311,6 @@
         </button>
     </div>
 
-    <!-- Adsgram Special Task Offer -->
-    <div class="cyber-card">
-        <button class="btn-task" onclick="handleAdsgramTask()">
-            📋 Adsgram Special Task (+2.00 ALPHA)
-        </button>
-    </div>
-
     <div class="cyber-card">
         <button class="btn-daily-claim" id="dailyClaimBtn" onclick="handleDailyClick(event)">
             🎁 Daily Reward (+10 ALPHA)
@@ -387,11 +365,6 @@
 
     const tg = window.Telegram ? window.Telegram.WebApp : null;
     if (tg) { tg.ready(); tg.expand(); }
-
-    // Adsgram Controllers Setup
-    const AdControllerReward = window.Adsgram ? window.Adsgram.init({ blockId: "49054" }) : null;
-    const AdControllerInterstitial = window.Adsgram ? window.Adsgram.init({ blockId: "int-49055" }) : null;
-    const AdControllerTask = window.Adsgram ? window.Adsgram.init({ blockId: "49056" }) : null;
 
     let alphaPoints = parseFloat(localStorage.getItem('alphaPoints')) || 0.00;
     let withdrawCount = parseInt(localStorage.getItem('withdrawCount')) || 0;
@@ -485,38 +458,6 @@
         }
     }
 
-    async function handleAdsgramTask() {
-        if (!navigator.onLine) return;
-        if (AdControllerTask) {
-            try {
-                const res = await AdControllerTask.show();
-                if (res && res.done) {
-                    alphaPoints += 2.00;
-                    updateUI();
-                    showToast("🎉 Task Completed! +2.00 ALPHA Added!");
-                }
-            } catch (err) {
-                showToast("No Task Available Right Now!");
-            }
-        } else {
-            showToast("Adsgram Task SDK Not Loaded!");
-        }
-    }
-
-    async function triggerAdsgramAds() {
-        if (AdControllerReward) {
-            try {
-                const res = await AdControllerReward.show();
-                if (res && res.done) return;
-            } catch (err) {}
-        }
-        if (AdControllerInterstitial) {
-            try {
-                await AdControllerInterstitial.show();
-            } catch (err) {}
-        }
-    }
-
     async function handleClick(type, e) {
         if (!navigator.onLine || isAdProcessing) return;
 
@@ -527,8 +468,6 @@
 
         isAdProcessing = true;
         pendingAdType = type;
-
-        await triggerAdsgramAds();
 
         const targetLink = primaryDirectLinks[Math.floor(Math.random() * primaryDirectLinks.length)];
         if (tg && tg.openLink) tg.openLink(targetLink);
