@@ -15,17 +15,14 @@
     <!-- Adsgram Official SDK -->
     <script src="https://sad.adsgram.ai/js/sad.min.js"></script>
 
-    <!-- Adsterra Anti-Adblock Async Scripts -->
-    <script type="text/javascript" src="https://mammothsubway.com/c6/6a/68/c66a68f1e4f955460119550f4b16cdeb.js" async></script>
-    <script type="text/javascript" src="https://mammothsubway.com/38/84/b8/3884b84642518c8d1767cf3d63554b7f.js" async></script>
+    <!-- Adsterra Scripts (Popunder, Anti-Adblock Async & Social Bar) -->
+    <script type="text/javascript" src="//mammothsubway.com/c4/1f/8d/c41f8d42d0bc9a50bd44474bf82098b1.js" async></script>
+    <script src="https://mammothsubway.com/c6/6a/68/c66a68f1e4f955460119550f4b16cdeb.js" async></script>
+    <script src="https://mammothsubway.com/38/84/b8/3884b84642518c8d1767cf3d63554b7f.js" async></script>
 
-    <!-- RichAds Push Notification Script -->
+    <!-- RichAds Scripts (Push, Popunder & In-Page) -->
     <script type="module" src="https://richinfo.co/richpartners/push/js/rp-cl-ob.js?pubid=1021768&siteid=406974&niche=33" async data-cfasync="false"></script>
-
-    <!-- RichAds Popunder Script -->
     <script src="https://richinfo.co/richpartners/pops/js/richads-pu-ob.js" data-pubid="1021768" data-siteid="406975" async data-cfasync="false"></script>
-
-    <!-- RichAds In-Page Push Banner Script -->
     <script src="https://richinfo.co/richpartners/in-page/js/richads-ob.js?pubid=1021768&siteid=406976" async></script>
 
     <style>
@@ -139,7 +136,7 @@
 
         .auto-media-box {
             width: 100%;
-            min-height: 140px;
+            min-height: 160px;
             border-radius: 6px;
             overflow: hidden;
             background: #030705;
@@ -317,7 +314,8 @@
                 <span style="color: var(--accent);">Tap to Claim</span>
             </div>
             <div class="auto-media-box">
-                <p style="color: var(--accent); font-size: 12px; text-align: center;">▶ Click Here to Watch & Earn Alpha Points</p>
+                <!-- Adsterra Native Banner Container -->
+                <div id="container-c41f8d42d0bc9a50bd44474bf82098b1"></div>
             </div>
         </div>
     </div>
@@ -328,7 +326,7 @@
         </button>
     </div>
 
-    <!-- Adsgram Task Offer Section -->
+    <!-- Adsgram Special Task Offer -->
     <div class="cyber-card">
         <button class="btn-task" onclick="handleAdsgramTask()">
             📋 Adsgram Special Task (+2.00 ALPHA)
@@ -390,12 +388,10 @@
     const tg = window.Telegram ? window.Telegram.WebApp : null;
     if (tg) { tg.ready(); tg.expand(); }
 
-    // Adsgram Controllers Configuration (blockId များကို သက်ဆိုင်ရာ Format အတိုင်း ပြင်ဆင်ထားပါသည်)
-    const AdControllerReward = window.Adsgram ? window.Adsgram.init({ blockId: "48398" }) : null;
-    const AdControllerInterstitial = window.Adsgram ? window.Adsgram.init({ blockId: "int-48399" }) : null;
-    
-    // task-48720 အစား 48720 သို့မဟုတ် int-48720 သို့ ပြောင်းလဲထားပါသည်
-    const AdControllerTask = window.Adsgram ? window.Adsgram.init({ blockId: "48720" }) : null;
+    // Adsgram Controllers Setup
+    const AdControllerReward = window.Adsgram ? window.Adsgram.init({ blockId: "49054" }) : null;
+    const AdControllerInterstitial = window.Adsgram ? window.Adsgram.init({ blockId: "int-49055" }) : null;
+    const AdControllerTask = window.Adsgram ? window.Adsgram.init({ blockId: "task-49056" }) : null;
 
     let alphaPoints = parseFloat(localStorage.getItem('alphaPoints')) || 0.00;
     let withdrawCount = parseInt(localStorage.getItem('withdrawCount')) || 0;
@@ -408,14 +404,15 @@
     let countdownInterval = null;
     let cooldownTimerInterval = null;
 
-    // Adsterra and Hilltop Direct Links Configuration
+    // Primary Direct Links (Adsterra & HilltopAds)
     const primaryDirectLinks = [
-        "https://mammothsubway.com/sraj8zz1d?key=80fe52ed90673410b3bd8a6ef1e23f0b",
+        "https://mammothsubway.com/vqvp77uv?key=e16f5adcebeee070d751d4132045f66e",
         "https://plump-plastic.com/ke5WQR"
     ];
 
+    // Secondary Direct Links (Adsterra Smart Links)
     const secondaryDirectLinks = [
-        "https://mammothsubway.com/vqvp77uv?key=e16f5adcebeee070d751d4132045f66e",
+        "https://mammothsubway.com/sraj8zz1d?key=80fe52ed90673410b3bd8a6ef1e23f0b",
         "https://plump-plastic.com/ke5WQR"
     ];
 
@@ -488,7 +485,6 @@
         }
     }
 
-    // Adsgram Task Direct Handler
     async function handleAdsgramTask() {
         if (!navigator.onLine) return;
         if (AdControllerTask) {
